@@ -2,12 +2,14 @@ Name:           perl-Math-NumSeq
 Version:        51
 Release:        1%{?dist}
 Summary:        Number sequences
-License:        GPL+
+License:        GPLv3+
 Group:          Development/Libraries
 URL:            http://search.cpan.org/dist/Math-NumSeq/
 Source0:        http://www.cpan.org/authors/id/K/KR/KRYDE/Math-NumSeq-%{version}.tar.gz
 BuildRequires:  perl >= 0:5.004
+BuildRequires:  perl(constant)
 BuildRequires:  perl(constant::defer) >= 1
+BuildRequires:  perl(warnings)
 BuildRequires:  perl(ExtUtils::MakeMaker)
 BuildRequires:  perl(File::HomeDir)
 BuildRequires:  perl(File::Spec)
@@ -18,6 +20,38 @@ BuildRequires:  perl(Math::Prime::XS) >= 0.23
 BuildRequires:  perl(Module::Load)
 BuildRequires:  perl(Module::Pluggable)
 BuildRequires:  perl(Module::Util)
+BuildRequires:  perl(lib)
+BuildRequires:  perl(Test)
+BuildRequires:  perl(POSIX)
+BuildRequires:  perl(Math::BigInt)
+BuildRequires:  perl(Test::ConsistentVersion)
+BuildRequires:  perl(FindBin)
+BuildRequires:  perl(YAML)
+BuildRequires:  perl(YAML::Syck)
+BuildRequires:  perl(YAML::Tiny)
+BuildRequires:  perl(YAML::XS)
+BuildRequires:  perl(Parse::CPAN::Meta)
+BuildRequires:  perl(ExtUtils::Manifest)
+BuildRequires:  perl(Test::Synopsis)
+BuildRequires:  perl(Test::More)
+BuildRequires:  perl(Test::YAML::Meta)
+BuildRequires:  perl(Exporter)
+BuildRequires:  perl(Devel::StackTrace)
+BuildRequires:  perl(Data::Dumper)
+BuildRequires:  perl(Scalar::Util)
+BuildRequires:  perl(Devel::FindRef)
+BuildRequires:  perl(Carp)
+BuildRequires:  perl(Math::Trig)
+BuildRequires:  perl(Math::Symbolic)
+BuildRequires:  perl(Math::Expression::Evaluator) # TODO
+BuildRequires:  perl(Language::Expr) # TODO
+BuildRequires:  perl(Language::Expr::Compiler::Perl) # TODO
+BuildRequires:  perl(Module::Pluggable)
+BuildRequires:  perl(SDBM_File)
+BuildRequires:  perl(File::Temp)
+BuildRequires:  perl(Getopt::Long)
+BuildRequires:  perl(Cwd)
+BuildRequires:  perl(File::Path)
 Requires:       perl(constant::defer) >= 1
 Requires:       perl(File::HomeDir)
 Requires:       perl(File::Spec)
@@ -28,7 +62,24 @@ Requires:       perl(Math::Prime::XS) >= 0.23
 Requires:       perl(Module::Load)
 Requires:       perl(Module::Pluggable)
 Requires:       perl(Module::Util)
+Requires:       perl(Carp)
+Requires:       perl(Math::Trig)
+Requires:       perl(Math::Symbolic)
+Requires:       perl(Math::Expression::Evaluator)
+Requires:       perl(Language::Expr)
+Requires:       perl(Language::Expr::Compiler::Perl) # TODO
+Requires:       perl(Module::Pluggable)
+Requires:       perl(SDBM_File)
+Requires:       perl(File::Temp)
+# tools
+Requires:       perl(Getopt::Long)
+Requires:       perl(Data::Dumper)
+Requires:       perl(ExtUtils::Manifest)
+Requires:       perl(Cwd)
+Requires:       perl(File::Path)
 Requires:       perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
+
+%{?perl_default_filter} # Filters (not)shared c libs
 
 %description
 This is a base class for some number sequences. Sequence objects can
@@ -55,7 +106,6 @@ find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 make test
 
 %files
-%defattr(-,root,root,-)
 %doc Changes COPYING
 %{perl_vendorarch}/auto/*
 %{perl_vendorarch}/Math*
