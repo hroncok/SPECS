@@ -11,8 +11,6 @@ BuildRequires:  perl(ExtUtils::MakeMaker)
 BuildRequires:  perl(Test)
 BuildRequires:  perl(Exporter)
 BuildRequires:  perl(vars)
-Requires:       perl(Exporter)
-Requires:       perl(vars)
 Requires:       perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
 
 %{?perl_default_filter} # Filters (not)shared c libs

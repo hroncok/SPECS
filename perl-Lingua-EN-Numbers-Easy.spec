@@ -9,15 +9,16 @@ Source0:        http://www.cpan.org/authors/id/A/AB/ABIGAIL/Lingua-EN-Numbers-Ea
 BuildArch:      noarch
 BuildRequires:  perl >= 0:5.006
 BuildRequires:  perl(ExtUtils::MakeMaker)
+BuildRequires:  perl(Test::More)
+BuildRequires:  perl(warnings)
 BuildRequires:  perl(Lingua::EN::Numbers) >= 1.01
-Requires:       perl(Lingua::EN::Numbers) >= 1.01
 Requires:       perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
 
 %{?perl_default_filter} # Filters (not)shared c libs
 
 %description
 Lingua::EN::Numbers is a module that translates numbers to English words.
-Unfortunally, it has an object oriented interface, which makes it hard to
+Unfortunately, it has an object oriented interface, which makes it hard to
 interpolate them in strings. Lingua::EN::Numbers::Easy translates numbers
 to words using a tied hash, which can be interpolated.
 
