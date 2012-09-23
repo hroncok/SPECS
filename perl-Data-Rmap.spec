@@ -17,16 +17,12 @@ BuildRequires:  perl(Storable)
 BuildRequires:  perl(warnings)
 BuildRequires:  perl(Carp)
 BuildRequires:  perl(Exporter)
-BuildRequires:  perl(Lingua::EN::Numbers::Easy) # TODO
-Requires:       perl(Scalar::Util)
+BuildRequires:  perl(Lingua::EN::Numbers::Easy)
 Requires:       perl(Test::Exception)
 Requires:       perl(Data::Dumper)
 Requires:       perl(Data::Dump)
 Requires:       perl(Storable)
-Requires:       perl(warnings)
-Requires:       perl(Carp)
-Requires:       perl(Exporter)
-Requires:       perl(Lingua::EN::Numbers::Easy) # TODO
+Requires:       perl(Lingua::EN::Numbers::Easy)
 Requires:       perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
 
 %{?perl_default_filter} # Filters (not)shared c libs
