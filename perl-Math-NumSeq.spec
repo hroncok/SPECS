@@ -43,7 +43,7 @@ BuildRequires:  perl(Devel::FindRef)
 BuildRequires:  perl(Carp)
 BuildRequires:  perl(Math::Trig)
 BuildRequires:  perl(Math::Symbolic)
-BuildRequires:  perl(Math::Expression::Evaluator) # TODO
+BuildRequires:  perl(Math::Expression::Evaluator)
 BuildRequires:  perl(Language::Expr) # TODO
 BuildRequires:  perl(Language::Expr::Compiler::Perl) # TODO
 BuildRequires:  perl(Module::Pluggable)
@@ -66,7 +66,7 @@ Requires:       perl(Carp)
 Requires:       perl(Math::Trig)
 Requires:       perl(Math::Symbolic)
 Requires:       perl(Math::Expression::Evaluator)
-Requires:       perl(Language::Expr)
+Requires:       perl(Language::Expr) # TODO
 Requires:       perl(Language::Expr::Compiler::Perl) # TODO
 Requires:       perl(Module::Pluggable)
 Requires:       perl(SDBM_File)
