@@ -1,14 +1,15 @@
-%global         githash  dceaf26f
-%global         snapshot 20120921git%{githash}
+%global         githash  b6935b93
+%global         snapshot 20120924git%{githash}
 Name:           printrun
 Version:        0.0
-Release:        5.%{snapshot}%{?dist}
+Release:        6.%{snapshot}%{?dist}
 Summary:        RepRap printer interface and tools
 License:        GPLv3+ # Ask author for LICENCE file
 Group:          Applications/Engineering # Optional
 URL:            https://github.com/kliment/Printrun
 # git clone https://github.com/kliment/Printrun.git; cd Printrun
 # git archive --format tar.gz dceaf26f > ../%{name}-%{snapshot}.tar.gz
+# the command has a mistake :(
 Source0:        %{name}-%{snapshot}.tar.gz
 # Bash runners
 Source1:        http://files.hroncok.cz/reprap/fedora/pronsole
@@ -110,6 +111,7 @@ mkdir -p %{buildroot}%{_datadir}/%{name} # /usr/share/printrun
 %{__ln_s} -f ../locale/ %{buildroot}%{_datadir}/%{name}/ # the app expects the locale folder in here
 cp -ar * %{buildroot}%{_datadir}/%{name} # copy everything to /usr/share/printrun
 %{__rm} -rf %{buildroot}%{_datadir}/%{name}/README* # this will be in docs
+%{__rm} -rf %{buildroot}%{_datadir}/%{name}/COPYING # this will be in docs
 mkdir -p %{buildroot}%{_datadir}/pixmaps # /usr/share/pixmaps
 %{__ln_s} ../%{name}/pronsole.ico %{buildroot}%{_datadir}/pixmaps # link the icons to pixmaps, so thay have the right location too
 %{__ln_s} ../%{name}/plater.ico %{buildroot}%{_datadir}/pixmaps
@@ -126,7 +128,7 @@ desktop-file-install --dir=%{buildroot}%{_datadir}/applications %{SOURCE6}
 %{find_lang} plater
 
 %files
-%doc README*
+%doc README* COPYING
 
 %files common -f pronterface.lang
 %dir %{_datadir}/%{name}/
@@ -142,7 +144,7 @@ desktop-file-install --dir=%{buildroot}%{_datadir}/applications %{SOURCE6}
 %attr(755,root,root) %{_bindir}/pronsole
 %{_datadir}/pixmaps/pronsole.ico
 %{_datadir}/applications/pronsole.desktop
-%doc README*
+%doc README* COPYING
 
 %files -n pronterface
 %{_datadir}/%{name}/pronterface.*
@@ -162,16 +164,19 @@ desktop-file-install --dir=%{buildroot}%{_datadir}/applications %{SOURCE6}
 %attr(755,root,root) %{_bindir}/pronterface
 %{_datadir}/pixmaps/P-face.ico
 %{_datadir}/applications/pronterface.desktop
-%doc README*
+%doc README* COPYING
 
 %files -n plater -f plater.lang
 %{_datadir}/%{name}/plater.*
 %attr(755,root,root) %{_bindir}/plater
 %{_datadir}/pixmaps/plater.ico
 %{_datadir}/applications/plater.desktop
-%doc README*
+%doc README* COPYING
 
 %changelog
+* Fri Sep 22 2012 Miro Hrončok <miro@hroncok.cz> - 0.0-6-20120924gitb6935b93
+- New commits, inlude the license
+
 * Fri Sep 22 2012 Miro Hrončok <miro@hroncok.cz> - 0.0-5-20120921gitdceaf26f
 - launching scripts now pass the params
 

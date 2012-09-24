@@ -6,14 +6,39 @@ License:        GPLv3+
 Group:          Development/Libraries
 URL:            http://search.cpan.org/dist/Math-PlanePath/
 Source0:        http://www.cpan.org/authors/id/K/KR/KRYDE/Math-PlanePath-%{version}.tar.gz
+BuildArch:      noarch
 BuildRequires:  perl >= 0:5.004
 BuildRequires:  perl(constant::defer) >= 5
+BuildRequires:  perl(constant)
 BuildRequires:  perl(ExtUtils::MakeMaker)
 BuildRequires:  perl(List::Util)
 BuildRequires:  perl(Math::Libm)
-Requires:       perl(constant::defer) >= 5
-Requires:       perl(List::Util)
-Requires:       perl(Math::Libm)
+BuildRequires:  perl(Test)
+BuildRequires:  perl(lib)
+BuildRequires:  perl(Math::BigInt)
+BuildRequires:  perl(Math::Prime::XS)
+BuildRequires:  perl(Math::BigRat)
+BuildRequires:  perl(Math::NumSeq::AllDigits)
+BuildRequires:  perl(Test::More)
+BuildRequires:  perl(File::Spec)
+BuildRequires:  perl(YAML)
+BuildRequires:  perl(YAML::Syck)
+BuildRequires:  perl(YAML::Tiny)
+BuildRequires:  perl(YAML::XS)
+BuildRequires:  perl(Parse::CPAN::Meta)
+BuildRequires:  perl(Data::Dumper)
+BuildRequires:  perl(File::Spec)
+BuildRequires:  perl(Module::Load)
+BuildRequires:  perl(Math::BigFloat)
+BuildRequires:  perl(Math::NumSeq)
+BuildRequires:  perl(Math::NumSeq::Base::IterateIth)
+BuildRequires:  perl(POSIX)
+BuildRequires:  perl(Exporter)
+BuildRequires:  perl(Carp)
+Requires:       perl(Math::NumSeq::Modulo)
+Requires:       perl(File::Spec)
+Requires:       perl(Module::Load)
+Requires:       perl(Math::BigFloat)
 Requires:       perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
 
 %{?perl_default_filter} # Filters (not)shared c libs
@@ -43,8 +68,8 @@ make test
 
 %files
 %doc Changes COPYING
-%{perl_vendorarch}/auto/*
-%{perl_vendorarch}/Math*
+#%%{perl_vendorlib}/auto/*
+%{perl_vendorlib}/Math*
 %{_mandir}/man3/*
 
 %changelog
