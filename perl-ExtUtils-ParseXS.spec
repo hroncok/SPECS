@@ -2,23 +2,31 @@ Name:           perl-ExtUtils-ParseXS
 Version:        3.15
 Release:        1%{?dist}
 Summary:        Converts Perl XS code into C code
-License:        CHECK(Distributable)
+License:        GPL+ or Artistic
 Group:          Development/Libraries
 URL:            http://search.cpan.org/dist/ExtUtils-ParseXS/
 Source0:        http://www.cpan.org/authors/id/S/SM/SMUELLER/ExtUtils-ParseXS-%{version}.tar.gz
+BuildArch:      noarch
 BuildRequires:  perl(Carp)
 BuildRequires:  perl(Cwd)
 BuildRequires:  perl(ExtUtils::CBuilder)
 BuildRequires:  perl(ExtUtils::MakeMaker) >= 6.46
 BuildRequires:  perl(File::Spec)
+BuildRequires:  perl(File::Temp)
 BuildRequires:  perl(Test::More) >= 0.47
+BuildRequires:  perl(warnings)
+BuildRequires:  perl(Exporter)
+BuildRequires:  perl(Config)
+BuildRequires:  perl(DynaLoader)
+BuildRequires:  perl(lib)
+BuildRequires:  perl(attributes)
+BuildRequires:  perl(overload)
+BuildRequires:  perl(Symbol)
+BuildRequires:  perl(File::Basename)
+BuildRequires:  perl(Getopt::Long)
 Requires:       perl(Carp)
-Requires:       perl(Cwd)
-Requires:       perl(ExtUtils::CBuilder)
-Requires:       perl(ExtUtils::MakeMaker) >= 6.46
-Requires:       perl(File::Spec)
-Requires:       perl(Test::More) >= 0.47
 Requires:       perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
+Provides:       xsubpp
 
 %{?perl_default_filter} # Filters (not)shared c libs
 
@@ -50,9 +58,11 @@ make test
 
 %files
 %doc Changes META.json README
-%{perl_vendorarch}/auto/*
-%{perl_vendorarch}/ExtUtils*
+#%%{perl_vendorlib}/auto/*
+%{perl_vendorlib}/ExtUtils*
+%{_mandir}/man1/*
 %{_mandir}/man3/*
+%{_bindir}/*
 
 %changelog
 * Tue Sep 25 2012 Miro Hrončok <miro@hroncok.cz> 3.15-1
