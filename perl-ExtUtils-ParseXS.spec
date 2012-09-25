@@ -26,7 +26,7 @@ BuildRequires:  perl(File::Basename)
 BuildRequires:  perl(Getopt::Long)
 Requires:       perl(Carp)
 Requires:       perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
-Provides:       xsubpp
+Provides:       xsubpp = %{version}
 
 %{?perl_default_filter} # Filters (not)shared c libs
 
@@ -60,9 +60,10 @@ make test
 %doc Changes META.json README
 #%%{perl_vendorlib}/auto/*
 %{perl_vendorlib}/ExtUtils*
+%attr(755,root,root) %{perl_vendorlib}/ExtUtils/xsubpp
 %{_mandir}/man1/*
 %{_mandir}/man3/*
-%{_bindir}/*
+%attr(755,root,root) %{_bindir}/*
 
 %changelog
 * Tue Sep 25 2012 Miro Hrončok <miro@hroncok.cz> 3.15-1
