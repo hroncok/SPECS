@@ -51,6 +51,8 @@ find %{buildroot} -type f -name .packlist -exec rm -f {} \;
 find %{buildroot} -type f -name '*.bs' -size 0 -exec rm -f {} \;
 find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null \;
 
+# wrong shebang correction
+sed -i 's|#!perl|#!/usr/bin/perl|' %{buildroot}%{perl_vendorlib}/ExtUtils/xsubpp
 
 %{_fixperms} %{buildroot}/*
 
