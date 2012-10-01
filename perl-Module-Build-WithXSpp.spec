@@ -1,7 +1,7 @@
 Name:           perl-Module-Build-WithXSpp
 Version:        0.11
 Release:        1%{?dist}
-Summary:        XS++ enhanced flavour of Module::Build
+Summary:        XS++ enhanced flavor of Module::Build
 License:        GPL+ or Artistic
 Group:          Development/Libraries
 URL:            http://search.cpan.org/dist/Module-Build-WithXSpp/
@@ -14,6 +14,11 @@ BuildRequires:  perl(ExtUtils::ParseXS) >= 2.2205
 BuildRequires:  perl(ExtUtils::Typemaps) >= 1.00
 BuildRequires:  perl(ExtUtils::XSpp) >= 0.11
 BuildRequires:  perl(Module::Build) >= 0.26
+BuildRequires:  perl(Test::More)
+BuildRequires:  perl(warnings)
+BuildRequires:  perl(File::Spec)
+BuildRequires:  perl(File::Basename)
+BuildRequires:  perl(XSLoader)
 Requires:       perl(Digest::MD5)
 Requires:       perl(ExtUtils::CBuilder)
 Requires:       perl(ExtUtils::CppGuess) >= 0.04
@@ -21,6 +26,9 @@ Requires:       perl(ExtUtils::ParseXS) >= 2.2205
 Requires:       perl(ExtUtils::Typemaps) >= 1.00
 Requires:       perl(ExtUtils::XSpp) >= 0.11
 Requires:       perl(Module::Build) >= 0.26
+Requires:       perl(File::Spec)
+Requires:       perl(File::Basename)
+Requires:       perl(XSLoader)
 Requires:       perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
 
 %description
