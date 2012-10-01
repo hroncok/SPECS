@@ -18,8 +18,6 @@ Requires:       perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $versi
 
 %{?perl_default_filter} # Filters (not)shared c libs
 
-# ppisar@redhat.com / https://lists.fedoraproject.org/mailman/listinfo/perl-devel
-
 %description
 Math::ConvexHull is a simple module that calculates convex hulls from a set
 of points in 2D space. It is a straightforward implementation of the

@@ -27,6 +27,14 @@ Boost::Geometry::Utils Perl module
 
 %prep
 %setup -q -n Boost-Geometry-Utils-%{version}
+# remove Windows file endings
+find . -name '*' -exec sed -i "s/\r//" {} \; 2>/dev/null
+# convert sources to uft8
+for FILE in `find ./src -name '*' -print`
+  do iconv -f iso8859-1 -t utf-8 $FILE > $FILE.conv && mv -f $FILE.conv $FILE
+  rm -f $FILE.conv
+done
+
 
 %build
 %{__perl} Build.PL installdirs=vendor optimize="$RPM_OPT_FLAGS"
