@@ -9,6 +9,8 @@ Source0:        http://www.cpan.org/authors/id/S/SM/SMUELLER/ExtUtils-Typemaps-D
 BuildArch:      noarch
 BuildRequires:  perl(ExtUtils::Typemaps) >= 1.00
 BuildRequires:  perl(Module::Build)
+BuildRequires:  perl(Test::More)
+BuildRequires:  perl(warnings)
 Requires:       perl(ExtUtils::Typemaps) >= 1.00
 Requires:       perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
 
