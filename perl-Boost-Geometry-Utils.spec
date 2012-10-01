@@ -9,7 +9,15 @@ Source0:        http://www.cpan.org/authors/id/A/AA/AAR/Boost-Geometry-Utils-%{v
 BuildRequires:  perl(ExtUtils::Typemaps::Default) >= 0.05
 BuildRequires:  perl(ExtUtils::XSpp) >= 0.16
 BuildRequires:  perl(Module::Build)
+BuildRequires:  perl(Module::Build::WithXSpp)
+BuildRequires:  perl(warnings)
+BuildRequires:  perl(File::Find)
+BuildRequires:  perl(File::Temp)
+BuildRequires:  perl(Exporter)
+BuildRequires:  perl(XSLoader)
 BuildRequires:  perl(Test::More)
+BuildRequires:  perl(Exporter)
+BuildRequires:  perl(XSLoader)
 Requires:       perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
 
 %{?perl_default_filter} # Filters (not)shared c libs
