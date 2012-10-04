@@ -2,7 +2,7 @@ Name:           skeinforge
 Version:        12.03.14
 Release:        5%{?dist}
 Summary:        Converts 3D model into G-Code for RepRap
-License:        AGPLv3 # Ask author for LICENCE file
+License:        AGPLv3 # Ask author for LICENCE file - will be in next release
 Group:          Applications/Engineering # Optional
 URL:            http://fabmetheus.crsndoo.com/wiki/index.php/Skeinforge
 Source0:        http://fabmetheus.crsndoo.com/files/50_reprap_python_beanshell.zip
