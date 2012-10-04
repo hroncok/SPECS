@@ -24,6 +24,8 @@ BuildRequires:  perl(File::Basename)
 BuildRequires:  perl(warnings)
 Requires:       perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
 
+%{?perl_default_filter} # Filters (not)shared c libs
+
 %description
 ExtUtils::CppGuess attempts to guess the system's C++ compiler that is
 compatible with the C compiler that your perl was built with.
