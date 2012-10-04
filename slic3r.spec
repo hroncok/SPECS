@@ -8,6 +8,7 @@ URL:            http://slic3r.org/
 # git clone git://github.com/alexrj/Slic3r.git && cd Slic3r
 # git archive %{version} --format tar.gz > ../%{name}-%{version}.tar.gz
 Source0:        %{name}-%{version}.tar.gz
+BuildArch:      noarch
 BuildRequires:  perl(Module::Build)
 BuildRequires:  perl(Exporter)
 BuildRequires:  perl(warnings)
@@ -33,27 +34,7 @@ BuildRequires:  perl(Boost::Geometry::Utils)
 BuildRequires:  perl(Math::Geometry::Voronoi)
 BuildRequires:  perl(Growl::GNTP)
 BuildRequires:  perl(Net::DBus)
-Requires:       perl(Exporter)
-Requires:       perl(warnings)
-Requires:       perl(File::Basename)
-Requires:       perl(Getopt::Long)
-Requires:       perl(constant)
-Requires:       perl(List::Util)
-Requires:       perl(FindBin)
-Requires:       perl(Moo) >= 0.091009
-Requires:       perl(File::Spec)
-Requires:       perl(Math::ConvexHull) >= 1.0.4
-Requires:       perl(Time::HiRes)
 Requires:       perl(XML::SAX)
-Requires:       perl(Math::PlanePath)
-Requires:       perl(utf8)
-Requires:       perl(Math::Clipper)
-Requires:       perl(Scalar::Util)
-Requires:       perl(SVG)
-Requires:       perl(parent)
-Requires:       perl(Wx)
-Requires:       perl(Boost::Geometry::Utils)
-Requires:       perl(Math::Geometry::Voronoi)
 Requires:       perl(Growl::GNTP)
 Requires:       perl(Net::DBus)
 Requires:       perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
@@ -83,8 +64,9 @@ find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null \;
 
 %files
 %doc MANIFEST README.markdown
-
-%{_mandir}/man1/*
+%{_bindir}/%{name}.pl
+%{perl_vendorlib}/Slic3r*
+%{_mandir}/man3/*
 
 %changelog
 * Thu Oct 04 2012 Miro Hrončok <miro@hroncok.cz> 0.9.3-1
