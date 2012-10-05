@@ -41,6 +41,8 @@ Requires:       perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $versi
 
 # There is no such module on CPAN and it works like a charm without it
 %filter_from_requires /perl(Wx::Dialog)/d
+# This is provided by XML::SAX (but not statet there)
+%filter_from_requires /perl(XML::SAX::PurePerl)/d
 %filter_setup
 
 %{?perl_default_filter} # Filters (not)shared c libs
@@ -62,6 +64,12 @@ for more information.
 ./Build install destdir=%{buildroot} create_packlist=0
 find %{buildroot} -type f -name '*.bs' -size 0 -exec rm -f {} \;
 find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null \;
+# TODO
+# move %{buildroot}%{_bindir}/%{name}.pl to %{buildroot}%{_datadir}/%{name}
+# copy var dir to %{buildroot}%{_datadir}/%{name}
+# create shell script %{buildroot}%{_bindir}/%{name} that runs %{buildroot}%{_datadir}/%{name}/%{name}.pl
+# link ico to pixmaps
+# create desktop file
 
 %{_fixperms} %{buildroot}/*
 
