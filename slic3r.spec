@@ -39,6 +39,12 @@ Requires:       perl(Growl::GNTP)
 Requires:       perl(Net::DBus)
 Requires:       perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
 
+# There is no such module on CPAN and it works like a charm without it
+%filter_from_requires /perl(Wx::Dialog)/d
+%filter_setup
+
+%{?perl_default_filter} # Filters (not)shared c libs
+
 %description
 Slic3r is a G-code generator for 3D printers. It's compatible with RepRaps,
 Makerbots, Ultimakers and many more machines.
