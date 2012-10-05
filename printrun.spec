@@ -2,7 +2,7 @@
 %global         snapshot 20120924git%{githash}
 Name:           printrun
 Version:        0.0
-Release:        6.%{snapshot}%{?dist}
+Release:        7.%{snapshot}%{?dist}
 Summary:        RepRap printer interface and tools
 License:        GPLv3+ # Ask author for LICENCE file
 Group:          Applications/Engineering # Optional
@@ -11,14 +11,16 @@ URL:            https://github.com/kliment/Printrun
 # git archive --format tar.gz dceaf26f > ../%{name}-%{snapshot}.tar.gz
 # the command has a mistake :(
 Source0:        %{name}-%{snapshot}.tar.gz
+
+%global         additional https://raw.github.com/hroncok/RPMAdditionalSources/master/
 # Bash runners
-Source1:        http://files.hroncok.cz/reprap/fedora/pronsole
-Source2:        http://files.hroncok.cz/reprap/fedora/pronterface
-Source3:        http://files.hroncok.cz/reprap/fedora/plater
+Source1:        %{additional}pronsole
+Source2:        %{additional}pronterface
+Source3:        %{additional}plater
 # Desktop files
-Source4:        http://files.hroncok.cz/reprap/fedora/pronsole.desktop
-Source5:        http://files.hroncok.cz/reprap/fedora/pronterface.desktop
-Source6:        http://files.hroncok.cz/reprap/fedora/plater.desktop
+Source4:        %{additional}pronsole.desktop
+Source5:        %{additional}pronterface.desktop
+Source6:        %{additional}plater.desktop
 
 BuildArch:      noarch
 BuildRequires:  python2-devel
@@ -174,6 +176,9 @@ desktop-file-install --dir=%{buildroot}%{_datadir}/applications %{SOURCE6}
 %doc README* COPYING
 
 %changelog
+* Thu Oct 04 2012 Miro Hrončok <miro@hroncok.cz> - 0.0-7-20120924gitb6935b93
+- New sources links
+
 * Fri Sep 22 2012 Miro Hrončok <miro@hroncok.cz> - 0.0-6-20120924gitb6935b93
 - New commits, inlude the license
 
