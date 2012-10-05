@@ -24,8 +24,8 @@ Source6:        %{additional}plater.desktop
 
 BuildArch:      noarch
 BuildRequires:  python2-devel
-BuildRequires:	desktop-file-utils
-BuildRequires:	gettext
+BuildRequires:  desktop-file-utils
+BuildRequires:  gettext
 Requires:       pronterface
 Requires:       pronsole
 Requires:       plater
