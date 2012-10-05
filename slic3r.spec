@@ -8,6 +8,13 @@ URL:            http://slic3r.org/
 # git clone git://github.com/alexrj/Slic3r.git && cd Slic3r
 # git archive %{version} --format tar.gz > ../%{name}-%{version}.tar.gz
 Source0:        %{name}-%{version}.tar.gz
+
+%global         additional https://raw.github.com/hroncok/RPMAdditionalSources/master/
+# Bash runners
+Source1:        %{additional}%{name}
+# Desktop files
+Source2:        %{additional}%{name}.desktop
+
 BuildArch:      noarch
 BuildRequires:  perl(Module::Build)
 BuildRequires:  perl(Exporter)
@@ -34,6 +41,7 @@ BuildRequires:  perl(Boost::Geometry::Utils)
 BuildRequires:  perl(Math::Geometry::Voronoi)
 BuildRequires:  perl(Growl::GNTP)
 BuildRequires:  perl(Net::DBus)
+BuildRequires:  desktop-file-utils
 Requires:       perl(XML::SAX)
 Requires:       perl(Growl::GNTP)
 Requires:       perl(Net::DBus)
@@ -64,12 +72,12 @@ for more information.
 ./Build install destdir=%{buildroot} create_packlist=0
 find %{buildroot} -type f -name '*.bs' -size 0 -exec rm -f {} \;
 find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null \;
-# TODO
-# move %{buildroot}%{_bindir}/%{name}.pl to %{buildroot}%{_datadir}/%{name}
-# copy var dir to %{buildroot}%{_datadir}/%{name}
-# create shell script %{buildroot}%{_bindir}/%{name} that runs %{buildroot}%{_datadir}/%{name}/%{name}.pl
-# link ico to pixmaps
-# create desktop file
+%{__mkdir} -p %{buildroot}%{_datadir}/%{name}
+%{__cp} %{SOURCE1} %{buildroot}%{_bindir}
+%{__mv} -f %{buildroot}%{_bindir}/%{name}.pl %{buildroot}%{_datadir}/%{name}
+%{__cp} -ar var %{buildroot}%{_datadir}/%{name}
+%{__ln_s} ../%{name}/var/Slic3r.ico %{buildroot}%{_datadir}/pixmaps/%{name}.ico
+desktop-file-install --dir=%{buildroot}%{_datadir}/applications %{SOURCE2} # desktop file
 
 %{_fixperms} %{buildroot}/*
 
