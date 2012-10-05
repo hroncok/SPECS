@@ -76,6 +76,7 @@ find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null \;
 %{__cp} %{SOURCE1} %{buildroot}%{_bindir}
 %{__mv} -f %{buildroot}%{_bindir}/%{name}.pl %{buildroot}%{_datadir}/%{name}
 %{__cp} -ar var %{buildroot}%{_datadir}/%{name}
+%{__mkdir} -p %{buildroot}%{_datadir}/pixmaps # /usr/share/pixmaps
 %{__ln_s} ../%{name}/var/Slic3r.ico %{buildroot}%{_datadir}/pixmaps/%{name}.ico
 desktop-file-install --dir=%{buildroot}%{_datadir}/applications %{SOURCE2} # desktop file
 
@@ -86,8 +87,11 @@ desktop-file-install --dir=%{buildroot}%{_datadir}/applications %{SOURCE2} # des
 
 %files
 %doc MANIFEST README.markdown
-%{_bindir}/%{name}.pl
+%attr(755,root,root) %{_bindir}/%{name}
 %{perl_vendorlib}/Slic3r*
+%{_datadir}/pixmaps/%{name}.ico
+%{_datadir}/applications/%{name}.desktop
+%{_datadir}/%{name}
 %{_mandir}/man3/*
 
 %changelog
