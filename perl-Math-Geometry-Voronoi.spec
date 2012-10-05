@@ -15,7 +15,7 @@ BuildRequires:  perl(Scalar::Util)
 BuildRequires:  perl(warnings)
 BuildRequires:  perl(Test::More)
 BuildRequires:  perl(XSLoader)
-BuildRequires:  glibc-devel
+BuildRequires:  glibc-devel.%{_target_cpu}
 Requires:       perl(Class::Accessor)
 Requires:       perl(List::Util)
 Requires:       perl(Params::Validate)
