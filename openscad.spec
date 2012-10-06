@@ -5,8 +5,8 @@ Summary:        The Programmers Solid 3D CAD Modeller
 License:        GPLv2 # Check the Exception
 Group:          Applications/Engineering # Optional
 URL:            http://www.openscad.org/
-%global         githash      3b6f16605c
-%global         githashMCAD  fa265644af
+# openscad commit hash 3b6f16605c
+#     MCAD commit hash fa265644af
 # git clone git://github.com/openscad/openscad.git; cd openscad
 # git archive --format tar.gz > ../%{name}-%{version}.tar.gz
 # git submodule init; git submodule update; cd libraries/MCAD/
