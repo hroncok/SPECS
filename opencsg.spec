@@ -23,6 +23,7 @@ defined interior and exterior. By construction, a CSG shape is also solid then.
 %package        devel
 Summary:        Development package of OpenCSG
 License:        GPLv2 # Check
+Requires:       %{name} = %{version}
 
 %description    devel
 OpenCSG is a library that does image-based CSG rendering using OpenGL.
@@ -35,18 +36,17 @@ This is the devel package, you only need it to build software against OpenCSG.
 sed -ibak s/example// opencsg.pro # examples might be broken without GLUT
 # modifying makefile for 64 bit machine
 %ifarch x86_64
-  sed -ibak64 s/"\-lXmu"/"\-L\/usr\/lib64\/libXmu.so.6"/ src/Makefile 
+  sed -i s/"\-lXmu"/"\-L\/usr\/lib64\/libXmu.so.6"/ src/Makefile 
 %endif
 # insecure rpath
 sed -ibak s/" -Wl,-rpath,..\/lib"// src/Makefile
 # New FSF Address, newlines
-for FILE in src/*
+for FILE in src/* include/* license.txt
 do
-  sed -ibak s/"59 Temple Place, Suite 330, Boston, MA 02111-1307 USA"/"51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA"/ $FILE
+  sed -i s/"59 Temple Place, Suite 330, Boston, MA 02111-1307 USA"/"51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA"/ $FILE
   sed -i "s/\r//" $FILE
 done
 sed -ibak s/"59 Temple Place, Suite 330, Boston, MA  02111-1307  USA"/"51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA"/ license.txt
-sed -i "s/\r//" license.txt
 
 %build
 qmake-qt4
@@ -58,12 +58,17 @@ make
 %{__mkdir} -p %{buildroot}%{_includedir}
 %{__cp} -av include/* %{buildroot}%{_includedir}
 
+%post -p /sbin/ldconfig
+
+%postun -p /sbin/ldconfig
+
 %files
 %doc license.txt changelog.txt *.html img src/*.cpp src/*.h src/Makefile
-%{_libdir}/*
+%{_libdir}/lib%{name}.so.*
 
 %files devel
 %doc license.txt changelog.txt *.html img src/*.cpp src/*.h src/Makefile
+%{_libdir}/lib%{name}.so
 %{_includedir}/*
 
 %changelog
