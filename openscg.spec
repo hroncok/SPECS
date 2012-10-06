@@ -7,7 +7,6 @@ URL:            http://www.opencsg.org/
 Source0:        http://www.opencsg.org/OpenCSG-%{version}.tar.gz
 BuildRequires:  libXmu
 BuildRequires:  qt-devel
-Requires:       libXmu
 
 %description
 OpenCSG is a library that does image-based CSG rendering using OpenGL.
@@ -28,7 +27,14 @@ sed -ibak s/example// opencsg.pro # examples might be broken without GLUT
 %endif
 # insecure rpath
 sed -ibak s/" -Wl,-rpath,..\/lib"// src/Makefile
-
+# New FSF Address, newlines
+for FILE in src/*
+do
+  sed -ibak s/"59 Temple Place, Suite 330, Boston, MA 02111-1307 USA"/"51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA"/ $FILE
+  sed -i "s/\r//" $FILE
+done
+sed -ibak s/"59 Temple Place, Suite 330, Boston, MA  02111-1307  USA"/"51 Franklin Street, Fifth Floor, Boston, MA 02110-1301  USA"/ license.txt
+sed -i "s/\r//" license.txt
 
 %build
 qmake-qt4
