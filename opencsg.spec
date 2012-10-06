@@ -1,4 +1,4 @@
-Name:           openscg
+Name:           opencsg
 Version:        1.3.2
 Release:        1%{?dist}
 Summary:        The CSG rendering library
@@ -17,6 +17,18 @@ the union of them, by intersecting them, or by subtracting one shape of the
 other. The most basic shapes, which are not result of such a CSG operation,
 are called primitives. Primitives must be solid, i.e., they must have a clearly
 defined interior and exterior. By construction, a CSG shape is also solid then.
+
+###############################################
+
+%package        devel
+Summary:        Development package of OpenCSG
+License:        GPLv2 # Check
+
+%description    devel
+OpenCSG is a library that does image-based CSG rendering using OpenGL.
+This is the devel package, you only need it to build software against OpenCSG.
+
+###############################################
 
 %prep
 %setup -q -n OpenCSG-%{version}
@@ -47,8 +59,11 @@ make
 %{__cp} -av include/* %{buildroot}%{_includedir}
 
 %files
-%doc license.txt changelog.txt *.html img src/*.cpp src/*.h src/Make*
+%doc license.txt changelog.txt *.html img src/*.cpp src/*.h src/Makefile
 %{_libdir}/*
+
+%files devel
+%doc license.txt changelog.txt *.html img src/*.cpp src/*.h src/Makefile
 %{_includedir}/*
 
 %changelog
