@@ -50,7 +50,7 @@ sed -ibak s/"59 Temple Place, Suite 330, Boston, MA  02111-1307  USA"/"51 Frankl
 
 %build
 qmake-qt4
-make
+make %{?_smp_mflags}
 
 %install
 %{__mkdir} -p %{buildroot}%{_libdir}
