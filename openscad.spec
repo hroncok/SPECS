@@ -52,13 +52,8 @@ changes, however many things are already working.
 ###############################################
 
 %prep
-<<<<<<< HEAD
 %setup -qa1 -Tcn %{name}-%{version}/libraries/MCAD
 %setup -Dcq
-=======
-%setup -c
-%setup -a1 -Tcn %{name}-%{version}/libraries/MCAD
->>>>>>> 1e3f743aa51285a9c100396078dd2a2757fd44d9
 
 %build
 qmake-qt4 VERSION=%{version} PREFIX=%{_exec_prefix}
