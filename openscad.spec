@@ -3,7 +3,7 @@ Version:        2012.08
 Release:        1%{?dist}
 Summary:        The Programmers Solid 3D CAD Modeller
 License:        GPLv2 # Check the Exception
-Group:          Applications/Engineering # Optional
+Group:          Applications/Engineering
 URL:            http://www.openscad.org/
 # openscad commit hash 3b6f16605c
 #     MCAD commit hash fa265644af
