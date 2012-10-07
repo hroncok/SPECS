@@ -8,8 +8,7 @@ License:        GPLv3+ # Ask author for LICENCE file
 Group:          Applications/Engineering
 URL:            https://github.com/kliment/Printrun
 # git clone https://github.com/kliment/Printrun.git; cd Printrun
-# git archive --format tar.gz dceaf26f > ../%{name}-%{snapshot}.tar.gz
-# the command has a mistake :(
+# git archive --format tar.gz master > ../%{name}-%{snapshot}.tar.gz
 Source0:        %{name}-%{snapshot}.tar.gz
 
 %global         additional https://raw.github.com/hroncok/RPMAdditionalSources/master/
