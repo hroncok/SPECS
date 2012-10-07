@@ -52,8 +52,13 @@ changes, however many things are already working.
 ###############################################
 
 %prep
+<<<<<<< HEAD
+%setup -qa1 -Tcn %{name}-%{version}/libraries/MCAD
+%setup -Dcq
+=======
 %setup -c
 %setup -a1 -Tcn %{name}-%{version}/libraries/MCAD
+>>>>>>> 1e3f743aa51285a9c100396078dd2a2757fd44d9
 
 %build
 qmake-qt4 VERSION=%{version} PREFIX=%{_exec_prefix}
@@ -64,6 +69,10 @@ make %{?_smp_mflags}
 
 %files
 %doc COPYING README.md RELEASE_NOTES
+%attr(755,root,root) %{_bindir}/%{name}
+
+%files      MCAD
+%doc libraries/MCAD/lgpl-2.1.txt libraries/MCAD/README.markdown
 
 %changelog
 * Sun Oct 07 2012 Miro Hrončok <miro@hroncok.cz> 2012.08-1
