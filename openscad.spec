@@ -59,7 +59,7 @@ done
 sed -i s/"59 Temple Place, Suite 330, Boston, MA  02111-1307  USA"/"51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA"/ COPYING
 
 %build
-qmake-qt4 VERSION=%{version} PREFIX=%{_exec_prefix}
+qmake-qt4 VERSION=%{version} PREFIX=%{_prefix}
 make %{?_smp_mflags}
 
 %install
