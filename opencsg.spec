@@ -50,6 +50,7 @@ sed -i s/"59 Temple Place, Suite 330, Boston, MA  02111-1307  USA"/"51 Franklin 
 
 %build
 qmake-qt4
+sed -i s/"-pipe -Wall -W -O2"/"%{optflags}"/ src/Makefile
 make %{?_smp_mflags}
 
 %install
