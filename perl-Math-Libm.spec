@@ -1,6 +1,6 @@
 Name:           perl-Math-Libm
 Version:        1.00
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Perl extension for the C math library, libm
 # The source doesn't include the license and author is unreachable
 # File Changes says, this module was created using h2xs from /usr/include/math.h
