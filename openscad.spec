@@ -13,16 +13,16 @@ URL:            http://www.openscad.org/
 # git archive --format tar.gz > ../../../%{name}-MCAD-%{version}.tar.gz
 Source0:        %{name}-%{version}.tar.gz
 Source1:        %{name}-MCAD-%{version}.tar.gz
-BuildRequires:  qt-devel
-BuildRequires:  bison
-BuildRequires:  flex
-BuildRequires:  eigen2-devel
-BuildRequires:  boost-devel
-BuildRequires:  mpfr-devel
-BuildRequires:  gmp-devel
-BuildRequires:  glew-devel
-BuildRequires:  CGAL-devel
-BuildRequires:  opencsg-devel
+BuildRequires:  qt-devel >= 4.4
+BuildRequires:  bison >= 2.4
+BuildRequires:  flex >= 2.5.35
+BuildRequires:  eigen2-devel >= 2.0.13
+BuildRequires:  boost-devel >= 1.3.5
+BuildRequires:  mpfr-devel >= 3.0.0
+BuildRequires:  gmp-devel >= 5.0.0
+BuildRequires:  glew-devel >= 1.6
+BuildRequires:  CGAL-devel >= 3.6
+BuildRequires:  opencsg-devel >= 1.3.2
 
 %description
 OpenSCAD is a software for creating solid 3D CAD objects.
