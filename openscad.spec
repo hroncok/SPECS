@@ -70,9 +70,16 @@ make %{?_smp_mflags}
 %files
 %doc COPYING README.md RELEASE_NOTES
 %attr(755,root,root) %{_bindir}/%{name}
+%{_datadir}/applications/%{name}.desktop
+%{_datadir}/pixmaps/%{name}.png
+%dir %{_datadir}/%{name}
+%{_datadir}/%{name}/examples
+%dir %{_datadir}/%{name}/libraries
+
 
 %files      MCAD
 %doc libraries/MCAD/lgpl-2.1.txt libraries/MCAD/README.markdown
+%{_datadir}/%{name}/libraries/MCAD
 
 %changelog
 * Sun Oct 07 2012 Miro Hrončok <miro@hroncok.cz> 2012.08-1
