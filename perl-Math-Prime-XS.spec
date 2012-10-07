@@ -1,6 +1,6 @@
 Name:           perl-Math-Prime-XS
 Version:        0.26
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Detect and calculate prime numbers with deterministic tests
 License:        GPL+ or Artistic
 Group:          Development/Libraries
@@ -59,6 +59,9 @@ find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null \;
 %{_mandir}/man3/*
 
 %changelog
+* Sun Oct 07 2012 Miro Hrončok <miro@hroncok.cz> 0.26-3
+- Rebuilding for 32bit, no spec changes.
+
 * Sun Sep 23 2012 Miro Hrončok <miro@hroncok.cz> 0.26-2
 - Removed useless require.
 

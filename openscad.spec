@@ -23,11 +23,8 @@ BuildRequires:  gmp-devel
 BuildRequires:  glew-devel
 BuildRequires:  CGAL-devel
 BuildRequires:  opencsg-devel
-#Requires:       eigen2
-#Requires:       boost
 #Requires:       mpfr
 #Requires:       gmp
-#Requires:       glew
 #Requires:       CGAL
 #Requires:       opencsg
 
@@ -55,9 +52,8 @@ changes, however many things are already working.
 ###############################################
 
 %prep
-%setup -cq
-# We don't want a version with today date
-#sed -i s/'$$system(date "+%Y.%m.%d")'/'"%{version}"'/ version.pri
+%setup -c
+%setup -a1 -Tcn %{name}-%{version}/libraries/MCAD
 
 %build
 qmake-qt4 VERSION=%{version} PREFIX=%{_exec_prefix}

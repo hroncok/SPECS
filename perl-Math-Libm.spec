@@ -53,6 +53,9 @@ make test
 %{_mandir}/man3/*
 
 %changelog
+* Sun Oct 07 2012 Miro Hrončok <miro@hroncok.cz> 1.00-3
+- Rebuilding for 32bit, no spec changes.
+
 * Sun Sep 23 2012 Miro Hrončok <miro@hroncok.cz> 1.00-2
 - License issue solved, somehow.
 
