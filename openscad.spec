@@ -113,9 +113,9 @@ changes, however many things are already working.
 %prep
 %setup -qa1 -Tcn %{name}-%{version}/libraries/MCAD
 %{__rm} -f *.py # we don't need them
+%{__rm} -f .gitmodules # git crap
 rmdir SolidPython ThingDoc # we don't need them
 %setup -Dcq
-rm libraries/MCAD/.gitmodules # git crap
 # New FSF Address
 for FILE in libraries/MCAD/regular_shapes.scad libraries/MCAD/metric_fastners.scad
 do
