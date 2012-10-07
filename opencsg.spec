@@ -2,7 +2,7 @@ Name:           opencsg
 Version:        1.3.2
 Release:        1%{?dist}
 Summary:        The CSG rendering library
-License:        GPLv2 # Check
+License:        GPLv2 with exceptions
 URL:            http://www.opencsg.org/
 Source0:        http://www.opencsg.org/OpenCSG-%{version}.tar.gz
 BuildRequires:  libXmu
