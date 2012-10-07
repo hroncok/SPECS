@@ -1,11 +1,13 @@
 Name:           skeinforge
 Version:        12.03.14
-Release:        5%{?dist}
+Release:        6%{?dist}
 Summary:        Converts 3D model into G-Code for RepRap
-License:        AGPLv3 # Ask author for LICENCE file - will be in next release
+License:        AGPLv3
 Group:          Applications/Engineering
 URL:            http://fabmetheus.crsndoo.com/wiki/index.php/Skeinforge
 Source0:        http://fabmetheus.crsndoo.com/files/50_reprap_python_beanshell.zip
+# Asked author for LICENSE file - will be in next release
+Source1:        http://www.gnu.org/licenses/agpl.txt
 
 BuildArch:      noarch
 BuildRequires:  python2-devel
@@ -28,6 +30,7 @@ This is the documentation.
 
 %prep
 %setup -cq
+%{__cp} -a %{SOURCE1} license.txt
 
 
 %build
@@ -40,14 +43,19 @@ cp -ar * %{buildroot}%{_datadir}/printrun/%{name}
 
 
 %files
+%doc license.txt
 %dir %{_datadir}/printrun/
 %{_datadir}/printrun/%{name}/
 %exclude %{_datadir}/printrun/%{name}/documentation/
 
 %files      doc
+%doc license.txt
 %{_datadir}/printrun/%{name}/documentation/
 
 %changelog
+* Sun Oct 07 2012 Miro Hrončok <miro@hroncok.cz> - 12.03.14-6
+- Include license file
+
 * Fri Sep 21 2012 Miro Hrončok <miro@hroncok.cz> - 12.03.14-5
 - Noarch
 
