@@ -32,7 +32,7 @@ BuildRequires:  opencsg-devel
 OpenSCAD is a software for creating solid 3D CAD objects.
 Unlike most free software for creating 3D models (such as the famous
 application Blender) it does not focus on the artistic aspects of 3D
-modelling but instead on the CAD aspects. Thus it might be the application
+modeling but instead on the CAD aspects. Thus it might be the application
 you are looking for when you are planning to create 3D models of machine
 parts but pretty sure is not what you are looking for when you are more
 interested in creating computer-animated movies.
@@ -54,6 +54,13 @@ changes, however many things are already working.
 %prep
 %setup -qa1 -Tcn %{name}-%{version}/libraries/MCAD
 %setup -Dcq
+rm libraries/MCAD/.gitmodules # git crap
+# New FSF Address
+for FILE in libraries/MCAD/regular_shapes.scad libraries/MCAD/metric_fastners.scad
+do
+  sed -i s/"59 Temple Place, Suite 330, Boston, MA 02111-1307 USA"/"51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA"/ $FILE
+done
+sed -i s/"59 Temple Place, Suite 330, Boston, MA  02111-1307  USA"/"51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA"/ COPYING
 
 %build
 qmake-qt4 VERSION=%{version} PREFIX=%{_exec_prefix}
