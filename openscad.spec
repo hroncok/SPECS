@@ -23,10 +23,6 @@ BuildRequires:  gmp-devel
 BuildRequires:  glew-devel
 BuildRequires:  CGAL-devel
 BuildRequires:  opencsg-devel
-#Requires:       mpfr
-#Requires:       gmp
-#Requires:       CGAL
-#Requires:       opencsg
 
 %description
 OpenSCAD is a software for creating solid 3D CAD objects.
