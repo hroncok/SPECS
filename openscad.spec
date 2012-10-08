@@ -1,17 +1,17 @@
 Name:           openscad
-Version:        2012.08
+Version:        2012.10
 Release:        1%{?dist}
 Summary:        The Programmers Solid 3D CAD Modeller
 # COPYING contains a linking exception for CGAL
 License:        GPLv2 with exceptions
 Group:          Applications/Engineering
 URL:            http://www.openscad.org/
-# openscad commit hash 3b6f16605c
+# openscad commit hash 1fe573864c
 #     MCAD commit hash fa265644af
 # git clone git://github.com/openscad/openscad.git; cd openscad
-# git archive --format tar.gz > ../%{name}-%{version}.tar.gz
+# git archive master --format tar.gz > ../%{name}-%{version}.tar.gz
 # git submodule init; git submodule update; cd libraries/MCAD/
-# git archive --format tar.gz > ../../../%{name}-MCAD-%{version}.tar.gz
+# git archive master --format tar.gz > ../../../%{name}-MCAD-%{version}.tar.gz
 Source0:        %{name}-%{version}.tar.gz
 Source1:        %{name}-MCAD-%{version}.tar.gz
 BuildRequires:  qt-devel >= 4.4
@@ -122,7 +122,6 @@ for FILE in libraries/MCAD/regular_shapes.scad libraries/MCAD/metric_fastners.sc
 do
   sed -i s/"59 Temple Place, Suite 330, Boston, MA 02111-1307 USA"/"51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA"/ $FILE
 done
-sed -i s/"59 Temple Place, Suite 330, Boston, MA  02111-1307  USA"/"51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA"/ COPYING
 
 %build
 qmake-qt4 VERSION=%{version} PREFIX=%{_prefix}
@@ -146,5 +145,8 @@ make %{?_smp_mflags}
 %{_datadir}/%{name}/libraries/MCAD
 
 %changelog
+* Mon Oct 08 2012 Miro Hrončok <miro@hroncok.cz> 2012.10-1
+- New version.
+
 * Sun Oct 07 2012 Miro Hrončok <miro@hroncok.cz> 2012.08-1
 - New package.
