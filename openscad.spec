@@ -2,6 +2,7 @@ Name:           openscad
 Version:        2012.08
 Release:        1%{?dist}
 Summary:        The Programmers Solid 3D CAD Modeller
+# COPYING contains a linking exception for CGAL
 License:        GPLv2 with exceptions
 Group:          Applications/Engineering
 URL:            http://www.openscad.org/
