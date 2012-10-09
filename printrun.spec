@@ -2,7 +2,7 @@
 %global         snapshot 20120924git%{githash}
 Name:           printrun
 Version:        0.0
-Release:        7.%{snapshot}%{?dist}
+Release:        8.%{snapshot}%{?dist}
 Summary:        RepRap printer interface and tools
 License:        GPLv3+ # Ask author for LICENCE file
 Group:          Applications/Engineering
@@ -111,6 +111,7 @@ cp -ar locale/* %{buildroot}%{_datadir}/locale # copy compiled locales to that d
 mkdir -p %{buildroot}%{_datadir}/%{name} # /usr/share/printrun
 %{__ln_s} -f ../locale/ %{buildroot}%{_datadir}/%{name}/ # the app expects the locale folder in here
 cp -ar * %{buildroot}%{_datadir}/%{name} # copy everything to /usr/share/printrun
+%{__ln_s} -f ../skeinforge %{buildroot}%{_datadir}/%{name}/ # link skeinforge here
 %{__rm} -rf %{buildroot}%{_datadir}/%{name}/README* # this will be in docs
 %{__rm} -rf %{buildroot}%{_datadir}/%{name}/COPYING # this will be in docs
 mkdir -p %{buildroot}%{_datadir}/pixmaps # /usr/share/pixmaps
@@ -142,6 +143,7 @@ desktop-file-install --dir=%{buildroot}%{_datadir}/applications %{SOURCE6}
 
 %files -n pronsole
 %{_datadir}/%{name}/pronsole.*
+%{_datadir}/%{name}/skeinforge
 %attr(755,root,root) %{_bindir}/pronsole
 %{_datadir}/pixmaps/pronsole.ico
 %{_datadir}/applications/pronsole.desktop
@@ -175,6 +177,9 @@ desktop-file-install --dir=%{buildroot}%{_datadir}/applications %{SOURCE6}
 %doc README* COPYING
 
 %changelog
+* Tue Oct 09 2012 Miro Hrončok <miro@hroncok.cz> - 0.0-8-20120924gitb6935b93
+- ln -s skeinforge
+
 * Thu Oct 04 2012 Miro Hrončok <miro@hroncok.cz> - 0.0-7-20120924gitb6935b93
 - New sources links
 

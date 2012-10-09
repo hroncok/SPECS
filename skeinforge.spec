@@ -1,6 +1,6 @@
 Name:           skeinforge
 Version:        12.03.14
-Release:        6%{?dist}
+Release:        7%{?dist}
 Summary:        Converts 3D model into G-Code for RepRap
 License:        AGPLv3
 Group:          Applications/Engineering
@@ -38,21 +38,23 @@ This is the documentation.
 
 %install
 %{__rm} -rf models terminal.sh test.stl %{name}_application/terminal.sh %{name}_application/test.stl # removes stupid useless files
-mkdir -p %{buildroot}%{_datadir}/printrun/%{name}
-cp -ar * %{buildroot}%{_datadir}/printrun/%{name}
+mkdir -p %{buildroot}%{_datadir}/%{name}
+cp -ar * %{buildroot}%{_datadir}/%{name}
 
 
 %files
 %doc license.txt
-%dir %{_datadir}/printrun/
-%{_datadir}/printrun/%{name}/
-%exclude %{_datadir}/printrun/%{name}/documentation/
+%{_datadir}/%{name}/
+%exclude %{_datadir}/%{name}/documentation/
 
 %files      doc
 %doc license.txt
-%{_datadir}/printrun/%{name}/documentation/
+%{_datadir}/%{name}/documentation/
 
 %changelog
+* Tue Oct 09 2012 Miro Hrončok <miro@hroncok.cz> - 12.03.14-7
+- Do not install directly to printrun dir
+
 * Sun Oct 07 2012 Miro Hrončok <miro@hroncok.cz> - 12.03.14-6
 - Include license file
 
