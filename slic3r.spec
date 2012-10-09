@@ -3,6 +3,7 @@ Version:        0.9.3
 Release:        1%{?dist}
 Summary:        G-code generator for 3D printers (RepRap, Makerbot, Ultimaker etc.)
 License:        AGPLv3 and CC-BY
+# Images are CC-BY, code is AGPLv3
 Group:          Applications/Engineering
 URL:            http://slic3r.org/
 # git clone git://github.com/alexrj/Slic3r.git && cd Slic3r
