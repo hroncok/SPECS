@@ -4,7 +4,7 @@ Name:           printrun
 Version:        0.0
 Release:        8.%{snapshot}%{?dist}
 Summary:        RepRap printer interface and tools
-License:        GPLv3+ # Ask author for LICENCE file
+License:        GPLv3+
 Group:          Applications/Engineering
 URL:            https://github.com/kliment/Printrun
 # git clone https://github.com/kliment/Printrun.git; cd Printrun
