@@ -179,6 +179,7 @@ desktop-file-install --dir=%{buildroot}%{_datadir}/applications %{SOURCE6}
 %changelog
 * Tue Oct 09 2012 Miro Hrončok <miro@hroncok.cz> - 0.0-8-20120924gitb6935b93
 - ln -s skeinforge
+- printrun requires exact version and release
 
 * Thu Oct 04 2012 Miro Hrončok <miro@hroncok.cz> - 0.0-7-20120924gitb6935b93
 - New sources links
