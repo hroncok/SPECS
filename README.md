@@ -39,3 +39,5 @@ Legal problems
 **TODO:** Shoot myself to the head.
 
 **Involved packages:** _self_, perl-Math-NumSeq, perl-Math-PlanePath, sli3r
+
+**Update:** [This](http://vetmed.illinois.edu/advancement/urhere/lewart.html) might be him, I'll try to get his contact.
