@@ -26,7 +26,7 @@ Legal problems
 
 **Problem:** The perl module is OK, but the C code in it is unlicensed, author is asked.
 
-**TODO:** Wait 1st author of the C code and see, if he agrees. Ask second author.
+**TODO:** Wait for 1st author of the C code and see, if he agrees. Ask second author.
 
 **Involved packages:** _self_, slic3r
 
