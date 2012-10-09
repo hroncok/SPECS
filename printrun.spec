@@ -2,7 +2,7 @@
 %global         snapshot 20120924git%{githash}
 Name:           printrun
 Version:        0.0
-Release:        8.%{snapshot}%{?dist}
+Release:        9.%{snapshot}%{?dist}
 Summary:        RepRap printer interface and tools
 License:        GPLv3+
 Group:          Applications/Engineering
@@ -177,6 +177,9 @@ desktop-file-install --dir=%{buildroot}%{_datadir}/applications %{SOURCE6}
 %doc README* COPYING
 
 %changelog
+* Tue Oct 09 2012 Miro Hrončok <miro@hroncok.cz> - 0.0-9-20120924gitb6935b93
+- updated bash lounchers
+
 * Tue Oct 09 2012 Miro Hrončok <miro@hroncok.cz> - 0.0-8-20120924gitb6935b93
 - ln -s skeinforge
 - printrun requires exact version and release
