@@ -25,9 +25,9 @@ BuildArch:      noarch
 BuildRequires:  python2-devel
 BuildRequires:  desktop-file-utils
 BuildRequires:  gettext
-Requires:       pronterface
-Requires:       pronsole
-Requires:       plater
+Requires:       pronterface = %{version}-%{release}
+Requires:       pronsole = %{version}-%{release}
+Requires:       plater = %{version}-%{release}
 
 %description
 Printrun is a set of G-code sending applications for RepRap.
