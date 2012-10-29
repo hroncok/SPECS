@@ -15,7 +15,7 @@ skeinforge: https://bugzilla.redhat.com/show_bug.cgi?id=863793
 
 printrun: https://bugzilla.redhat.com/show_bug.cgi?id=863796
 
-opencsg: https://bugzilla.redhat.com/show_bug.cgi?id=825489 (not mine, but needed)
+opencsg: https://bugzilla.redhat.com/show_bug.cgi?id=870860
 
 openscad: https://bugzilla.redhat.com/show_bug.cgi?id=864187
 
