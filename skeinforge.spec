@@ -50,6 +50,7 @@ desktop-file-install --dir=%{buildroot}%{_datadir}/applications %{SOURCE2} # des
 %files
 %doc license.txt
 %{_datadir}/%{name}/
+%{_datadir}/applications/skeinforge.desktop
 %exclude %{_datadir}/%{name}/documentation/
 
 %files      doc
