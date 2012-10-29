@@ -34,14 +34,14 @@ This is the documentation.
 
 %prep
 %setup -cq
-%{__cp} -a %{SOURCE1} license.txt
+cp -a %{SOURCE1} license.txt
 
 
 %build
 
 
 %install
-%{__rm} -rf models terminal.sh test.stl %{name}_application/terminal.sh %{name}_application/test.stl # removes stupid useless files
+rm -rf models terminal.sh test.stl %{name}_application/terminal.sh %{name}_application/test.stl # removes stupid useless files
 mkdir -p %{buildroot}%{_datadir}/%{name}
 cp -ar * %{buildroot}%{_datadir}/%{name}
 desktop-file-install --dir=%{buildroot}%{_datadir}/applications %{SOURCE2} # desktop file
@@ -54,12 +54,13 @@ desktop-file-install --dir=%{buildroot}%{_datadir}/applications %{SOURCE2} # des
 %exclude %{_datadir}/%{name}/documentation/
 
 %files      doc
-%doc license.txt
 %{_datadir}/%{name}/documentation/
 
 %changelog
 * Mon Oct 29 2012 Miro Hrončok <miro@hroncok.cz> - 12.03.14-8
 - Added desktop file
+- Don't use macros for rm and cp
+- Removed license file from doc package
 
 * Tue Oct 09 2012 Miro Hrončok <miro@hroncok.cz> - 12.03.14-7
 - Do not install directly to printrun dir
