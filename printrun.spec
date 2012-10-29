@@ -2,7 +2,7 @@
 %global         snapshot 20120924git%{githash}
 Name:           printrun
 Version:        0.0
-Release:        9.%{snapshot}%{?dist}
+Release:        10.%{snapshot}%{?dist}
 Summary:        RepRap printer interface and tools
 License:        GPLv3+
 Group:          Applications/Engineering
@@ -177,6 +177,9 @@ desktop-file-install --dir=%{buildroot}%{_datadir}/applications %{SOURCE6}
 %doc README* COPYING
 
 %changelog
+* Mon Oct 29 2012 Miro Hrončok <miro@hroncok.cz> - 0.0-10-20120924gitb6935b93
+- Switched generic names and names in desktop files
+
 * Tue Oct 09 2012 Miro Hrončok <miro@hroncok.cz> - 0.0-9-20120924gitb6935b93
 - updated bash lounchers
 
@@ -197,7 +200,7 @@ desktop-file-install --dir=%{buildroot}%{_datadir}/applications %{SOURCE6}
 - Build gettext
 
 * Fri Sep 21 2012 Miro Hrončok <miro@hroncok.cz> - 0.0-3-20120921gitdceaf26f
-- BuildRequires:	desktop-file-utils
+- BuildRequires:  desktop-file-utils
 
 * Fri Sep 21 2012 Miro Hrončok <miro@hroncok.cz> - 0.0-2-20120921gitdceaf26f
 - Language files correctly added
