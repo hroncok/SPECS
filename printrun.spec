@@ -104,20 +104,20 @@ cd ..
 
 
 %install
-%{__rm} -rf 20cube_export.gcode locale/*.pot locale/*/LC_MESSAGES/*.po # removes stupid useless files and original .po files
+rm -rf 20cube_export.gcode locale/*.pot locale/*/LC_MESSAGES/*.po # removes stupid useless files and original .po files
 mkdir -p %{buildroot}%{_datadir}/locale # /usr/share/locale
 cp -ar locale/* %{buildroot}%{_datadir}/locale # copy compiled locales to that dir
-%{__rm} -rf locale # remove original locale dir
+rm -rf locale # remove original locale dir
 mkdir -p %{buildroot}%{_datadir}/%{name} # /usr/share/printrun
-%{__ln_s} -f ../locale/ %{buildroot}%{_datadir}/%{name}/ # the app expects the locale folder in here
+ln -s -f ../locale/ %{buildroot}%{_datadir}/%{name}/ # the app expects the locale folder in here
 cp -ar * %{buildroot}%{_datadir}/%{name} # copy everything to /usr/share/printrun
-%{__ln_s} -f ../skeinforge %{buildroot}%{_datadir}/%{name}/ # link skeinforge here
-%{__rm} -rf %{buildroot}%{_datadir}/%{name}/README* # this will be in docs
-%{__rm} -rf %{buildroot}%{_datadir}/%{name}/COPYING # this will be in docs
+ln -s -f ../skeinforge %{buildroot}%{_datadir}/%{name}/ # link skeinforge here
+rm -rf %{buildroot}%{_datadir}/%{name}/README* # this will be in docs
+rm -rf %{buildroot}%{_datadir}/%{name}/COPYING # this will be in docs
 mkdir -p %{buildroot}%{_datadir}/pixmaps # /usr/share/pixmaps
-%{__ln_s} ../%{name}/pronsole.ico %{buildroot}%{_datadir}/pixmaps # link the icons to pixmaps, so thay have the right location too
-%{__ln_s} ../%{name}/plater.ico %{buildroot}%{_datadir}/pixmaps
-%{__ln_s} ../%{name}/P-face.ico %{buildroot}%{_datadir}/pixmaps
+ln -s ../%{name}/pronsole.ico %{buildroot}%{_datadir}/pixmaps # link the icons to pixmaps, so thay have the right location too
+ln -s ../%{name}/plater.ico %{buildroot}%{_datadir}/pixmaps
+ln -s ../%{name}/P-face.ico %{buildroot}%{_datadir}/pixmaps
 mkdir -p %{buildroot}%{_bindir} # /usr/bin
 cp %{SOURCE1} %{buildroot}%{_bindir} # shell scripts to run the apps
 cp %{SOURCE2} %{buildroot}%{_bindir}
@@ -179,6 +179,7 @@ desktop-file-install --dir=%{buildroot}%{_datadir}/applications %{SOURCE6}
 %changelog
 * Mon Oct 29 2012 Miro Hrončok <miro@hroncok.cz> - 0.0-10-20120924gitb6935b93
 - Switched generic names and names in desktop files
+- Don't use rm, cp and ln -s macros
 
 * Tue Oct 09 2012 Miro Hrončok <miro@hroncok.cz> - 0.0-9-20120924gitb6935b93
 - updated bash lounchers
