@@ -1,13 +1,13 @@
 Name:           openscad
-Version:        2012.10
+Version:        2012.10.31
 Release:        1%{?dist}
 Summary:        The Programmers Solid 3D CAD Modeller
 # COPYING contains a linking exception for CGAL
 License:        GPLv2 with exceptions
 Group:          Applications/Engineering
 URL:            http://www.openscad.org/
-# openscad commit hash 1fe573864c
-#     MCAD commit hash fa265644af
+# openscad commit hash b04734cbf5
+#     MCAD commit hash 9af89906fa
 # git clone git://github.com/openscad/openscad.git; cd openscad
 # git archive master --format tar.gz > ../%{name}-%{version}.tar.gz
 # git submodule init; git submodule update; cd libraries/MCAD/
@@ -62,6 +62,7 @@ changes, however many things are already working.
 #   gears.scad
 #   involute_gears.scad
 #   servos.scad
+#   transformations.scad
 #   triangles.scad
 #   unregular_shapes.scad
 #   bitmap/letter_necklace.scad
@@ -88,6 +89,7 @@ changes, however many things are already working.
 #   units.scad
 
 ##  CC-BY:
+#   polyholes.scad
 #   bitmap/alphabet_block.scad
 #   bitmap/bitmap.scad
 #   bitmap/height_map.scad
@@ -105,17 +107,12 @@ changes, however many things are already working.
 #   lego_compatibility.scad
 #   trochoids.scad
 
-## Asked:
-#   polyholes.scad # asked author
-#   transformations.scad # no author information, asked MCAD
-
 ###############################################
 
 %prep
 %setup -qa1 -Tcn %{name}-%{version}/libraries/MCAD
-%{__rm} -rf *.py SolidPython ThingDoc # we don't need them
-%{__rm} -f .gitmodules # git crap
-%{__rm} -f polyholes.scad transformations.scad # unknown license - remove this, if changed
+rm -rf *.py SolidPython ThingDoc # we don't need them
+rm -f .gitmodules # git crap
 %setup -Dcq
 # New FSF Address
 for FILE in libraries/MCAD/regular_shapes.scad libraries/MCAD/metric_fastners.scad
@@ -145,6 +142,11 @@ make %{?_smp_mflags}
 %{_datadir}/%{name}/libraries/MCAD
 
 %changelog
+* Wed Oct 31 2012 Miro Hrončok <miro@hroncok.cz> 2012.10.31-1
+- New version
+- Solved 2 MLCAD files license issues
+- Using full date version
+
 * Mon Oct 08 2012 Miro Hrončok <miro@hroncok.cz> 2012.10-1
 - New version.
 
