@@ -1,3 +1,0 @@
-[submodule "opencsg-spec"]
-	path = opencsg-spec
-	url = git@github.com:hroncok/opencsg-spec.git
