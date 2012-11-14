@@ -1,14 +1,14 @@
 Name:           opencsg
 Version:        1.3.2
-Release:        5%{?dist}
+Release:        6%{?dist}
 Summary:        Library for Constructive Solid Geometry using OpenGL
 Group:          System Environment/Libraries
+# license.txt contains a linking exception for CGAL
 License:        GPLv2 with exceptions
 URL:            http://www.opencsg.org/
 Source0:        http://www.opencsg.org/OpenCSG-%{version}.tar.gz
 Patch0:         OpenCSG-1.3.2-3.remove-example.patch
-Patch1:         OpenCSG-1.3.2-2.fsf-address.patch
-Patch2:         OpenCSG-1.3.2-4.remove-unresolved.patch
+Patch1:         OpenCSG-1.3.2-4.remove-unresolved.patch
 BuildRequires:  qt-devel, freeglut-devel, glew-devel, dos2unix
 
 %description
@@ -41,10 +41,15 @@ Development files for OpenCSG.
 %setup -q -n OpenCSG-%{version}
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
 
-rm ./src/Makefile ./RenderTexture/Makefile ./Makefile ./example/Makefile
-dos2unix ./license.txt
+rm src/Makefile RenderTexture/Makefile Makefile example/Makefile
+dos2unix license.txt
+# New FSF Address
+for FILE in src/*.h src/*.cpp include/opencsg.h
+do
+  sed -i s/"59 Temple Place, Suite 330, Boston, MA 02111-1307 USA"/"51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA"/ $FILE
+done
+
 # Use Fedora's glew
 rm -rf glew/
 
@@ -57,8 +62,8 @@ make %{?_smp_mflags}
 chmod g-w lib/*
 mkdir -p %{buildroot}/%{_libdir}
 mkdir -p %{buildroot}/%{_includedir}
-mv lib/* %{buildroot}/%{_libdir}/
-cp -p include/opencsg.h %{buildroot}/%{_includedir}/opencsg.h
+cp -pP lib/* %{buildroot}/%{_libdir}/
+cp -p include/opencsg.h %{buildroot}/%{_includedir}/
 
 %post -p /sbin/ldconfig
 
@@ -69,11 +74,18 @@ cp -p include/opencsg.h %{buildroot}/%{_includedir}/opencsg.h
 %{_libdir}/*so.*
 
 %files devel
-%doc changelog.txt index.html news.html publications.html license.txt img
 %{_includedir}/*
 %{_libdir}/*so
 
 %changelog
+* Wed Nov 14 2012 Miro Hrončok <miro@hroncok.cz> - 1.3.2-6
+- Removed FSF Address path
+   - using sed instead, so the path is not needed to update in newer version
+   - don't modify license file
+- License exception explained in a comment
+- Dropped doc form devel package
+- Usiyng cp -pP instead of mv to preserve timestamps
+
 * Mon Oct 8 2012 Miro Hrončok <miro@hroncok.cz> - 1.3.2-5
 - Added img to doc (needed by html files)
 - Added odc to devel package (to avoid W: no-documentation)
