@@ -1,5 +1,5 @@
 Name:           slic3r
-Version:        0.9.3
+Version:        0.9.5
 Release:        1%{?dist}
 Summary:        G-code generator for 3D printers (RepRap, Makerbot, Ultimaker etc.)
 License:        AGPLv3 and CC-BY
@@ -25,13 +25,15 @@ BuildRequires:  perl(Getopt::Long)
 BuildRequires:  perl(constant)
 BuildRequires:  perl(List::Util)
 BuildRequires:  perl(Test::More)
-BuildRequires:  perl(Math::Clipper)
+BuildRequires:  perl(Math::Clipper) >= 1.14
 BuildRequires:  perl(FindBin)
 BuildRequires:  perl(Moo) >= 0.091009
 BuildRequires:  perl(File::Spec)
 BuildRequires:  perl(Math::ConvexHull) >= 1.0.4
+BuildRequires:  perl(Math::ConvexHull::MonotoneChain)
 BuildRequires:  perl(Time::HiRes)
 BuildRequires:  perl(XML::SAX)
+BuildRequires:  perl(XML::SAX::ExpatXS)
 BuildRequires:  perl(Math::PlanePath)
 BuildRequires:  perl(utf8)
 BuildRequires:  perl(Scalar::Util)
@@ -96,5 +98,11 @@ desktop-file-install --dir=%{buildroot}%{_datadir}/applications %{SOURCE2} # des
 %{_mandir}/man3/*
 
 %changelog
+* Wed Nov 14 2012 Miro Hrončok <miro@hroncok.cz> 0.9.5-1
+- New version
+- Requires perl(Math::Clipper) >= 1.14
+- Requires perl(Math::ConvexHull::MonotoneChain)
+- Requires perl(XML::SAX::ExpatXS)
+
 * Thu Oct 04 2012 Miro Hrončok <miro@hroncok.cz> 0.9.3-1
 - New package
