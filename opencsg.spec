@@ -88,7 +88,7 @@ cp -p include/opencsg.h %{buildroot}/%{_includedir}/
 
 * Mon Oct 8 2012 Miro Hrončok <miro@hroncok.cz> - 1.3.2-5
 - Added img to doc (needed by html files)
-- Added odc to devel package (to avoid W: no-documentation)
+- Added doc to devel package (to avoid W: no-documentation)
 
 * Thu Jul 5 2012 Greg Jurman <gdj2214@rit.edu> - 1.3.2-4
 - Removed extranous build-depend to libXmu
