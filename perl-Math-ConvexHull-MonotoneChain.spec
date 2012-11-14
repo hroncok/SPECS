@@ -11,7 +11,7 @@ BuildRequires:  perl(Test::More) >= 0.88
 BuildRequires:  perl(warnings)
 BuildRequires:  perl(Exporter)
 BuildRequires:  perl(XSLoader)
-Requires:       perl(Test::More) >= 0.88
+Requires:       perl(XSLoader)
 Requires:       perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
 
 %{?perl_default_filter} # Filters (not)shared c libs
