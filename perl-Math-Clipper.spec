@@ -1,6 +1,6 @@
 Name:           perl-Math-Clipper
-Version:        1.09
-Release:        2%{?dist}
+Version:        1.14
+Release:        1%{?dist}
 Summary:        Polygon clipping in 2D
 License:        Boost
 Group:          Development/Libraries
@@ -54,6 +54,9 @@ find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null \;
 %{_mandir}/man3/*
 
 %changelog
+* Sun Oct 07 2012 Miro Hrončok <miro@hroncok.cz> 1.14-1
+- New version.
+
 * Sun Oct 07 2012 Miro Hrončok <miro@hroncok.cz> 1.09-2
 - Rebuilding for 32bit, no spec changes.
 
