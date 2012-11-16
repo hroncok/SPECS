@@ -1,6 +1,6 @@
 Name:           perl-ExtUtils-ParseXS
 Version:        3.15
-Release:        10%{?dist}
+Release:        11%{?dist}
 Summary:        Converts Perl XS code into C code
 License:        GPL+ or Artistic
 Group:          Development/Libraries
@@ -12,18 +12,7 @@ BuildRequires:  perl(Cwd)
 BuildRequires:  perl(ExtUtils::CBuilder)
 BuildRequires:  perl(ExtUtils::MakeMaker) >= 6.46
 BuildRequires:  perl(File::Spec)
-BuildRequires:  perl(File::Temp)
 BuildRequires:  perl(Test::More) >= 0.47
-BuildRequires:  perl(warnings)
-BuildRequires:  perl(Exporter)
-BuildRequires:  perl(Config)
-BuildRequires:  perl(DynaLoader)
-BuildRequires:  perl(lib)
-BuildRequires:  perl(attributes)
-BuildRequires:  perl(overload)
-BuildRequires:  perl(Symbol)
-BuildRequires:  perl(File::Basename)
-BuildRequires:  perl(Getopt::Long)
 Requires:       perl(Carp)
 Requires:       perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
 Provides:       xsubpp = %{version}
@@ -69,6 +58,9 @@ make test
 %attr(755,root,root) %{_bindir}/*
 
 %changelog
+* Fri Nov 16 2012 Miro Hrončok <miro@hroncok.cz> - 3.15-11
+- Removed BRs provided by perl package
+
 * Tue Sep 28 2012 Miro Hrončok <miro@hroncok.cz> 3.15-10
 - Release changed to 10, so i can update.
 * Tue Sep 25 2012 Miro Hrončok <miro@hroncok.cz> 3.15-1

@@ -1,14 +1,12 @@
 Name:           perl-Math-Prime-XS
 Version:        0.26
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        Detect and calculate prime numbers with deterministic tests
 License:        GPL+ or Artistic
 Group:          Development/Libraries
 URL:            http://search.cpan.org/dist/Math-Prime-XS/
 Source0:        http://www.cpan.org/authors/id/K/KR/KRYDE/Math-Prime-XS-%{version}.tar.gz
 BuildRequires:  perl(boolean)
-BuildRequires:  perl(strict)
-BuildRequires:  perl(warnings)
 BuildRequires:  perl(Carp)
 BuildRequires:  perl(ExtUtils::CBuilder)
 BuildRequires:  perl(Module::Build)
@@ -16,10 +14,6 @@ BuildRequires:  perl(Params::Validate)
 BuildRequires:  perl(Scalar::Util)
 BuildRequires:  perl(File::Spec)
 BuildRequires:  perl(File::HomeDir)
-BuildRequires:  perl(POSIX)
-BuildRequires:  perl(Config)
-BuildRequires:  perl(Exporter)
-BuildRequires:  perl(Benchmark)
 BuildRequires:  perl(Test::More)
 BuildRequires:  perl(Test::Pod) >= 1.14
 BuildRequires:  perl(Test::Pod::Coverage) >= 1.04
@@ -59,6 +53,9 @@ find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null \;
 %{_mandir}/man3/*
 
 %changelog
+* Fri Nov 16 2012 Miro Hrončok <miro@hroncok.cz> - 0.26-4
+- Removed BRs provided by perl package
+
 * Sun Oct 07 2012 Miro Hrončok <miro@hroncok.cz> 0.26-3
 - Rebuilding for 32bit, no spec changes.
 

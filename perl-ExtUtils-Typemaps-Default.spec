@@ -1,6 +1,6 @@
 Name:           perl-ExtUtils-Typemaps-Default
 Version:        1.01
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Set of useful typemaps
 License:        GPL+ or Artistic
 Group:          Development/Libraries
@@ -10,7 +10,6 @@ BuildArch:      noarch
 BuildRequires:  perl(ExtUtils::Typemaps) >= 1.00
 BuildRequires:  perl(Module::Build)
 BuildRequires:  perl(Test::More)
-BuildRequires:  perl(warnings)
 Requires:       perl(ExtUtils::Typemaps) >= 1.00
 Requires:       perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
 
@@ -49,6 +48,9 @@ find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null \;
 %{_mandir}/man3/*
 
 %changelog
+* Fri Nov 16 2012 Miro Hrončok <miro@hroncok.cz> - 1.01-2
+- Removed BRs provided by perl package
+
 * Wed Nov 14 2012 Miro Hrončok <miro@hroncok.cz> 1.01-1
 - New version.
 - Longer description.

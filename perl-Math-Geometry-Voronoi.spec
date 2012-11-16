@@ -1,6 +1,6 @@
 Name:           perl-Math-Geometry-Voronoi
 Version:        1.3
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Compute Voronoi diagrams from sets of points
 License:        GPL+ or Artistic
 # TODO contact Steve and Derek about the license
@@ -12,9 +12,7 @@ BuildRequires:  perl(ExtUtils::MakeMaker)
 BuildRequires:  perl(List::Util)
 BuildRequires:  perl(Params::Validate)
 BuildRequires:  perl(Scalar::Util)
-BuildRequires:  perl(warnings)
 BuildRequires:  perl(Test::More)
-BuildRequires:  perl(XSLoader)
 BuildRequires:  glibc-devel
 Requires:       perl(Class::Accessor)
 Requires:       perl(List::Util)
@@ -55,6 +53,9 @@ make test
 %{_mandir}/man3/*
 
 %changelog
+* Fri Nov 16 2012 Miro Hrončok <miro@hroncok.cz> - 1.3-3
+- Removed BRs provided by perl package
+
 * Sun Oct 07 2012 Miro Hrončok <miro@hroncok.cz> 1.3-2
 - Rebuilding for 32bit, no spec changes.
 

@@ -1,6 +1,6 @@
 Name:           perl-Math-NumSeq
 Version:        52
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Number sequences
 License:        GPLv3+
 Group:          Development/Libraries
@@ -8,9 +8,7 @@ URL:            http://search.cpan.org/dist/Math-NumSeq/
 Source0:        http://www.cpan.org/authors/id/K/KR/KRYDE/Math-NumSeq-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  perl >= 0:5.004
-BuildRequires:  perl(constant)
 BuildRequires:  perl(constant::defer) >= 1
-BuildRequires:  perl(warnings)
 BuildRequires:  perl(ExtUtils::MakeMaker)
 BuildRequires:  perl(File::HomeDir)
 BuildRequires:  perl(File::Spec)
@@ -21,12 +19,7 @@ BuildRequires:  perl(Math::Prime::XS) >= 0.23
 BuildRequires:  perl(Module::Load)
 BuildRequires:  perl(Module::Pluggable)
 BuildRequires:  perl(Module::Util)
-BuildRequires:  perl(lib)
-BuildRequires:  perl(Test)
-BuildRequires:  perl(POSIX)
-BuildRequires:  perl(Math::BigInt)
 BuildRequires:  perl(Test::ConsistentVersion)
-BuildRequires:  perl(FindBin)
 BuildRequires:  perl(YAML)
 BuildRequires:  perl(YAML::Syck)
 BuildRequires:  perl(YAML::Tiny)
@@ -36,23 +29,16 @@ BuildRequires:  perl(ExtUtils::Manifest)
 BuildRequires:  perl(Test::Synopsis)
 BuildRequires:  perl(Test::More)
 BuildRequires:  perl(Test::YAML::Meta)
-BuildRequires:  perl(Exporter)
 BuildRequires:  perl(Devel::StackTrace)
-BuildRequires:  perl(Data::Dumper)
 BuildRequires:  perl(Scalar::Util)
 BuildRequires:  perl(Devel::FindRef)
 BuildRequires:  perl(Carp)
-BuildRequires:  perl(Math::Trig)
 BuildRequires:  perl(Math::Symbolic)
 BuildRequires:  perl(Math::Expression::Evaluator)
 BuildRequires:  perl(Language::Expr)
 BuildRequires:  perl(Language::Expr::Compiler::Perl)
 BuildRequires:  perl(Module::Pluggable)
-BuildRequires:  perl(SDBM_File)
-BuildRequires:  perl(File::Temp)
-BuildRequires:  perl(Getopt::Long)
 BuildRequires:  perl(Cwd)
-BuildRequires:  perl(File::Path)
 Requires:       perl(File::HomeDir)
 Requires:       perl(Module::Load)
 Requires:       perl(Math::Trig)
@@ -96,6 +82,9 @@ make test
 %{_mandir}/man3/*
 
 %changelog
+* Fri Nov 16 2012 Miro Hrončok <miro@hroncok.cz> - 52-2
+- Removed BRs provided by perl package
+
 * Tue Oct 09 2012 Miro Hrončok <miro@hroncok.cz> 52-1
 - New release
 

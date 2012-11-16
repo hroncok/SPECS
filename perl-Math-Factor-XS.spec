@@ -1,15 +1,12 @@
 Name:           perl-Math-Factor-XS
 Version:        0.40
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Factorize numbers and calculate matching multiplications
 License:        GPL+ or Artistic
 Group:          Development/Libraries
 URL:            http://search.cpan.org/dist/Math-Factor-XS/
 Source0:        http://www.cpan.org/authors/id/K/KR/KRYDE/Math-Factor-XS-%{version}.tar.gz
 BuildRequires:  perl(boolean)
-BuildRequires:  perl(strict)
-BuildRequires:  perl(warnings)
-BuildRequires:  perl(Exporter)
 BuildRequires:  perl(Carp)
 BuildRequires:  perl(ExtUtils::CBuilder)
 BuildRequires:  perl(List::MoreUtils)
@@ -19,10 +16,7 @@ BuildRequires:  perl(Scalar::Util)
 BuildRequires:  perl(Test::More)
 BuildRequires:  perl(Test::Pod) >= 1.14
 BuildRequires:  perl(Test::Pod::Coverage) >= 1.04
-BuildRequires:  perl(POSIX)
 BuildRequires:  perl(Scalar::Util)
-BuildRequires:  perl(Math::BigInt)
-BuildRequires:  perl(XSLoader)
 Requires:       perl(Test::Pod) >= 1.14
 Requires:       perl(Test::Pod::Coverage) >= 1.04
 Requires:       perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
@@ -62,6 +56,9 @@ find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null \;
 %{_mandir}/man3/*
 
 %changelog
+* Fri Nov 16 2012 Miro Hrončok <miro@hroncok.cz> - 0.40-3
+- Removed BRs provided by perl package
+
 * Sun Oct 07 2012 Miro Hrončok <miro@hroncok.cz> 0.40-2
 - Rebuilding for 32bit, no spec changes.
 

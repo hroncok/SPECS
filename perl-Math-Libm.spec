@@ -1,6 +1,6 @@
 Name:           perl-Math-Libm
 Version:        1.00
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        Perl extension for the C math library, libm
 # The source doesn't include the license and author is unreachable
 # File Changes says, this module was created using h2xs from /usr/include/math.h
@@ -12,9 +12,6 @@ URL:            http://search.cpan.org/dist/Math-Libm/
 Source0:        http://www.cpan.org/authors/id/D/DS/DSLEWART/Math-Libm-%{version}.tar.gz
 BuildRequires:  perl(ExtUtils::MakeMaker)
 BuildRequires:  perl(Carp)
-BuildRequires:  perl(Exporter)
-BuildRequires:  perl(DynaLoader)
-BuildRequires:  perl(AutoLoader)
 Requires:       perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
 Requires:       perl(Carp)
 Requires:       perl(Exporter)
@@ -53,6 +50,9 @@ make test
 %{_mandir}/man3/*
 
 %changelog
+* Fri Nov 16 2012 Miro Hrončok <miro@hroncok.cz> - 1.00-4
+- Removed BRs provided by perl package
+
 * Sun Oct 07 2012 Miro Hrončok <miro@hroncok.cz> 1.00-3
 - Rebuilding for 32bit, no spec changes.
 

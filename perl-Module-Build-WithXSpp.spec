@@ -1,6 +1,6 @@
 Name:           perl-Module-Build-WithXSpp
 Version:        0.12
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        XS++ enhanced flavor of Module::Build
 License:        GPL+ or Artistic
 Group:          Development/Libraries
@@ -15,10 +15,7 @@ BuildRequires:  perl(ExtUtils::Typemaps) >= 1.00
 BuildRequires:  perl(ExtUtils::XSpp) >= 0.11
 BuildRequires:  perl(Module::Build) >= 0.26
 BuildRequires:  perl(Test::More)
-BuildRequires:  perl(warnings)
 BuildRequires:  perl(File::Spec)
-BuildRequires:  perl(File::Basename)
-BuildRequires:  perl(XSLoader)
 Requires:       perl(Digest::MD5)
 Requires:       perl(ExtUtils::CBuilder)
 Requires:       perl(ExtUtils::CppGuess) >= 0.04
@@ -57,6 +54,9 @@ find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null \;
 %{_mandir}/man3/*
 
 %changelog
+* Fri Nov 16 2012 Miro Hrončok <miro@hroncok.cz> - 0.12-2
+- Removed BRs provided by perl package
+
 * Wed Nov 14 2012 Miro Hrončok <miro@hroncok.cz> 0.12-1
 - New version.
 

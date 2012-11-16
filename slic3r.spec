@@ -18,24 +18,24 @@ Source2:        %{additional}%{name}.desktop
 
 BuildArch:      noarch
 BuildRequires:  perl(Module::Build)
-BuildRequires:  perl(Exporter)
-BuildRequires:  perl(warnings)
-BuildRequires:  perl(File::Basename)
-BuildRequires:  perl(Getopt::Long)
-BuildRequires:  perl(constant)
+
+
+
+
+
 BuildRequires:  perl(List::Util)
 BuildRequires:  perl(Test::More)
 BuildRequires:  perl(Math::Clipper) >= 1.14
-BuildRequires:  perl(FindBin)
+
 BuildRequires:  perl(Moo) >= 0.091009
 BuildRequires:  perl(File::Spec)
 BuildRequires:  perl(Math::ConvexHull) >= 1.0.4
 BuildRequires:  perl(Math::ConvexHull::MonotoneChain)
-BuildRequires:  perl(Time::HiRes)
+
 BuildRequires:  perl(XML::SAX)
 BuildRequires:  perl(XML::SAX::ExpatXS)
 BuildRequires:  perl(Math::PlanePath)
-BuildRequires:  perl(utf8)
+
 BuildRequires:  perl(Scalar::Util)
 BuildRequires:  perl(SVG)
 BuildRequires:  perl(parent)

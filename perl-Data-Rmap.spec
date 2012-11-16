@@ -1,6 +1,6 @@
 Name:           perl-Data-Rmap
 Version:        0.62
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Recursive map, apply a block to a data structure
 License:        GPL+ or Artistic
 Group:          Development/Libraries
@@ -11,12 +11,8 @@ BuildRequires:  perl(Module::Build)
 BuildRequires:  perl(Scalar::Util)
 BuildRequires:  perl(Test::Exception)
 BuildRequires:  perl(Test::More)
-BuildRequires:  perl(Data::Dumper)
 BuildRequires:  perl(Data::Dump)
-BuildRequires:  perl(Storable)
-BuildRequires:  perl(warnings)
 BuildRequires:  perl(Carp)
-BuildRequires:  perl(Exporter)
 BuildRequires:  perl(Lingua::EN::Numbers::Easy)
 Requires:       perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
 
@@ -51,6 +47,9 @@ find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null \;
 %{_mandir}/man3/*
 
 %changelog
+* Fri Nov 16 2012 Miro Hrončok <miro@hroncok.cz> - 0.62-3
+- Removed BRs provided by perl package
+
 * Sun Sep 23 2012 Miro Hrončok <miro@hroncok.cz> 0.62-2
 - Removed uselesss requires.
 

@@ -1,6 +1,6 @@
 Name:           perl-XML-SAX
 Version:        0.99
-Release:        10%{?dist}
+Release:        11%{?dist}
 Summary:        Simple API for XML
 License:        GPL+ or Artistic
 Group:          Development/Libraries
@@ -10,16 +10,7 @@ BuildArch:      noarch
 BuildRequires:  perl(ExtUtils::MakeMaker)
 BuildRequires:  perl(XML::NamespaceSupport) >= 0.03
 BuildRequires:  perl(XML::SAX::Base) >= 1.05
-BuildRequires:  perl(Exporter)
-BuildRequires:  perl(File::Basename)
 BuildRequires:  perl(File::Spec)
-BuildRequires:  perl(Symbol)
-BuildRequires:  perl(constant)
-BuildRequires:  perl(Test)
-BuildRequires:  perl(warnings)
-BuildRequires:  perl(File::Path)
-BuildRequires:  perl(Fatal)
-BuildRequires:  perl(IO::File)
 BuildRequires:  perl(XML::SAX::Exception)
 BuildRequires:  perl(Carp)
 Requires:       perl(XML::NamespaceSupport) >= 0.03
@@ -61,6 +52,9 @@ make test
 %{_mandir}/man3/*
 
 %changelog
+* Fri Nov 16 2012 Miro Hrončok <miro@hroncok.cz> - 0.99-11
+- Removed BRs provided by perl package
+
 * Fri Oct 05 2012 Miro Hrončok <miro@hroncok.cz> 0.99-10
 - Fake revision 10.
 

@@ -1,6 +1,6 @@
 Name:           perl-constant-defer
 Version:        5
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Constant subs with deferred value calculation
 License:        GPLv3+
 Group:          Development/Libraries
@@ -9,10 +9,7 @@ Source0:        http://www.cpan.org/authors/id/K/KR/KRYDE/constant-defer-%{versi
 BuildArch:      noarch
 BuildRequires:  perl >= 0:5
 BuildRequires:  perl(ExtUtils::MakeMaker)
-BuildRequires:  perl(strict)
-BuildRequires:  perl(warnings)
 BuildRequires:  perl(Test::More)
-BuildRequires:  perl(FindBin)
 BuildRequires:  perl(File::Spec)
 BuildRequires:  perl(YAML)
 BuildRequires:  perl(YAML::Syck)
@@ -21,24 +18,18 @@ BuildRequires:  perl(YAML::XS)
 BuildRequires:  perl(Parse::CPAN::Meta)
 BuildRequires:  perl(Test::Synopsis)
 BuildRequires:  perl(Test::DistManifest)
-BuildRequires:  perl(Exporter)
 BuildRequires:  perl(Devel::StackTrace)
-BuildRequires:  perl(Data::Dumper)
 BuildRequires:  perl(Data::Dump)
 BuildRequires:  perl(Scalar::Util)
 BuildRequires:  perl(Devel::StackTrace)
 BuildRequires:  perl(Devel::FindRef)
 BuildRequires:  perl(Carp)
 BuildRequires:  perl(Pod::Simple::HTML)
-BuildRequires:  perl(Attribute::Handlers)
 BuildRequires:  perl(Smart::Comments)
 BuildRequires:  perl(Test::NoWarnings)
-BuildRequires:  perl(POSIX)
 BuildRequires:  perl(Sub::Identify)
 BuildRequires:  perl(Glib)
-BuildRequires:  perl(B)
 BuildRequires:  perl(B::Utils)
-BuildRequires:  perl(Devel::Peek)
 Requires:       perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
 Requires:       perl(warnings)
 Requires:       perl(Carp)
@@ -75,6 +66,9 @@ make test
 %{_mandir}/man3/*
 
 %changelog
+* Fri Nov 16 2012 Miro Hrončok <miro@hroncok.cz> - 5-3
+- Removed BRs provided by perl package
+
 * Sun Sep 23 2012 Miro Hrončok <miro@hroncok.cz> 5-2
 - Removed useless requires.
 

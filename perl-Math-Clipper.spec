@@ -1,6 +1,6 @@
 Name:           perl-Math-Clipper
 Version:        1.14
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Polygon clipping in 2D
 License:        Boost
 Group:          Development/Libraries
@@ -10,14 +10,10 @@ BuildRequires:  perl(ExtUtils::Typemaps::Default) >= 0.05
 BuildRequires:  perl(ExtUtils::XSpp) >= 0.16
 BuildRequires:  perl(Module::Build)
 BuildRequires:  perl(Module::Build::WithXSpp)
-BuildRequires:  perl(warnings)
 BuildRequires:  perl(Test::More)
 BuildRequires:  perl(Test::Deep)
-BuildRequires:  perl(Config)
 BuildRequires:  perl(File::Spec)
-BuildRequires:  perl(constant)
 BuildRequires:  perl(Carp)
-BuildRequires:  perl(Exporter)
 Requires:       perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
 
 %{?perl_default_filter} # Filters (not)shared c libs
@@ -54,6 +50,9 @@ find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null \;
 %{_mandir}/man3/*
 
 %changelog
+* Fri Nov 16 2012 Miro Hrončok <miro@hroncok.cz> - 1.14-2
+- Removed BRs provided by perl package
+
 * Sun Oct 07 2012 Miro Hrončok <miro@hroncok.cz> 1.14-1
 - New version.
 

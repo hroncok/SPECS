@@ -1,6 +1,6 @@
 Name:           perl-Math-PlanePath
 Version:        90
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Points on a path through the 2D plane
 License:        GPLv3+
 Group:          Development/Libraries
@@ -9,15 +9,10 @@ Source0:        http://www.cpan.org/authors/id/K/KR/KRYDE/Math-PlanePath-%{versi
 BuildArch:      noarch
 BuildRequires:  perl >= 0:5.004
 BuildRequires:  perl(constant::defer) >= 5
-BuildRequires:  perl(constant)
 BuildRequires:  perl(ExtUtils::MakeMaker)
 BuildRequires:  perl(List::Util)
 BuildRequires:  perl(Math::Libm)
-BuildRequires:  perl(Test)
-BuildRequires:  perl(lib)
-BuildRequires:  perl(Math::BigInt)
 BuildRequires:  perl(Math::Prime::XS)
-BuildRequires:  perl(Math::BigRat)
 BuildRequires:  perl(Math::NumSeq::AllDigits)
 BuildRequires:  perl(Test::More)
 BuildRequires:  perl(File::Spec)
@@ -26,14 +21,10 @@ BuildRequires:  perl(YAML::Syck)
 BuildRequires:  perl(YAML::Tiny)
 BuildRequires:  perl(YAML::XS)
 BuildRequires:  perl(Parse::CPAN::Meta)
-BuildRequires:  perl(Data::Dumper)
 BuildRequires:  perl(File::Spec)
 BuildRequires:  perl(Module::Load)
-BuildRequires:  perl(Math::BigFloat)
 BuildRequires:  perl(Math::NumSeq)
 BuildRequires:  perl(Math::NumSeq::Base::IterateIth)
-BuildRequires:  perl(POSIX)
-BuildRequires:  perl(Exporter)
 BuildRequires:  perl(Carp)
 Requires:       perl(Math::NumSeq::Modulo)
 Requires:       perl(File::Spec)
@@ -73,6 +64,9 @@ make test
 %{_mandir}/man3/*
 
 %changelog
+* Fri Nov 16 2012 Miro Hrončok <miro@hroncok.cz> - 90-2
+- Removed BRs provided by perl package
+
 * Tue Oct 09 2012 Miro Hrončok <miro@hroncok.cz> 90-1
 - New release
 

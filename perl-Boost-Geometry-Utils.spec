@@ -1,6 +1,6 @@
 Name:           perl-Boost-Geometry-Utils
 Version:        0.05
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Boost::Geometry::Utils Perl module
 License:        GPL+ or Artistic
 Group:          Development/Libraries
@@ -10,14 +10,7 @@ BuildRequires:  perl(ExtUtils::Typemaps::Default) >= 0.05
 BuildRequires:  perl(ExtUtils::XSpp) >= 0.16
 BuildRequires:  perl(Module::Build)
 BuildRequires:  perl(Module::Build::WithXSpp)
-BuildRequires:  perl(warnings)
-BuildRequires:  perl(File::Find)
-BuildRequires:  perl(File::Temp)
-BuildRequires:  perl(Exporter)
-BuildRequires:  perl(XSLoader)
 BuildRequires:  perl(Test::More)
-BuildRequires:  perl(Exporter)
-BuildRequires:  perl(XSLoader)
 Requires:       perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
 
 %{?perl_default_filter} # Filters (not)shared c libs
@@ -57,6 +50,9 @@ find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null \;
 %{_mandir}/man3/*
 
 %changelog
+* Fri Nov 16 2012 Miro Hrončok <miro@hroncok.cz> - 0.05-3
+- Removed BRs provided by perl package
+
 * Sun Oct 07 2012 Miro Hrončok <miro@hroncok.cz> 0.05-2
 - Rebuilding for 32bit, no spec changes.
 
