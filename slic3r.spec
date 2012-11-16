@@ -1,6 +1,6 @@
 Name:           slic3r
 Version:        0.9.5
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        G-code generator for 3D printers (RepRap, Makerbot, Ultimaker etc.)
 License:        AGPLv3 and CC-BY
 # Images are CC-BY, code is AGPLv3
@@ -15,27 +15,18 @@ Source0:        %{name}-%{version}.tar.gz
 Source1:        %{additional}%{name}
 # Desktop files
 Source2:        %{additional}%{name}.desktop
-
 BuildArch:      noarch
 BuildRequires:  perl(Module::Build)
-
-
-
-
-
 BuildRequires:  perl(List::Util)
 BuildRequires:  perl(Test::More)
 BuildRequires:  perl(Math::Clipper) >= 1.14
-
 BuildRequires:  perl(Moo) >= 0.091009
 BuildRequires:  perl(File::Spec)
 BuildRequires:  perl(Math::ConvexHull) >= 1.0.4
 BuildRequires:  perl(Math::ConvexHull::MonotoneChain)
-
 BuildRequires:  perl(XML::SAX)
 BuildRequires:  perl(XML::SAX::ExpatXS)
 BuildRequires:  perl(Math::PlanePath)
-
 BuildRequires:  perl(Scalar::Util)
 BuildRequires:  perl(SVG)
 BuildRequires:  perl(parent)
@@ -98,6 +89,9 @@ desktop-file-install --dir=%{buildroot}%{_datadir}/applications %{SOURCE2} # des
 %{_mandir}/man3/*
 
 %changelog
+* Fri Nov 16 2012 Miro Hrončok <miro@hroncok.cz> - 0.9.5-2
+- Removed BRs provided by perl package
+
 * Wed Nov 14 2012 Miro Hrončok <miro@hroncok.cz> 0.9.5-1
 - New version
 - Requires perl(Math::Clipper) >= 1.14
