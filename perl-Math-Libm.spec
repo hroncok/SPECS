@@ -2,14 +2,11 @@ Name:           perl-Math-Libm
 Version:        1.00
 Release:        4%{?dist}
 Summary:        Perl extension for the C math library, libm
-# The source doesn't include the license and author is unreachable
-# File Changes says, this module was created using h2xs from /usr/include/math.h
-# /usr/include/math.h is LGPLv2+ therefore, this module has to be LGPLv2+, right?
-# In case this is a problem for Fedora, I should try to do the same steps as the author 12 years ago
-License:        LGPLv2+
+License:        GPL+ or Artistic
 Group:          Development/Libraries
 URL:            http://search.cpan.org/dist/Math-Libm/
 Source0:        http://www.cpan.org/authors/id/D/DS/DSLEWART/Math-Libm-%{version}.tar.gz
+Source1:        https://raw.github.com/hroncok/RPMAdditionalSources/master/Math-Libm-license.txt
 BuildRequires:  perl(ExtUtils::MakeMaker)
 BuildRequires:  perl(Carp)
 Requires:       perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
@@ -22,10 +19,16 @@ Requires:       perl(AutoLoader)
 
 %description
 This module is a translation of the C math.h file. It exports the following
-selected constants and functions.
+selected constants and functions:
+M_1_PI M_2_PI M_2_SQRTPI M_E M_LN10 M_LN2 M_LOG10E
+M_LOG2E M_PI M_PI_2 M_PI_4 M_SQRT1_2 M_SQRT2
+acos acosh asin asinh atan atanh cbrt ceil cosh
+erf erfc expm1 floor hypot j0 j1 jn lgamma_r
+log10 log1p pow rint sinh tan tanh y0 y1 yn
 
 %prep
 %setup -q -n Math-Libm-%{version}
+cp -p %{SOURCE1} license.txt
 
 %build
 %{__perl} Makefile.PL INSTALLDIRS=vendor OPTIMIZE="$RPM_OPT_FLAGS"
@@ -44,7 +47,7 @@ find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null \;
 make test
 
 %files
-%doc Changes README
+%doc Changes README license.txt
 %{perl_vendorarch}/auto/*
 %{perl_vendorarch}/Math*
 %{_mandir}/man3/*
@@ -52,6 +55,8 @@ make test
 %changelog
 * Fri Nov 16 2012 Miro Hrončok <miro@hroncok.cz> - 1.00-4
 - Removed BRs provided by perl package
+- Updated description
+- License issue solved properly
 
 * Sun Oct 07 2012 Miro Hrončok <miro@hroncok.cz> 1.00-3
 - Rebuilding for 32bit, no spec changes.
