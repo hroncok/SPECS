@@ -22,6 +22,8 @@ I want my packages in Fedora
  * [perl-ExtUtils-Typemaps-Default](https://bugzilla.redhat.com/show_bug.cgi?id=876399)
  * [perl-Growl-GNTP](https://bugzilla.redhat.com/show_bug.cgi?id=876409)
  * [perl-Language-Expr](https://bugzilla.redhat.com/show_bug.cgi?id=876411)
+ * [perl-Lingue-EN-Numbers](https://bugzilla.redhat.com/show_bug.cgi?id=878245)
+ * [perl-Lingue-EN-Numbers-Easy](https://bugzilla.redhat.com/show_bug.cgi?id=878247)
  * [perl-Module-Build-WithXSpp](https://bugzilla.redhat.com/show_bug.cgi?id=876405)
  * [perl-Math-Libm](https://bugzilla.redhat.com/show_bug.cgi?id=877765)
 
