@@ -1,33 +1,20 @@
 Name:           perl-Growl-GNTP
 Version:        0.15
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Perl implementation of GNTP Protocol (Client Part)
 License:        GPL+ or Artistic
 Group:          Development/Libraries
 URL:            http://search.cpan.org/dist/Growl-GNTP/
 Source0:        http://www.cpan.org/authors/id/M/MA/MATTN/Growl-GNTP-%{version}.tar.gz
+Patch0:         perl-Growl-GNTP-0.15-3.inc-and-xt-dereference.patch
 BuildArch:      noarch
 BuildRequires:  perl(Crypt::CBC) >= 2.29
 BuildRequires:  perl(Data::UUID) >= 0.149
 BuildRequires:  perl(Digest::MD5) >= 2.36
 BuildRequires:  perl(Digest::SHA) >= 5.45
 BuildRequires:  perl(ExtUtils::MakeMaker)
-BuildRequires:  perl(Test::More)
-BuildRequires:  perl(Test::Perl::Critic)
 BuildRequires:  perl(inc::Module::Install)
-BuildRequires:  perl(Carp)
-BuildRequires:  perl(Scalar::Util)
-BuildRequires:  perl(YAML)
-BuildRequires:  perl(Test::Builder)
-BuildRequires:  perl(Spiffy)
-BuildRequires:  perl(Test::Deep)
-BuildRequires:  perl(LWP::Simple)
-BuildRequires:  perl(Test::Builder)
-BuildRequires:  perl(threads::shared)
-BuildRequires:  perl(Module::Install::Base)
-BuildRequires:  perl(Cwd)
-BuildRequires:  perl(YAML::Tiny)
-BuildRequires:  perl(ExtUtils::MM_Unix)
+BuildRequires:  perl(Test::More)
 BuildRequires:  dos2unix
 Requires:       perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
 
@@ -36,6 +23,8 @@ Growl::GNTP is Perl implementation of GNTP Protocol (Client Part)
 
 %prep
 %setup -q -n Growl-GNTP-%{version}
+%patch0 -p1
+rm -rf inc xt
 dos2unix README
 
 %build
@@ -59,6 +48,11 @@ make test
 %{_mandir}/man3/*
 
 %changelog
+* Mon Nov 19 2012 Miro Hrončok <miro@hroncok.cz> - 0.15-3
+- Removed local inc and xs directories
+- Patched source so it doesn't need them
+- Removed lots of BR (builds in mock)
+
 * Fri Nov 16 2012 Miro Hrončok <miro@hroncok.cz> - 0.15-2
 - Removed BRs provided by perl package
 - Removed useless perl autofilter
