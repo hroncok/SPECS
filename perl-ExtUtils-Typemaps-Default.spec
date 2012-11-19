@@ -13,8 +13,6 @@ BuildRequires:  perl(Test::More)
 Requires:       perl(ExtUtils::Typemaps) >= 1.00
 Requires:       perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
 
-%{?perl_default_filter} # Filters (not)shared c libs
-
 %description
 ExtUtils::Typemaps::Default is an ExtUtils::Typemaps subclass that provides
 a set of default mappings (in addition to what perl itself provides). These
@@ -50,6 +48,7 @@ find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null \;
 %changelog
 * Fri Nov 16 2012 Miro Hrončok <miro@hroncok.cz> - 1.01-2
 - Removed BRs provided by perl package
+- Removed perl autofilter
 
 * Wed Nov 14 2012 Miro Hrončok <miro@hroncok.cz> 1.01-1
 - New version.
