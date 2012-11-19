@@ -1,6 +1,6 @@
 Name:           perl-ExtUtils-ParseXS
-Version:        3.15
-Release:        12%{?dist}
+Version:        3.18
+Release:        1%{?dist}
 Summary:        Converts Perl XS code into C code
 License:        GPL+ or Artistic
 Group:          Development/Libraries
@@ -52,6 +52,9 @@ make test
 %attr(755,root,root) %{_bindir}/*
 
 %changelog
+* Mon Nov 19 2012 Miro Hrončok <miro@hroncok.cz> - 3.18-1
+- New release
+
 * Mon Nov 19 2012 Miro Hrončok <miro@hroncok.cz> - 3.15-12
 - Removed useless Requires and BR
 - Removed perl autofilter
