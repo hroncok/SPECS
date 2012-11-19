@@ -8,15 +8,9 @@ URL:            http://search.cpan.org/dist/Data-Rmap/
 Source0:        http://www.cpan.org/authors/id/B/BO/BOWMANBS/Data-Rmap-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  perl(Module::Build)
-BuildRequires:  perl(Scalar::Util)
-BuildRequires:  perl(Test::Exception)
 BuildRequires:  perl(Test::More)
-BuildRequires:  perl(Data::Dump)
-BuildRequires:  perl(Carp)
-BuildRequires:  perl(Lingua::EN::Numbers::Easy)
+BuildRequires:  perl(Test::Exception)
 Requires:       perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
-
-%{?perl_default_filter} # Filters (not)shared c libs
 
 %description
 Recursively evaluate a BLOCK over a list of data structures 
@@ -48,7 +42,7 @@ find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null \;
 
 %changelog
 * Fri Nov 16 2012 Miro Hrončok <miro@hroncok.cz> - 0.62-3
-- Removed BRs provided by perl package
+- Removed BRs provided by perl package and more
 
 * Sun Sep 23 2012 Miro Hrončok <miro@hroncok.cz> 0.62-2
 - Removed uselesss requires.
