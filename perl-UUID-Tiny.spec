@@ -7,24 +7,18 @@ Group:          Development/Libraries
 URL:            http://search.cpan.org/dist/UUID-Tiny/
 Source0:        http://www.cpan.org/authors/id/C/CA/CAUGUSTIN/UUID-Tiny-%{version}.tar.gz
 BuildArch:      noarch
-BuildRequires:  perl(Carp)
-BuildRequires:  perl(Digest::MD5)
-BuildRequires:  perl(Digest::SHA1)
 BuildRequires:  perl(ExtUtils::MakeMaker)
 BuildRequires:  perl(Test::More)
+BuildRequires:  perl(Digest::MD5)
+BuildRequires:  perl(Digest::SHA1)
 Requires:       perl(Digest::SHA1)
-Requires:       perl(constant)
 Requires:       perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
-
-%{?perl_default_filter} # Filters (not)shared c libs
 
 %description
 UUID::Tiny is a lightweight, low dependency Pure Perl module for UUID
 creation and testing. This module provides the creation of version 1 time
 based UUIDs (using random multicast MAC addresses), version 3 MD5 based
 UUIDs, version 4 random UUIDs, and version 5 SHA-1 based UUIDs.
-
-# rpmlint doesn't like multicast -. what should I do?
 
 %prep
 %setup -q -n UUID-Tiny-%{version}
