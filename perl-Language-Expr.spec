@@ -1,6 +1,6 @@
 Name:           perl-Language-Expr
 Version:        0.19
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Simple mini-language for use in expression
 License:        GPL+ or Artistic
 Group:          Development/Libraries
@@ -9,24 +9,19 @@ Source0:        http://www.cpan.org/authors/id/S/SH/SHARYANTO/Language-Expr-%{ve
 BuildArch:      noarch
 BuildRequires:  perl >= 0:5.010000
 BuildRequires:  perl(boolean) >= 0.20
+BuildRequires:  perl(Regexp::Grammars) >= 1.005
+BuildRequires:  perl(Module::Build)
+BuildRequires:  perl(Test::More)
+BuildRequires:  perl(Moo)
+BuildRequires:  perl(UUID::Tiny)
+BuildRequires:  perl(List::MoreUtils)
 BuildRequires:  perl(Data::Clone)
 BuildRequires:  perl(Data::Rmap)
 BuildRequires:  perl(File::Which)
-BuildRequires:  perl(JSON)
-BuildRequires:  perl(List::MoreUtils)
-BuildRequires:  perl(Module::Build)
-BuildRequires:  perl(Moo)
-BuildRequires:  perl(Moo::Role)
-BuildRequires:  perl(Regexp::Grammars) >= 1.005
 BuildRequires:  perl(String::ShellQuote)
-BuildRequires:  perl(UUID::Tiny)
-BuildRequires:  perl(Test::More)
 BuildRequires:  perl(Test::Exception)
-BuildRequires:  perl(List::Util)
 Requires:       perl(JSON)
 Requires:       perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
-
-%{?perl_default_filter} # Filters (not)shared c libs
 
 %description
 Language::Expr defines a simple, Perl-like expression mini-language. It
@@ -56,6 +51,10 @@ find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null \;
 %{_mandir}/man3/*
 
 %changelog
+* Tue Nov 20 2012 Miro Hrončok <miro@hroncok.cz> - 0.19-3
+- Removed some BRs
+- Removed perl autofilter
+
 * Fri Nov 16 2012 Miro Hrončok <miro@hroncok.cz> - 0.19-2
 - Removed BRs provided by perl package
 
