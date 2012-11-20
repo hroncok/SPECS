@@ -1,6 +1,6 @@
 Name:           perl-Growl-GNTP
 Version:        0.15
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        Perl implementation of GNTP Protocol (Client Part)
 License:        GPL+ or Artistic
 Group:          Development/Libraries
@@ -13,7 +13,7 @@ BuildRequires:  perl(Data::UUID) >= 0.149
 BuildRequires:  perl(Digest::MD5) >= 2.36
 BuildRequires:  perl(Digest::SHA) >= 5.45
 BuildRequires:  perl(ExtUtils::MakeMaker)
-BuildRequires:  perl(inc::Module::Install)
+BuildRequires:  perl(Module::Install)
 BuildRequires:  perl(Test::More)
 BuildRequires:  dos2unix
 Requires:       perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
@@ -48,6 +48,9 @@ make test
 %{_mandir}/man3/*
 
 %changelog
+* Tue Nov 20 2012 Miro Hrončok <miro@hroncok.cz> - 0.15-4
+- perl(inc::Module::Install) to perl(Module::Install)
+
 * Mon Nov 19 2012 Miro Hrončok <miro@hroncok.cz> - 0.15-3
 - Removed local inc and xs directories
 - Patched source so it doesn't need them
