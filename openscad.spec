@@ -24,6 +24,7 @@ BuildRequires:  gmp-devel >= 5.0.0
 BuildRequires:  glew-devel >= 1.6
 BuildRequires:  CGAL-devel >= 3.6
 BuildRequires:  opencsg-devel >= 1.3.2
+BuildRequires:  desktop-file-utils
 
 %description
 OpenSCAD is a software for creating solid 3D CAD objects.
@@ -127,6 +128,9 @@ make %{?_smp_mflags}
 %install
 %{__make} install INSTALL_ROOT=%{buildroot}
 
+%check
+desktop-file-validate %{buildroot}/%{_datadir}/applications/%{name}.desktop
+
 %files
 %doc COPYING README.md RELEASE_NOTES
 %attr(755,root,root) %{_bindir}/%{name}
@@ -146,6 +150,7 @@ make %{?_smp_mflags}
 - Different versioning (won't upgrade to this, reinstall the package!)
 - Commented macros in comments
 - Fully versioned dependency of the main package
+- added desktop-file-validate
 
 * Wed Oct 31 2012 Miro Hrončok <miro@hroncok.cz> 2012.10.31-1
 - New version
