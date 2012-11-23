@@ -1,6 +1,6 @@
 Name:           openscad
-Version:        2012.10.31
-Release:        1%{?dist}
+Version:        2012.10
+Release:        0.2%{?dist}
 Summary:        The Programmers Solid 3D CAD Modeller
 # COPYING contains a linking exception for CGAL
 License:        GPLv2 with exceptions
@@ -9,9 +9,9 @@ URL:            http://www.openscad.org/
 # openscad commit hash b04734cbf5
 #     MCAD commit hash 9af89906fa
 # git clone git://github.com/openscad/openscad.git; cd openscad
-# git archive master --format tar.gz > ../%{name}-%{version}.tar.gz
+# git archive master --format tar.gz > ../%%{name}-%%{version}.tar.gz
 # git submodule init; git submodule update; cd libraries/MCAD/
-# git archive master --format tar.gz > ../../../%{name}-MCAD-%{version}.tar.gz
+# git archive master --format tar.gz > ../../../%%{name}-MCAD-%%{version}.tar.gz
 Source0:        %{name}-%{version}.tar.gz
 Source1:        %{name}-MCAD-%{version}.tar.gz
 BuildRequires:  qt-devel >= 4.4
@@ -39,7 +39,7 @@ interested in creating computer-animated movies.
 %package        MCAD
 Summary:        OpenSCAD Parametric CAD Library
 License:        LGPLv2+ and LGPLv2 and LGPLv3+ and (GPLv3 or LGPLv2) and (GPLv3+ or LGPLv2) and (CC-BY-SA or LGPLv2+) and (CC-BY-SA or LGPLv2) and CC-BY and BSD and MIT and Public Domain
-Requires:       %{name}
+Requires:       %{name}%{?_isa} = %{version}-%{release}
 BuildArch:      noarch
 
 %description    MCAD
@@ -142,6 +142,11 @@ make %{?_smp_mflags}
 %{_datadir}/%{name}/libraries/MCAD
 
 %changelog
+* Fri Nov 23 2012 Miro Hrončok <miro@hroncok.cz> - 2012.10-0.2
+- Different versioning (won't upgrade to this, reinstall the package!)
+- Commented macros in comments
+- Fully versioned dependency of the main package
+
 * Wed Oct 31 2012 Miro Hrončok <miro@hroncok.cz> 2012.10.31-1
 - New version
 - Solved 2 MLCAD files license issues
