@@ -1,25 +1,21 @@
-%global         githash  b6935b93
-%global         snapshot 20120924git%{githash}
+%global         githash  6fa47668f2
+%global         snapshot 20121103git%{githash}
 Name:           printrun
 Version:        0.0
-Release:        10.%{snapshot}%{?dist}
+Release:        12.%{snapshot}%{?dist}
 Summary:        RepRap printer interface and tools
 License:        GPLv3+
 Group:          Applications/Engineering
 URL:            https://github.com/kliment/Printrun
 # git clone https://github.com/kliment/Printrun.git; cd Printrun
-# git archive --format tar.gz master > ../%{name}-%{snapshot}.tar.gz
+# git archive --format tar.gz master > ../%%{name}-%%{snapshot}.tar.gz
 Source0:        %{name}-%{snapshot}.tar.gz
 
 %global         additional https://raw.github.com/hroncok/RPMAdditionalSources/master/
-# Bash runners
-Source1:        %{additional}pronsole
-Source2:        %{additional}pronterface
-Source3:        %{additional}plater
 # Desktop files
-Source4:        %{additional}pronsole.desktop
-Source5:        %{additional}pronterface.desktop
-Source6:        %{additional}plater.desktop
+Source1:        %{additional}pronsole.desktop
+Source2:        %{additional}pronterface.desktop
+Source3:        %{additional}plater.desktop
 
 BuildArch:      noarch
 BuildRequires:  python2-devel
@@ -94,7 +90,9 @@ It is a part of Printrun.
 %setup -cq
 
 %build
-# build locales
+CFLAGS="$RPM_OPT_FLAGS" %{__python} setup.py build
+
+# rebuild locales
 cd locale
 for FILE in *
   do msgfmt $FILE/LC_MESSAGES/plater.po -o $FILE/LC_MESSAGES/plater.mo || echo plater not there
@@ -102,29 +100,29 @@ for FILE in *
 done
 cd ..
 
-
 %install
-rm -rf 20cube_export.gcode locale/*.pot locale/*/LC_MESSAGES/*.po # removes stupid useless files and original .po files
-mkdir -p %{buildroot}%{_datadir}/locale # /usr/share/locale
-cp -ar locale/* %{buildroot}%{_datadir}/locale # copy compiled locales to that dir
-rm -rf locale # remove original locale dir
-mkdir -p %{buildroot}%{_datadir}/%{name} # /usr/share/printrun
-ln -s -f ../locale/ %{buildroot}%{_datadir}/%{name}/ # the app expects the locale folder in here
-cp -ar * %{buildroot}%{_datadir}/%{name} # copy everything to /usr/share/printrun
-ln -s -f ../skeinforge %{buildroot}%{_datadir}/%{name}/ # link skeinforge here
-rm -rf %{buildroot}%{_datadir}/%{name}/README* # this will be in docs
-rm -rf %{buildroot}%{_datadir}/%{name}/COPYING # this will be in docs
-mkdir -p %{buildroot}%{_datadir}/pixmaps # /usr/share/pixmaps
-ln -s ../%{name}/pronsole.ico %{buildroot}%{_datadir}/pixmaps # link the icons to pixmaps, so thay have the right location too
-ln -s ../%{name}/plater.ico %{buildroot}%{_datadir}/pixmaps
-ln -s ../%{name}/P-face.ico %{buildroot}%{_datadir}/pixmaps
-mkdir -p %{buildroot}%{_bindir} # /usr/bin
-cp %{SOURCE1} %{buildroot}%{_bindir} # shell scripts to run the apps
-cp %{SOURCE2} %{buildroot}%{_bindir}
-cp %{SOURCE3} %{buildroot}%{_bindir}
-desktop-file-install --dir=%{buildroot}%{_datadir}/applications %{SOURCE4} # desktop files
-desktop-file-install --dir=%{buildroot}%{_datadir}/applications %{SOURCE5}
-desktop-file-install --dir=%{buildroot}%{_datadir}/applications %{SOURCE6}
+%{__python} setup.py install --skip-build --prefix %{buildroot}%{_prefix}
+cp pronsole.ico %{buildroot}%{_datadir}/pixmaps/
+cp gcoder.* %{buildroot}%{_bindir}
+
+# use absolute path for skeinforge
+sed -i 's|python skeinforge/skeinforge_application|python %{_datadir}/skeinforge/skeinforge_application|' %{buildroot}%{_bindir}/pronsole.py
+
+# desktop files
+desktop-file-install --dir=%{buildroot}%{_datadir}/applications %{SOURCE1}
+desktop-file-install --dir=%{buildroot}%{_datadir}/applications %{SOURCE2}
+desktop-file-install --dir=%{buildroot}%{_datadir}/applications %{SOURCE3}
+
+# locales
+mkdir -p %{buildroot}%{_datadir}/locale
+cp -ar %{buildroot}%{_datadir}/pronterface/locale/* %{buildroot}%{_datadir}/locale
+rm -rf %{buildroot}%{_datadir}/pronterface/locale
+ln -s -f %{_datadir}/locale/ %{buildroot}%{_datadir}/pronterface/ # the app expects the locale folder in here
+
+# exacutables
+cd %{buildroot}%{python_sitelib}/%{name}
+chmod +x gcview.py graph.py stlview.py SkeinforgeQuickEditDialog.py calibrateextruder.py webinterface.py
+cd -
 
 %{find_lang} pronterface
 %{find_lang} plater
@@ -133,50 +131,41 @@ desktop-file-install --dir=%{buildroot}%{_datadir}/applications %{SOURCE6}
 %doc README* COPYING
 
 %files common -f pronterface.lang
-%dir %{_datadir}/%{name}/
-%dir %{_datadir}/%{name}/locale/
-%doc README*
-%{_datadir}/%{name}/printcore.*
-%{_datadir}/%{name}/stlview.*
-%{_datadir}/%{name}/stltool.*
-%{_datadir}/%{name}/__init__.*
+%{python_sitelib}/%{name}
+%{python_sitelib}/Printrun*
+%{_bindir}/printcore.*
+%doc README* COPYING
 
 %files -n pronsole
-%{_datadir}/%{name}/pronsole.*
-%{_datadir}/%{name}/skeinforge
-%attr(755,root,root) %{_bindir}/pronsole
+%{_bindir}/pronsole.*
+%{_bindir}/gcoder.*
 %{_datadir}/pixmaps/pronsole.ico
 %{_datadir}/applications/pronsole.desktop
 %doc README* COPYING
 
 %files -n pronterface
-%{_datadir}/%{name}/pronterface.*
-%{_datadir}/%{name}/P-face.*
-%{_datadir}/%{name}/images
-%{_datadir}/%{name}/bufferedcanvas.*
-%{_datadir}/%{name}/calibrateextruder.*
-%{_datadir}/%{name}/custombtn.txt
-%{_datadir}/%{name}/gcview.*
-%{_datadir}/%{name}/graph.*
-%{_datadir}/%{name}/gviz.*
-%{_datadir}/%{name}/projectlayer.*
-%{_datadir}/%{name}/SkeinforgeQuickEditDialog.*
-%{_datadir}/%{name}/xybuttons.*
-%{_datadir}/%{name}/zbuttons.*
-%{_datadir}/%{name}/zscaper.*
-%attr(755,root,root) %{_bindir}/pronterface
+%{_bindir}/pronterface.*
+%{_datadir}/pronterface
 %{_datadir}/pixmaps/P-face.ico
 %{_datadir}/applications/pronterface.desktop
 %doc README* COPYING
 
 %files -n plater -f plater.lang
-%{_datadir}/%{name}/plater.*
-%attr(755,root,root) %{_bindir}/plater
+%{_bindir}/plater.*
 %{_datadir}/pixmaps/plater.ico
 %{_datadir}/applications/plater.desktop
 %doc README* COPYING
 
 %changelog
+* Fri Nov 23 2012 Miro Hrončok <miro@hroncok.cz> - 0.0-12.20121103git6fa47668f2
+- Fixing a source mistake
+- Redone, using setup.py now
+
+* Fri Nov 23 2012 Miro Hrončok <miro@hroncok.cz> - 0.0-11.20121103git6fa47668f2
+- New upstream "version" (merge from experimetal)
+- Commented macros in comments
+- Playing a bit with attr
+
 * Mon Oct 29 2012 Miro Hrončok <miro@hroncok.cz> - 0.0-10-20120924gitb6935b93
 - Switched generic names and names in desktop files
 - Don't use rm, cp and ln -s macros
