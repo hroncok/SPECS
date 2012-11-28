@@ -1,6 +1,6 @@
 Name:           openscad
-Version:        2012.10
-Release:        0.2%{?dist}
+Version:        2012.10.31
+Release:        2%{?dist}
 Summary:        The Programmers Solid 3D CAD Modeller
 # COPYING contains a linking exception for CGAL
 License:        GPLv2 with exceptions
@@ -146,8 +146,7 @@ desktop-file-validate %{buildroot}/%{_datadir}/applications/%{name}.desktop
 %{_datadir}/%{name}/libraries/MCAD
 
 %changelog
-* Fri Nov 23 2012 Miro Hrončok <miro@hroncok.cz> - 2012.10-0.2
-- Different versioning (won't upgrade to this, reinstall the package!)
+* Fri Nov 23 2012 Miro Hrončok <miro@hroncok.cz> - 2012.10.31-2
 - Commented macros in comments
 - Fully versioned dependency of the main package
 - added desktop-file-validate
