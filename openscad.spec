@@ -1,6 +1,6 @@
 Name:           openscad
 Version:        2012.10.31
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        The Programmers Solid 3D CAD Modeller
 # COPYING contains a linking exception for CGAL
 License:        GPLv2 with exceptions
@@ -24,7 +24,7 @@ BuildRequires:  gmp-devel >= 5.0.0
 BuildRequires:  glew-devel >= 1.6
 BuildRequires:  CGAL-devel >= 3.6
 BuildRequires:  opencsg-devel >= 1.3.2
-BuildRequires:  desktop-file-utils
+BuildRequires:  desktop-file-utils, gzip
 
 %description
 OpenSCAD is a software for creating solid 3D CAD objects.
@@ -127,9 +127,14 @@ make %{?_smp_mflags}
 
 %install
 %{__make} install INSTALL_ROOT=%{buildroot}
+# manpage
+mkdir -p %{buildroot}%{_mandir}/man1
+cp doc/%{name}.1 %{buildroot}%{_mandir}/man1/
+gzip %{buildroot}%{_mandir}/man1/%{name}.1
+
 
 %check
-desktop-file-validate %{buildroot}/%{_datadir}/applications/%{name}.desktop
+desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 
 %files
 %doc COPYING README.md RELEASE_NOTES
@@ -139,6 +144,7 @@ desktop-file-validate %{buildroot}/%{_datadir}/applications/%{name}.desktop
 %dir %{_datadir}/%{name}
 %{_datadir}/%{name}/examples
 %dir %{_datadir}/%{name}/libraries
+%{_mandir}/man1/*
 
 
 %files      MCAD
@@ -146,6 +152,9 @@ desktop-file-validate %{buildroot}/%{_datadir}/applications/%{name}.desktop
 %{_datadir}/%{name}/libraries/MCAD
 
 %changelog
+* Sun Dec 02 2012 Miro Hrončok <miro@hroncok.cz> - 2012.10.31-3
+- Added manpage (BR gzip)
+
 * Fri Nov 23 2012 Miro Hrončok <miro@hroncok.cz> - 2012.10.31-2
 - Commented macros in comments
 - Fully versioned dependency of the main package
