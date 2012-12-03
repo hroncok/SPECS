@@ -1,6 +1,6 @@
 Name:           openscad
 Version:        2012.10.31
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        The Programmers Solid 3D CAD Modeller
 # COPYING contains a linking exception for CGAL
 License:        GPLv2 with exceptions
@@ -130,7 +130,6 @@ make %{?_smp_mflags}
 # manpage
 mkdir -p %{buildroot}%{_mandir}/man1
 cp doc/%{name}.1 %{buildroot}%{_mandir}/man1/
-gzip %{buildroot}%{_mandir}/man1/%{name}.1
 
 
 %check
@@ -152,6 +151,9 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 %{_datadir}/%{name}/libraries/MCAD
 
 %changelog
+* Mon Dec 03 2012 Miro Hrončok <miro@hroncok.cz> - 2012.10.31-4
+- Removed useless gziping
+
 * Sun Dec 02 2012 Miro Hrončok <miro@hroncok.cz> - 2012.10.31-3
 - Added manpage
 
