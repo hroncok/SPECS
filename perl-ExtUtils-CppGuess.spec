@@ -1,6 +1,6 @@
 Name:           perl-ExtUtils-CppGuess
 Version:        0.07
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Guess C++ compiler and flags
 License:        GPL+ or Artistic
 Group:          Development/Libraries
@@ -10,6 +10,12 @@ BuildArch:      noarch
 BuildRequires:  perl(Module::Build) >= 0.36
 BuildRequires:  perl(Test::More)
 BuildRequires:  perl(Capture::Tiny)
+BuildRequires:  perl(ExtUtils::Manifest)
+BuildRequires:  perl(File::Path)
+BuildRequires:  perl(File::Spec::Functions)
+BuildRequires:  perl(Cwd)
+BuildRequires:  perl(Fatal)
+BuildRequires:  perl(Exporter)
 Requires:       perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
 
 %description
@@ -26,7 +32,6 @@ compatible with the C compiler that your perl was built with.
 %install
 ./Build install destdir=%{buildroot} create_packlist=0
 find %{buildroot} -type f -name '*.bs' -size 0 -exec rm -f {} \;
-find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null \;
 
 %{_fixperms} %{buildroot}/*
 
@@ -40,6 +45,10 @@ find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null \;
 %{_mandir}/man3/*
 
 %changelog
+* Tue Dec 04 2012 Miro Hrončok <miro@hroncok.cz> - 0.07-3
+- Removed deleting empty dirs
+- Added BRs for t/lib/TestUtils.pm
+
 * Fri Nov 16 2012 Miro Hrončok <miro@hroncok.cz> - 0.07-2
 - Removed useless BRs
 - Removed perl autofilter
