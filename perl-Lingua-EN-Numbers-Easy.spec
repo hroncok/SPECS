@@ -47,6 +47,7 @@ make test
 * Thu Dec 06 2012 Miro Hrončok <miro@hroncok.cz> - 2009110701-3
 - Removed deleting empty dirs
 - Replaced obsoleted PERL_INSTALL_ROOT with DESTDIR
+- Removed README (same as manpage)
 
 * Fri Nov 16 2012 Miro Hrončok <miro@hroncok.cz> - 2009110701-2
 - Removed BRs provided by perl package
