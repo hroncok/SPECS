@@ -1,6 +1,6 @@
 Name:           perl-ExtUtils-ParseXS
 Version:        3.18
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Converts Perl XS code into C code
 License:        GPL+ or Artistic
 Group:          Development/Libraries
@@ -10,6 +10,12 @@ BuildArch:      noarch
 BuildRequires:  perl(ExtUtils::MakeMaker) >= 6.46
 BuildRequires:  perl(Test::More) >= 0.47
 BuildRequires:  perl(ExtUtils::CBuilder)
+BuildRequires:  perl(Carp)
+BuildRequires:  perl(Cwd)
+BuildRequires:  perl(Exporter)
+BuildRequires:  perl(File::Spec)
+BuildRequires:  perl(File::Temp)
+BuildRequires:  perl(lib)
 Requires:       perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
 Provides:       xsubpp = %{version}
 
@@ -28,11 +34,10 @@ Perl values.
 make %{?_smp_mflags}
 
 %install
-make pure_install PERL_INSTALL_ROOT=%{buildroot}
+make pure_install DESTDIR=%{buildroot}
 
 find %{buildroot} -type f -name .packlist -exec rm -f {} \;
 find %{buildroot} -type f -name '*.bs' -size 0 -exec rm -f {} \;
-find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null \;
 
 # wrong shebang correction
 sed -i 's|#!perl|#!/usr/bin/perl|' %{buildroot}%{perl_vendorlib}/ExtUtils/xsubpp
@@ -45,13 +50,20 @@ make test
 %files
 %doc Changes META.json README
 #%%{perl_vendorlib}/auto/*
-%{perl_vendorlib}/ExtUtils*
+%{perl_vendorlib}/ExtUtils/ParseXS*
+%{perl_vendorlib}/ExtUtils/Typemaps*
 %attr(755,root,root) %{perl_vendorlib}/ExtUtils/xsubpp
 %{_mandir}/man1/*
 %{_mandir}/man3/*
 %attr(755,root,root) %{_bindir}/*
 
 %changelog
+* Thu Dec 06 2012 Miro Hrončok <miro@hroncok.cz> - 3.18-2
+- Added missing BR for tests
+- Removed deleting empty dirs
+- Replaced obsoleted PERL_INSTALL_ROOT with DESTDIR
+- Updated %%files to prevent duplicity
+
 * Mon Nov 19 2012 Miro Hrončok <miro@hroncok.cz> - 3.18-1
 - New release
 
