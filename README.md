@@ -15,6 +15,7 @@ I want my packages in Fedora
  * [printrun](https://bugzilla.redhat.com/show_bug.cgi?id=863796)
  * [opencsg](https://bugzilla.redhat.com/show_bug.cgi?id=870860) - approved
  * [openscad](https://bugzilla.redhat.com/show_bug.cgi?id=864187)
+ * [openscad-MCAD](https://bugzilla.redhat.com/show_bug.cgi?id=884876)
  * [perl-Boost-Geometry-Utils](https://bugzilla.redhat.com/show_bug.cgi?id=876408)
  * [perl-Data-Rmap](https://bugzilla.redhat.com/show_bug.cgi?id=876406)
  * [perl-ExtUtils-CppGuess](https://bugzilla.redhat.com/show_bug.cgi?id=876403) - approved
