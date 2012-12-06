@@ -1,19 +1,15 @@
 Name:           openscad
 Version:        2012.10.31
-Release:        4%{?dist}
+Release:        5%{?dist}
 Summary:        The Programmers Solid 3D CAD Modeller
 # COPYING contains a linking exception for CGAL
 License:        GPLv2 with exceptions
 Group:          Applications/Engineering
 URL:            http://www.openscad.org/
-# openscad commit hash b04734cbf5
-#     MCAD commit hash 9af89906fa
+# commit hash b04734cbf5
 # git clone git://github.com/openscad/openscad.git; cd openscad
 # git archive master --format tar.gz > ../%%{name}-%%{version}.tar.gz
-# git submodule init; git submodule update; cd libraries/MCAD/
-# git archive master --format tar.gz > ../../../%%{name}-MCAD-%%{version}.tar.gz
 Source0:        %{name}-%{version}.tar.gz
-Source1:        %{name}-MCAD-%{version}.tar.gz
 BuildRequires:  qt-devel >= 4.4
 BuildRequires:  bison >= 2.4
 BuildRequires:  flex >= 2.5.35
@@ -35,91 +31,8 @@ you are looking for when you are planning to create 3D models of machine
 parts but pretty sure is not what you are looking for when you are more
 interested in creating computer-animated movies.
 
-###############################################
-
-%package        MCAD
-Summary:        OpenSCAD Parametric CAD Library
-License:        LGPLv2+ and LGPLv2 and LGPLv3+ and (GPLv3 or LGPLv2) and (GPLv3+ or LGPLv2) and (CC-BY-SA or LGPLv2+) and (CC-BY-SA or LGPLv2) and CC-BY and BSD and MIT and Public Domain
-Requires:       %{name}%{?_isa} = %{version}-%{release}
-BuildArch:      noarch
-
-%description    MCAD
-This library contains components commonly used in designing and moching up
-mechanical designs. It is currently unfinished and you can expect some API
-changes, however many things are already working.
-
-### LICENSES:
-
-##  LGPLv2+:
-#   3d_triangle.scad
-#   fonts.scad
-#   gridbeam.scad
-#   hardware.scad
-#   multiply.scad
-#   shapes.scad
-#   screw.scad
-
-##  LGPLv2:
-#   gears.scad
-#   involute_gears.scad
-#   servos.scad
-#   transformations.scad
-#   triangles.scad
-#   unregular_shapes.scad
-#   bitmap/letter_necklace.scad
-
-##  LGPLv3+:
-#   teardrop.scad
-
-##  GPLv3 or LGPLv2:
-#   motors.scad
-#   nuts_and_bolts.scad
-
-
-##  GPLv3+ or LGPLv2:
-#   metric_fastners.scad
-#   regular_shapes.scad
-
-##  CC-BY-SA or LGPLv2+:
-#   bearing.scad
-#   materials.scad
-#   stepper.scad
-#   utilities.scad
-
-##  CC-BY-SA or LGPLv2:
-#   units.scad
-
-##  CC-BY:
-#   polyholes.scad
-#   bitmap/alphabet_block.scad
-#   bitmap/bitmap.scad
-#   bitmap/height_map.scad
-#   bitmap/name_tag.scad
-
-## BSD
-#   boxes.scad
-
-## MIT
-#   constants.scad
-#   curves.scad
-#   math.scad
-
-## Public Domain
-#   lego_compatibility.scad
-#   trochoids.scad
-
-###############################################
-
 %prep
-%setup -qa1 -Tcn %{name}-%{version}/libraries/MCAD
-rm -rf *.py SolidPython ThingDoc # we don't need them
-rm -f .gitmodules # git crap
-%setup -Dcq
-# New FSF Address
-for FILE in libraries/MCAD/regular_shapes.scad libraries/MCAD/metric_fastners.scad
-do
-  sed -i s/"59 Temple Place, Suite 330, Boston, MA 02111-1307 USA"/"51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA"/ $FILE
-done
+%setup -cq
 
 %build
 qmake-qt4 VERSION=%{version} PREFIX=%{_prefix}
@@ -130,7 +43,6 @@ make %{?_smp_mflags}
 # manpage
 mkdir -p %{buildroot}%{_mandir}/man1
 cp doc/%{name}.1 %{buildroot}%{_mandir}/man1/
-
 
 %check
 desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
@@ -145,12 +57,10 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 %dir %{_datadir}/%{name}/libraries
 %{_mandir}/man1/*
 
-
-%files      MCAD
-%doc libraries/MCAD/lgpl-2.1.txt libraries/MCAD/README.markdown
-%{_datadir}/%{name}/libraries/MCAD
-
 %changelog
+* Thu Dec 06 2012 Miro Hrončok <miro@hroncok.cz> - 2012.10.31-5
+- Separated MCAD
+
 * Mon Dec 03 2012 Miro Hrončok <miro@hroncok.cz> - 2012.10.31-4
 - Removed useless gziping
 
