@@ -1,6 +1,6 @@
 Name:           perl-Lingua-EN-Numbers-Easy
 Version:        2009110701
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Hash access to Lingua::EN::Numbers objects
 License:        MIT
 Group:          Development/Libraries
@@ -29,10 +29,9 @@ to words using a tied hash, which can be interpolated.
 make %{?_smp_mflags}
 
 %install
-make pure_install PERL_INSTALL_ROOT=%{buildroot}
+make pure_install DESTDIR=%{buildroot}
 
 find %{buildroot} -type f -name .packlist -exec rm -f {} \;
-find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null \;
 
 %{_fixperms} %{buildroot}/*
 
@@ -40,11 +39,15 @@ find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null \;
 make test
 
 %files
-%doc Changes README
+%doc Changes
 %{perl_vendorlib}/*
 %{_mandir}/man3/*
 
 %changelog
+* Thu Dec 06 2012 Miro Hrončok <miro@hroncok.cz> - 2009110701-3
+- Removed deleting empty dirs
+- Replaced obsoleted PERL_INSTALL_ROOT with DESTDIR
+
 * Fri Nov 16 2012 Miro Hrončok <miro@hroncok.cz> - 2009110701-2
 - Removed BRs provided by perl package
 
