@@ -18,7 +18,6 @@ I want my packages in Fedora
  * [perl-Boost-Geometry-Utils](https://bugzilla.redhat.com/show_bug.cgi?id=876408)
  * [perl-Data-Rmap](https://bugzilla.redhat.com/show_bug.cgi?id=876406)
  * [perl-ExtUtils-CppGuess](https://bugzilla.redhat.com/show_bug.cgi?id=876403) - approved
- * [perl-ExtUtils-ParseXS](https://bugzilla.redhat.com/show_bug.cgi?id=876401)
  * [perl-ExtUtils-Typemaps-Default](https://bugzilla.redhat.com/show_bug.cgi?id=876399)
  * [perl-Growl-GNTP](https://bugzilla.redhat.com/show_bug.cgi?id=876409) - approved
  * [perl-Language-Expr](https://bugzilla.redhat.com/show_bug.cgi?id=876411)
