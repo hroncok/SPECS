@@ -17,7 +17,7 @@ I want my packages in Fedora
  * [openscad](https://bugzilla.redhat.com/show_bug.cgi?id=864187)
  * [perl-Boost-Geometry-Utils](https://bugzilla.redhat.com/show_bug.cgi?id=876408)
  * [perl-Data-Rmap](https://bugzilla.redhat.com/show_bug.cgi?id=876406)
- * [perl-ExtUtils-CppGuess](https://bugzilla.redhat.com/show_bug.cgi?id=876403)
+ * [perl-ExtUtils-CppGuess](https://bugzilla.redhat.com/show_bug.cgi?id=876403) - approved
  * [perl-ExtUtils-ParseXS](https://bugzilla.redhat.com/show_bug.cgi?id=876401)
  * [perl-ExtUtils-Typemaps-Default](https://bugzilla.redhat.com/show_bug.cgi?id=876399)
  * [perl-Growl-GNTP](https://bugzilla.redhat.com/show_bug.cgi?id=876409) - approved
