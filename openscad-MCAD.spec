@@ -82,7 +82,6 @@ changes, however many things are already working.
 
 %prep
 %setup -cq
-pwd
 rm -rf *.py SolidPython ThingDoc # we don't need them
 rm -f .gitmodules # git crap
 # New FSF Address
