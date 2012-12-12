@@ -1,13 +1,16 @@
 Name:           perl-Math-Libm
 Version:        1.00
-Release:        5%{?dist}
+Release:        6%{?dist}
 Summary:        Perl extension for the C math library, libm
 License:        GPL+ or Artistic
 Group:          Development/Libraries
 URL:            http://search.cpan.org/dist/Math-Libm/
 Source0:        http://www.cpan.org/authors/id/D/DS/DSLEWART/Math-Libm-%{version}.tar.gz
-Source1:        https://raw.github.com/hroncok/RPMAdditionalSources/master/Math-Libm-license.txt
+Source1:        Math-Libm-license.txt
 BuildRequires:  perl(ExtUtils::MakeMaker)
+BuildRequires:  perl(AutoLoader)
+BuildRequires:  perl(Carp)
+BuildRequires:  perl(Exporter)
 Requires:       perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
 
 %{?perl_default_filter} # Filters (not)shared c libs
@@ -30,11 +33,10 @@ cp -p %{SOURCE1} license.txt
 make %{?_smp_mflags}
 
 %install
-make pure_install PERL_INSTALL_ROOT=%{buildroot}
+make pure_install DESTDIR=%{buildroot}
 
 find %{buildroot} -type f -name .packlist -exec rm -f {} \;
 find %{buildroot} -type f -name '*.bs' -size 0 -exec rm -f {} \;
-find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null \;
 
 %{_fixperms} %{buildroot}/*
 
@@ -48,6 +50,12 @@ make test
 %{_mandir}/man3/*
 
 %changelog
+* Wed Dec 12 2012 Miro Hrončok <miro@hroncok.cz> - 1.00-6
+- License file without URL
+- Added more BRs
+- PERL_INSTALL_ROOT changed to DESTDIR
+- Removed the deleting empty directories
+
 * Mon Nov 19 2012 Miro Hrončok <miro@hroncok.cz> - 1.00-5
 - Removed useless Requires and BR
 
