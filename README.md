@@ -27,14 +27,3 @@ I want my packages in Fedora
  * [perl-Module-Build-WithXSpp](https://bugzilla.redhat.com/show_bug.cgi?id=876405)
  * [perl-Math-Libm](https://bugzilla.redhat.com/show_bug.cgi?id=877765)
  * [perl-UUID-Tiny](https://bugzilla.redhat.com/show_bug.cgi?id=878680) - approved
-
-Legal problems
---------------
-
-### perl-Math-Geometry-Voronoi
-
-**Problem:** The perl module is OK, but the C code in it is unlicensed. It has two authors, first agrees to release the code under the terms of MIT license, the second is asked.
-
-**TODO:** Wait for second author of the C code and see, if he agrees.
-
-**Involved packages:** _self_, slic3r
