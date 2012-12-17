@@ -25,6 +25,7 @@ I want my packages in Fedora
  * [perl-Lingue-EN-Numbers](https://bugzilla.redhat.com/show_bug.cgi?id=878245) - approved
  * [perl-Lingue-EN-Numbers-Easy](https://bugzilla.redhat.com/show_bug.cgi?id=878247) - approved
  * [perl-Module-Build-WithXSpp](https://bugzilla.redhat.com/show_bug.cgi?id=876405)
+ * [perl-Math-Clipper](https://bugzilla.redhat.com/show_bug.cgi?id=887913)
  * [perl-Math-Geometry-Voronoi](https://bugzilla.redhat.com/show_bug.cgi?id=877765)
  * [perl-Math-Libm](https://bugzilla.redhat.com/show_bug.cgi?id=887846) - approved
  * [perl-UUID-Tiny](https://bugzilla.redhat.com/show_bug.cgi?id=878680) - approved
