@@ -1,18 +1,24 @@
 Name:           perl-Math-Geometry-Voronoi
 Version:        1.3
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        Compute Voronoi diagrams from sets of points
-License:        GPL+ or Artistic
-# TODO contact Steve and Derek about the license
+License:        (GPL+ or Artistic) and MIT
+# Perl module is licensed as Perl, underlaying C code is MIT
 Group:          Development/Libraries
 URL:            http://search.cpan.org/dist/Math-Geometry-Voronoi/
 Source0:        http://www.cpan.org/authors/id/S/SA/SAMTREGAR/Math-Geometry-Voronoi-%{version}.tar.gz
+Source1:        Math-Geometry-Voronoi-license-mail1.txt
+Source2:        Math-Geometry-Voronoi-license-mail2.txt
 BuildRequires:  perl(Class::Accessor)
 BuildRequires:  perl(ExtUtils::MakeMaker)
 BuildRequires:  perl(List::Util)
 BuildRequires:  perl(Params::Validate)
 BuildRequires:  perl(Scalar::Util)
 BuildRequires:  perl(Test::More)
+BuildRequires:  perl(File::Find)
+BuildRequires:  perl(File::Temp)
+BuildRequires:  perl(Exporter)
+BuildRequires:  perl(XSLoader)
 BuildRequires:  glibc-devel
 Requires:       perl(Class::Accessor)
 Requires:       perl(List::Util)
@@ -29,17 +35,20 @@ Voronoi diagrams can be found here:
 
 %prep
 %setup -q -n Math-Geometry-Voronoi-%{version}
+cp -p %{SOURCE1} license-mail1.txt
+cp -p %{SOURCE2} license-mail2.txt
 
 %build
 %{__perl} Makefile.PL INSTALLDIRS=vendor OPTIMIZE="$RPM_OPT_FLAGS"
 make %{?_smp_mflags}
+# Get the license from the e-mail
+tail -22 license-mail1.txt | head -20 | base64 -d > C-LICENSE
 
 %install
-make pure_install PERL_INSTALL_ROOT=%{buildroot}
+make pure_install DESTDIR=%{buildroot}
 
 find %{buildroot} -type f -name .packlist -exec rm -f {} \;
 find %{buildroot} -type f -name '*.bs' -size 0 -exec rm -f {} \;
-find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null \;
 
 %{_fixperms} %{buildroot}/*
 
@@ -47,12 +56,18 @@ find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null \;
 make test
 
 %files
-%doc Changes README
+%doc Changes C-LICENSE README license-mail*
 %{perl_vendorarch}/auto/*
 %{perl_vendorarch}/Math*
 %{_mandir}/man3/*
 
 %changelog
+* Mon Dec 17 2012 Miro Hrončok <miro@hroncok.cz> - 1.3-4
+- Added BRs again.
+- Added e-mails about the license and adapted the spec
+- PERL_INSTALL_ROOT changed to DESTDIR
+- Removed deleting empty directories
+
 * Fri Nov 16 2012 Miro Hrončok <miro@hroncok.cz> - 1.3-3
 - Removed BRs provided by perl package
 
