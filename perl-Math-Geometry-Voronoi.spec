@@ -19,7 +19,6 @@ BuildRequires:  perl(File::Find)
 BuildRequires:  perl(File::Temp)
 BuildRequires:  perl(Exporter)
 BuildRequires:  perl(XSLoader)
-BuildRequires:  glibc-devel
 Requires:       perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
 
 %{?perl_default_filter} # Filters (not)shared c libs
@@ -58,6 +57,7 @@ make test
 %changelog
 * Mon Dec 17 2012 Miro Hrončok <miro@hroncok.cz> - 1.3-5
 - Removed directly listed Requires
+- Removed glibc-devel BR
 
 * Mon Dec 17 2012 Miro Hrončok <miro@hroncok.cz> - 1.3-4
 - Added BRs again.
