@@ -1,6 +1,6 @@
 Name:           perl-Math-Clipper
-Version:        1.14
-Release:        2%{?dist}
+Version:        1.15
+Release:        1%{?dist}
 Summary:        Polygon clipping in 2D
 License:        Boost
 Group:          Development/Libraries
@@ -14,6 +14,9 @@ BuildRequires:  perl(Test::More)
 BuildRequires:  perl(Test::Deep)
 BuildRequires:  perl(File::Spec)
 BuildRequires:  perl(Carp)
+BuildRequires:  perl(Config)
+BuildRequires:  perl(Exporter)
+BuildRequires:  dos2unix
 Requires:       perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
 
 %{?perl_default_filter} # Filters (not)shared c libs
@@ -25,7 +28,7 @@ Clipper is a C++ (and Delphi) library that implements polygon clipping.
 %setup -q -n Math-Clipper-%{version}
 iconv -f iso8859-1 -t utf-8 src/clipper.cpp > src/clipper.cpp.conv && mv -f src/clipper.cpp.conv src/clipper.cpp
 iconv -f iso8859-1 -t utf-8 src/clipper.hpp > src/clipper.hpp.conv && mv -f src/clipper.hpp.conv src/clipper.hpp
-find src -name '*' -exec sed -i "s/\r//" {} \; 2>/dev/null
+find src -name '*' -exec dos2unix {} \; 2>/dev/null
 
 %build
 %{__perl} Build.PL installdirs=vendor optimize="$RPM_OPT_FLAGS"
@@ -35,7 +38,6 @@ chmod -x src/clipper.*pp
 %install
 ./Build install destdir=%{buildroot} create_packlist=0
 find %{buildroot} -type f -name '*.bs' -size 0 -exec rm -f {} \;
-find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null \;
 
 %{_fixperms} %{buildroot}/*
 
@@ -50,6 +52,12 @@ find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null \;
 %{_mandir}/man3/*
 
 %changelog
+* Mon Dec 17 2012 Miro Hrončok <miro@hroncok.cz> - 1.15-1
+- New version
+- Added perl(Config) and perl(Exporter) to BRs
+- Removed deleting empty directories
+- using dos2unix instead of sed
+
 * Fri Nov 16 2012 Miro Hrončok <miro@hroncok.cz> - 1.14-2
 - Removed BRs provided by perl package
 
