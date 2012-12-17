@@ -30,8 +30,7 @@ Requires:       perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $versi
 %{?perl_default_filter} # Filters (not)shared c libs
 
 %description
-This module computes Voronoi diagrams from a set of input points. Info on
-Voronoi diagrams can be found here:
+This module computes Voronoi diagrams from a set of input points.
 
 %prep
 %setup -q -n Math-Geometry-Voronoi-%{version}
