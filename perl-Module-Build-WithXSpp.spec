@@ -1,32 +1,28 @@
 Name:           perl-Module-Build-WithXSpp
 Version:        0.12
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        XS++ enhanced flavor of Module::Build
 License:        GPL+ or Artistic
 Group:          Development/Libraries
 URL:            http://search.cpan.org/dist/Module-Build-WithXSpp/
 Source0:        http://www.cpan.org/authors/id/S/SM/SMUELLER/Module-Build-WithXSpp-%{version}.tar.gz
 BuildArch:      noarch
-BuildRequires:  perl(Digest::MD5)
-BuildRequires:  perl(ExtUtils::CBuilder)
 BuildRequires:  perl(ExtUtils::CppGuess) >= 0.04
-BuildRequires:  perl(ExtUtils::ParseXS) >= 2.2205
-BuildRequires:  perl(ExtUtils::Typemaps) >= 1.00
-BuildRequires:  perl(ExtUtils::XSpp) >= 0.11
+BuildRequires:  perl(File::Spec)
 BuildRequires:  perl(Module::Build) >= 0.26
 BuildRequires:  perl(Test::More)
-BuildRequires:  perl(File::Spec)
-Requires:       perl(Digest::MD5)
-Requires:       perl(ExtUtils::CBuilder)
 Requires:       perl(ExtUtils::CppGuess) >= 0.04
 Requires:       perl(ExtUtils::ParseXS) >= 2.2205
 Requires:       perl(ExtUtils::Typemaps) >= 1.00
 Requires:       perl(ExtUtils::XSpp) >= 0.11
-Requires:       perl(Module::Build) >= 0.26
-Requires:       perl(File::Spec)
 Requires:       perl(File::Basename)
-Requires:       perl(XSLoader)
+Requires:       perl(File::Spec)
+Requires:       perl(Module::Build) >= 0.26
 Requires:       perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
+
+# Filtering unversioned requires
+%filter_from_requires /perl(Module::Build)/d
+%filter_from_requires /perl(ExtUtils::CppGuess)/d
 
 %description
 This subclass of Module::Build adds some tools and processes to make it
@@ -41,7 +37,6 @@ easier to use for wrapping C++ using XS++ (ExtUtils::XSpp).
 
 %install
 ./Build install destdir=%{buildroot} create_packlist=0
-find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null \;
 
 %{_fixperms} %{buildroot}/*
 
@@ -49,11 +44,19 @@ find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null \;
 ./Build test
 
 %files
-%doc Changes META.json README
+%doc Changes README
 %{perl_vendorlib}/*
 %{_mandir}/man3/*
 
 %changelog
+* Thu Dec 20 2012 Miro Hrončok <miro@hroncok.cz> - 0.12-3
+- Removed deleting empty dirs in %%install section
+- Do not package META.json
+- Removed (B)Rs: perl(XSLoader), perl(Digest::MD5), perl(ExtUtils::CBuilder)
+- Removed BRs: perl(ExtUtils::ParseXS), perl(ExtUtils::Typemaps), perl(ExtUtils::XSpp)
+- Filter unversioned Requires: perl(Module::Build), perl(ExtUtils::CppGuess)
+- Sort (B)Rs lexicografically
+
 * Fri Nov 16 2012 Miro Hrončok <miro@hroncok.cz> - 0.12-2
 - Removed BRs provided by perl package
 
