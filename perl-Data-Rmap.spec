@@ -1,33 +1,36 @@
 Name:           perl-Data-Rmap
 Version:        0.62
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        Recursive map, apply a block to a data structure
 License:        GPL+ or Artistic
 Group:          Development/Libraries
 URL:            http://search.cpan.org/dist/Data-Rmap/
 Source0:        http://www.cpan.org/authors/id/B/BO/BOWMANBS/Data-Rmap-%{version}.tar.gz
 BuildArch:      noarch
+BuildRequires:  perl(Carp)
+BuildRequires:  perl(Data::Dumper)
+BuildRequires:  perl(Exporter)
 BuildRequires:  perl(Module::Build)
-BuildRequires:  perl(Test::More)
+BuildRequires:  perl(Scalar::Util)
 BuildRequires:  perl(Test::Exception)
-Requires:       perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
+BuildRequires:  perl(Test::More)
+Requires:       perl(:MODULE_COMPAT_%(eval "`perl -V:version`"; echo $version))
 
 %description
-Recursively evaluate a BLOCK over a list of data structures 
-(locally setting $_ to each element) and return the list composed
-of the results of such evaluations.  $_ can be used to modify
+This perl module evaluates a BLOCK over a list of data structures
+recursively (locally setting $_ to each element) and return the list
+composed of the results of such evaluations.  $_ can be used to modify
 the elements.
 
 %prep
 %setup -q -n Data-Rmap-%{version}
 
 %build
-%{__perl} Build.PL installdirs=vendor
+perl Build.PL installdirs=vendor
 ./Build
 
 %install
 ./Build install destdir=%{buildroot} create_packlist=0
-find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null \;
 
 %{_fixperms} %{buildroot}/*
 
@@ -41,6 +44,12 @@ find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null \;
 %{_mandir}/man3/*
 
 %changelog
+* Thu Dec 20 2012 Miro Hrončok <miro@hroncok.cz> - 0.62-4
+- Chnaged the description a bit for better language
+- Replaced %%{__perl} with perl
+- Removed deleting empty directories in %%install section
+- Added BRs for tests
+
 * Fri Nov 16 2012 Miro Hrončok <miro@hroncok.cz> - 0.62-3
 - Removed BRs provided by perl package and more
 
