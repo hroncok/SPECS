@@ -21,8 +21,8 @@ Requires:       perl(Module::Build) >= 0.26
 Requires:       perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
 
 # Filtering unversioned requires
-%filter_from_requires /perl(Module::Build)/d
-%filter_from_requires /perl(ExtUtils::CppGuess)/d
+%global __requires_exclude %{?__requires_exclude:%__requires_exclude|}^perl\\(Module::Build\\)$
+%global __requires_exclude %{?__requires_exclude:%__requires_exclude|}^perl\\(ExtUtils::CppGuess\\)$
 
 %description
 This subclass of Module::Build adds some tools and processes to make it
