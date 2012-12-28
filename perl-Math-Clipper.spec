@@ -1,7 +1,7 @@
 Name:           perl-Math-Clipper
-Version:        1.15
+Version:        1.16
 Release:        1%{?dist}
-Summary:        Polygon clipping in 2D
+Summary:        Perl wrapper around Clipper library
 License:        Boost
 Group:          Development/Libraries
 URL:            http://search.cpan.org/dist/Math-Clipper/
@@ -16,24 +16,26 @@ BuildRequires:  perl(File::Spec)
 BuildRequires:  perl(Carp)
 BuildRequires:  perl(Config)
 BuildRequires:  perl(Exporter)
+BuildRequires:  polyclipping-devel
 BuildRequires:  dos2unix
 Requires:       perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
+Requires:       libpolyclipping.so.3
 
 %{?perl_default_filter} # Filters (not)shared c libs
 
 %description
-Clipper is a C++ (and Delphi) library that implements polygon clipping.
+Perl module Math::Clipper is a wrapper around a Clipper library
+that implements polygon clipping.
 
 %prep
 %setup -q -n Math-Clipper-%{version}
-iconv -f iso8859-1 -t utf-8 src/clipper.cpp > src/clipper.cpp.conv && mv -f src/clipper.cpp.conv src/clipper.cpp
-iconv -f iso8859-1 -t utf-8 src/clipper.hpp > src/clipper.hpp.conv && mv -f src/clipper.hpp.conv src/clipper.hpp
+rm -f src/clipper.{c,h}pp
 find src -name '*' -exec dos2unix {} \; 2>/dev/null
+sed -i 's|clipper.hpp|polyclipping/clipper.hpp|' src/myinit.h
 
 %build
 %{__perl} Build.PL installdirs=vendor optimize="$RPM_OPT_FLAGS"
 ./Build
-chmod -x src/clipper.*pp
 
 %install
 ./Build install destdir=%{buildroot} create_packlist=0
@@ -46,12 +48,15 @@ find %{buildroot} -type f -name '*.bs' -size 0 -exec rm -f {} \;
 
 %files
 %doc Changes META.json xsp
-%doc src/clipper.*pp src/clipper.cpp src/*.h
 %{perl_vendorarch}/auto/*
 %{perl_vendorarch}/Math*
 %{_mandir}/man3/*
 
 %changelog
+* Fri Dec 28 2012 Miro Hrončok <miro@hroncok.cz> - 1.16-1
+- New version
+- Removed boundled C clipper and using the distribution one
+
 * Mon Dec 17 2012 Miro Hrončok <miro@hroncok.cz> - 1.15-1
 - New version
 - Added perl(Config) and perl(Exporter) to BRs
