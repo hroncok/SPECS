@@ -18,7 +18,6 @@ BuildRequires:  perl(Carp)
 BuildRequires:  perl(Config)
 BuildRequires:  perl(Exporter)
 BuildRequires:  polyclipping-devel
-BuildRequires:  dos2unix
 Requires:       perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
 
 %{?perl_default_filter} # Filters (not)shared c libs
@@ -31,7 +30,6 @@ that implements polygon clipping.
 %setup -q -n Math-Clipper-%{version}
 %patch0 -p1
 rm -f src/clipper.{c,h}pp
-find src -name '*' -exec dos2unix {} \; 2>/dev/null
 
 %build
 %{__perl} Build.PL installdirs=vendor optimize="$RPM_OPT_FLAGS"
@@ -56,6 +54,7 @@ find %{buildroot} -type f -name '*.bs' -size 0 -exec rm -f {} \;
 * Fri Dec 28 2012 Miro Hrončok <miro@hroncok.cz> - 1.16-1
 - New version
 - Removed boundled C clipper and using the distribution one
+- Removed no longer needed dos2unix
 
 * Mon Dec 17 2012 Miro Hrončok <miro@hroncok.cz> - 1.15-1
 - New version
