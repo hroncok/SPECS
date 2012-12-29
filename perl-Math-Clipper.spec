@@ -6,6 +6,7 @@ License:        Boost
 Group:          Development/Libraries
 URL:            http://search.cpan.org/dist/Math-Clipper/
 Source0:        http://www.cpan.org/authors/id/A/AA/AAR/Math-Clipper-%{version}.tar.gz
+Patch0:         %{name}-1.16-1.no-c-sources.patch
 BuildRequires:  perl(ExtUtils::Typemaps::Default) >= 0.05
 BuildRequires:  perl(ExtUtils::XSpp) >= 0.16
 BuildRequires:  perl(Module::Build)
@@ -19,7 +20,6 @@ BuildRequires:  perl(Exporter)
 BuildRequires:  polyclipping-devel
 BuildRequires:  dos2unix
 Requires:       perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
-Requires:       libpolyclipping.so.3
 
 %{?perl_default_filter} # Filters (not)shared c libs
 
@@ -29,9 +29,9 @@ that implements polygon clipping.
 
 %prep
 %setup -q -n Math-Clipper-%{version}
+%patch0 -p1
 rm -f src/clipper.{c,h}pp
 find src -name '*' -exec dos2unix {} \; 2>/dev/null
-sed -i 's|clipper.hpp|polyclipping/clipper.hpp|' src/myinit.h
 
 %build
 %{__perl} Build.PL installdirs=vendor optimize="$RPM_OPT_FLAGS"
