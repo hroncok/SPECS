@@ -1,24 +1,26 @@
 Name:           perl-Math-Prime-XS
 Version:        0.26
-Release:        4%{?dist}
+Release:        5%{?dist}
 Summary:        Detect and calculate prime numbers with deterministic tests
 License:        GPL+ or Artistic
 Group:          Development/Libraries
 URL:            http://search.cpan.org/dist/Math-Prime-XS/
 Source0:        http://www.cpan.org/authors/id/K/KR/KRYDE/Math-Prime-XS-%{version}.tar.gz
 BuildRequires:  perl(boolean)
+BuildRequires:  perl(Benchmark)
 BuildRequires:  perl(Carp)
+BuildRequires:  perl(Config)
+BuildRequires:  perl(Exporter)
 BuildRequires:  perl(ExtUtils::CBuilder)
+BuildRequires:  perl(File::HomeDir)
+BuildRequires:  perl(File::Spec)
 BuildRequires:  perl(Module::Build)
 BuildRequires:  perl(Params::Validate)
+BuildRequires:  perl(POSIX)
 BuildRequires:  perl(Scalar::Util)
-BuildRequires:  perl(File::Spec)
-BuildRequires:  perl(File::HomeDir)
 BuildRequires:  perl(Test::More)
-BuildRequires:  perl(Test::Pod) >= 1.14
 BuildRequires:  perl(Test::Pod::Coverage) >= 1.04
-Requires:       perl(Test::Pod) >= 1.14
-Requires:       perl(Test::Pod::Coverage) >= 1.04
+BuildRequires:  perl(Test::Pod) >= 1.14
 Requires:       perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
 
 %{?perl_default_filter} # Filters (not)shared c libs
@@ -38,7 +40,6 @@ calculation or Trial division.
 %install
 ./Build install destdir=%{buildroot} create_packlist=0
 find %{buildroot} -type f -name '*.bs' -size 0 -exec rm -f {} \;
-find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null \;
 
 %{_fixperms} %{buildroot}/*
 
@@ -53,6 +54,11 @@ find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null \;
 %{_mandir}/man3/*
 
 %changelog
+* Sun Dec 30 2012 Miro Hrončok <miro@hroncok.cz> - 0.26-5
+- Removed deleting empty directories
+- Removed run-time Test Requires
+- Added previously removed BRs
+
 * Fri Nov 16 2012 Miro Hrončok <miro@hroncok.cz> - 0.26-4
 - Removed BRs provided by perl package
 

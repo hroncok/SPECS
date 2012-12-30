@@ -1,6 +1,6 @@
 Name:           perl-Math-Factor-XS
 Version:        0.40
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        Factorize numbers and calculate matching multiplications
 License:        GPL+ or Artistic
 Group:          Development/Libraries
@@ -8,17 +8,18 @@ URL:            http://search.cpan.org/dist/Math-Factor-XS/
 Source0:        http://www.cpan.org/authors/id/K/KR/KRYDE/Math-Factor-XS-%{version}.tar.gz
 BuildRequires:  perl(boolean)
 BuildRequires:  perl(Carp)
+BuildRequires:  perl(Exporter)
 BuildRequires:  perl(ExtUtils::CBuilder)
 BuildRequires:  perl(List::MoreUtils)
+BuildRequires:  perl(Math::BigInt)
 BuildRequires:  perl(Module::Build)
 BuildRequires:  perl(Params::Validate)
+BuildRequires:  perl(POSIX)
 BuildRequires:  perl(Scalar::Util)
 BuildRequires:  perl(Test::More)
-BuildRequires:  perl(Test::Pod) >= 1.14
 BuildRequires:  perl(Test::Pod::Coverage) >= 1.04
-BuildRequires:  perl(Scalar::Util)
-Requires:       perl(Test::Pod) >= 1.14
-Requires:       perl(Test::Pod::Coverage) >= 1.04
+BuildRequires:  perl(Test::Pod) >= 1.14
+BuildRequires:  perl(XSLoader)
 Requires:       perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
 
 %{?perl_default_filter} # Filters (not)shared c libs
@@ -42,7 +43,6 @@ rm -rf %{buildroot}
 
 ./Build install destdir=%{buildroot} create_packlist=0
 find %{buildroot} -type f -name '*.bs' -size 0 -exec rm -f {} \;
-find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null \;
 
 %{_fixperms} %{buildroot}/*
 
@@ -56,6 +56,11 @@ find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null \;
 %{_mandir}/man3/*
 
 %changelog
+* Sun Dec 30 2012 Miro Hrončok <miro@hroncok.cz> - 0.40-4
+- Removed deleting empty directories
+- Removed run-time Test Requires
+- Added previously removed BRs
+
 * Fri Nov 16 2012 Miro Hrončok <miro@hroncok.cz> - 0.40-3
 - Removed BRs provided by perl package
 
