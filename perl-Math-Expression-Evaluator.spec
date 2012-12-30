@@ -1,6 +1,6 @@
 Name:           perl-Math-Expression-Evaluator
 Version:        0.3.2
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Parses, compiles and evaluates mathematics expressions
 License:        GPL+ or Artistic
 Group:          Development/Libraries
@@ -8,15 +8,16 @@ URL:            http://search.cpan.org/dist/Math-Expression-Evaluator/
 Source0:        http://www.cpan.org/authors/id/M/MO/MORITZ/Math-Expression-Evaluator-v%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires:  perl >= 0:5.006001
+BuildRequires:  perl(Benchmark)
 BuildRequires:  perl(Carp)
+BuildRequires:  perl(Data::Dumper)
+BuildRequires:  perl(Exporter)
+BuildRequires:  perl(Math::Trig)
 BuildRequires:  perl(Module::Build)
+BuildRequires:  perl(POSIX)
 BuildRequires:  perl(Test::More)
 BuildRequires:  perl(Test::Pod::Coverage)
-Requires:       perl(lib)
-Requires:       perl(Benchmark)
 Requires:       perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
-
-%{?perl_default_filter} # Filters (not)shared c libs
 
 %description
 Math::Expression::Evaluator is a parser, compiler and interpreter for
@@ -33,7 +34,6 @@ iconv -f iso8859-1 -t utf-8 README > README.conv && mv -f README.conv README
 
 %install
 ./Build install destdir=%{buildroot} create_packlist=0
-find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null \;
 find %{buildroot} -type f -name '*.pm' -exec chmod -x {} 2>/dev/null ';'
 
 %{_fixperms} %{buildroot}/*
@@ -47,6 +47,12 @@ find %{buildroot} -type f -name '*.pm' -exec chmod -x {} 2>/dev/null ';'
 %{_mandir}/man3/*
 
 %changelog
+* Sun Dec 30 2012 Miro Hrončok <miro@hroncok.cz> - 0.3.2-3
+- Removed the deleting empty directories
+- Removed filter for shared libs, noarch
+- Removed explicitly Required Benchmark and lib, they are not needed
+- Added previously removed BRs back
+
 * Fri Nov 16 2012 Miro Hrončok <miro@hroncok.cz> - 0.3.2-2
 - Removed BRs provided by perl package
 
