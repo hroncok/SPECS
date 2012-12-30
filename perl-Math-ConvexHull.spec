@@ -9,10 +9,9 @@ Source0:        http://www.cpan.org/authors/id/S/SM/SMUELLER/Math-ConvexHull-%{v
 BuildArch:      noarch
 BuildRequires:  perl(Exporter)
 BuildRequires:  perl(ExtUtils::MakeMaker)
-BuildRequires:  perl(File::Find)
-BuildRequires:  perl(File::Temp)
 BuildRequires:  perl(List::Util)
 BuildRequires:  perl(Test::More)
+BuildRequires:  perl(XSLoader)
 BuildRequires:  dos2unix
 Requires:       perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
 
@@ -53,7 +52,7 @@ make test
 * Sun Dec 30 2012 Miro Hrončok <miro@hroncok.cz> - 1.04-3
 - PERL_INSTALL_ROOT changed to DESTDIR
 - Using dos2unix instead of sed
-- Added some previously removed BRs back
+- 
 
 * Fri Nov 16 2012 Miro Hrončok <miro@hroncok.cz> - 1.04-2
 - Removed BRs provided by perl package
