@@ -1,24 +1,22 @@
 Name:           perl-Regexp-Grammars
 Version:        1.021
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Add grammatical parsing features to Perl 5.10 regexps
 License:        GPL+ or Artistic
 Group:          Development/Libraries
 URL:            http://search.cpan.org/dist/Regexp-Grammars/
 Source0:        http://www.cpan.org/authors/id/D/DC/DCONWAY/Regexp-Grammars-%{version}.tar.gz
 BuildArch:      noarch
+BuildRequires:  perl(Data::Dumper)
 BuildRequires:  perl(ExtUtils::MakeMaker)
-BuildRequires:  perl(Module::Build)
-BuildRequires:  perl(Test::More)
-BuildRequires:  perl(version)
 BuildRequires:  perl(List::Util)
+BuildRequires:  perl(Module::Build)
 BuildRequires:  perl(Moose)
 BuildRequires:  perl(Moose::Util::TypeConstraints)
 BuildRequires:  perl(Scalar::Util)
-Requires:       perl(version)
+BuildRequires:  perl(Test::More)
+BuildRequires:  perl(version)
 Requires:       perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
-
-%{?perl_default_filter} # Filters (not)shared c libs
 
 %description
 This module adds a small number of new regexp constructs that can be used
@@ -33,7 +31,6 @@ within Perl 5.10 patterns to implement complete recursive-descent parsing.
 
 %install
 ./Build install destdir=%{buildroot} create_packlist=0
-find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null \;
 
 %{_fixperms} %{buildroot}/*
 
@@ -46,6 +43,11 @@ find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null \;
 %{_mandir}/man3/*
 
 %changelog
+* Sun Dec 30 2012 Miro Hrončok <miro@hroncok.cz> - 1.021-3
+- Removed the deleting empty directories
+- Removed filter of shared libs, noarch
+- Added BR perl(Data::Dumper)
+
 * Fri Nov 16 2012 Miro Hrončok <miro@hroncok.cz> - 1.021-2
 - Removed BRs provided by perl package
 
