@@ -1,15 +1,17 @@
 Name:           perl-Math-ConvexHull-MonotoneChain
 Version:        0.01
-Release:        2%{?dist}
-Summary:        Andrew's monotone chain algorithm for finding a convex hull in 2D
+Release:        3%{?dist}
+Summary:        Monotone chain algorithm for finding a convex hull in 2D
 License:        GPL+ or Artistic
 Group:          Development/Libraries
 URL:            http://search.cpan.org/dist/Math-ConvexHull-MonotoneChain/
 Source0:        http://www.cpan.org/authors/id/S/SM/SMUELLER/Math-ConvexHull-MonotoneChain-%{version}.tar.gz
+BuildRequires:  perl(Exporter)
 BuildRequires:  perl(ExtUtils::MakeMaker)
 BuildRequires:  perl(Test::More) >= 0.88
-Requires:       perl(XSLoader)
+BuildRequires:  perl(XSLoader)
 Requires:       perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
+Requires:       perl(XSLoader)
 
 %{?perl_default_filter} # Filters (not)shared c libs
 
@@ -30,11 +32,10 @@ in practice since it avoids polar coordinates.
 make %{?_smp_mflags}
 
 %install
-make pure_install PERL_INSTALL_ROOT=$RPM_BUILD_ROOT
+make pure_install DESTDIR=$RPM_BUILD_ROOT
 
 find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} \;
 find $RPM_BUILD_ROOT -type f -name '*.bs' -size 0 -exec rm -f {} \;
-find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 
 %{_fixperms} $RPM_BUILD_ROOT/*
 
@@ -48,6 +49,12 @@ make test
 %{_mandir}/man3/*
 
 %changelog
+* Sun Dec 30 2012 Miro Hrončok <miro@hroncok.cz> - 0.01-3
+- PERL_INSTALL_ROOT changed to DESTDIR
+- Removed the deleting empty directories
+- Removed Andrew from summary
+- Added BR Exporter back
+
 * Fri Nov 16 2012 Miro Hrončok <miro@hroncok.cz> - 0.01-2
 - Removed BRs provided by perl package
 
