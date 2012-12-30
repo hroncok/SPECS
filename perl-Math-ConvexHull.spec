@@ -1,15 +1,19 @@
 Name:           perl-Math-ConvexHull
 Version:        1.04
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Calculate convex hulls using Graham's scan (n*log(n))
 License:        GPL+ or Artistic
 Group:          Development/Libraries
 URL:            http://search.cpan.org/dist/Math-ConvexHull/
 Source0:        http://www.cpan.org/authors/id/S/SM/SMUELLER/Math-ConvexHull-%{version}.tar.gz
 BuildArch:      noarch
+BuildRequires:  perl(Exporter)
 BuildRequires:  perl(ExtUtils::MakeMaker)
+BuildRequires:  perl(File::Find)
+BuildRequires:  perl(File::Temp)
 BuildRequires:  perl(List::Util)
 BuildRequires:  perl(Test::More)
+BuildRequires:  dos2unix
 Requires:       perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
 
 %{?perl_default_filter} # Filters (not)shared c libs
@@ -24,14 +28,14 @@ the convex hull. These may or may not be implemented in a future version.
 
 %prep
 %setup -q -n Math-ConvexHull-%{version}
-sed -i "s/\r//" Changes
+dos2unix Changes
 
 %build
 %{__perl} Makefile.PL INSTALLDIRS=vendor
 make %{?_smp_mflags}
 
 %install
-make pure_install PERL_INSTALL_ROOT=%{buildroot}
+make pure_install DESTDIR=%{buildroot}
 
 find %{buildroot} -type f -name .packlist -exec rm -f {} \;
 
@@ -40,13 +44,17 @@ find %{buildroot} -type f -name .packlist -exec rm -f {} \;
 %check
 make test
 
-
 %files
 %doc Changes README
 %{perl_vendorlib}/*
 %{_mandir}/man3/*
 
 %changelog
+* Sun Dec 30 2012 Miro Hrončok <miro@hroncok.cz> - 1.04-3
+- PERL_INSTALL_ROOT changed to DESTDIR
+- Using dos2unix instead of sed
+- Added some previously removed BRs back
+
 * Fri Nov 16 2012 Miro Hrončok <miro@hroncok.cz> - 1.04-2
 - Removed BRs provided by perl package
 
