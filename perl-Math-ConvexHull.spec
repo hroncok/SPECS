@@ -15,8 +15,6 @@ BuildRequires:  perl(Test::More)
 BuildRequires:  dos2unix
 Requires:       perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
 
-%{?perl_default_filter} # Filters (not)shared c libs
-
 %description
 Math::ConvexHull is a simple module that calculates convex hulls from a set
 of points in 2D space. It is a straightforward implementation of the
@@ -52,7 +50,8 @@ make test
 * Sun Dec 30 2012 Miro Hrončok <miro@hroncok.cz> - 1.04-3
 - PERL_INSTALL_ROOT changed to DESTDIR
 - Using dos2unix instead of sed
-- 
+- Added some remvoed BRs back
+- Do not filter shared C libs (noarch)
 
 * Fri Nov 16 2012 Miro Hrončok <miro@hroncok.cz> - 1.04-2
 - Removed BRs provided by perl package
