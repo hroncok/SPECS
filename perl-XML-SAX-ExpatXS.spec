@@ -1,15 +1,20 @@
 Name:           perl-XML-SAX-ExpatXS
 Version:        1.33
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Perl SAX 2 XS extension to Expat parser
 License:        GPL+ or Artistic
 Group:          Development/Libraries
 URL:            http://search.cpan.org/dist/XML-SAX-ExpatXS/
 Source0:        http://www.cpan.org/authors/id/P/PC/PCIMPRICH/XML-SAX-ExpatXS-%{version}.tar.gz
-BuildRequires:  perl(ExtUtils::MakeMaker)
-BuildRequires:  perl(XML::SAX) >= 0.96
 BuildRequires:  perl(Carp)
+BuildRequires:  perl(Config)
+BuildRequires:  perl(DynaLoader)
+BuildRequires:  perl(ExtUtils::MakeMaker)
+BuildRequires:  perl(IO::File)
+BuildRequires:  perl(Test)
+BuildRequires:  perl(vars)
 BuildRequires:  perl(XML::SAX::Base)
+BuildRequires:  perl(XML::SAX) >= 0.96
 BuildRequires:  expat-devel
 Requires:       perl(XML::SAX) >= 0.96
 Requires:       perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
@@ -31,11 +36,10 @@ yes | %{__perl} Makefile.PL INSTALLDIRS=vendor OPTIMIZE="$RPM_OPT_FLAGS"
 make %{?_smp_mflags}
 
 %install
-make pure_install PERL_INSTALL_ROOT=$RPM_BUILD_ROOT
+make pure_install DESTDIR=$RPM_BUILD_ROOT
 
 find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} \;
 find $RPM_BUILD_ROOT -type f -name '*.bs' -size 0 -exec rm -f {} \;
-find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 
 %{_fixperms} $RPM_BUILD_ROOT/*
 
@@ -49,6 +53,11 @@ make test
 %{_mandir}/man3/*
 
 %changelog
+* Sun Dec 30 2012 Miro Hrončok <miro@hroncok.cz> - 1.33-3
+- PERL_INSTALL_ROOT changed to DESTDIR
+- Removed the deleting empty directories
+- Added removed BRs back
+
 * Fri Nov 16 2012 Miro Hrončok <miro@hroncok.cz> - 1.33-2
 - Removed BRs provided by perl package
 
