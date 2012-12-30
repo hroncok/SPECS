@@ -2,7 +2,7 @@
 %global         snapshot 20121103git%{githash}
 Name:           printrun
 Version:        0.0
-Release:        12.%{snapshot}%{?dist}
+Release:        13.%{snapshot}%{?dist}
 Summary:        RepRap printer interface and tools
 License:        GPLv3+
 Group:          Applications/Engineering
@@ -11,11 +11,10 @@ URL:            https://github.com/kliment/Printrun
 # git archive --format tar.gz master > ../%%{name}-%%{snapshot}.tar.gz
 Source0:        %{name}-%{snapshot}.tar.gz
 
-%global         additional https://raw.github.com/hroncok/RPMAdditionalSources/master/
 # Desktop files
-Source1:        %{additional}pronsole.desktop
-Source2:        %{additional}pronterface.desktop
-Source3:        %{additional}plater.desktop
+Source1:        pronsole.desktop
+Source2:        pronterface.desktop
+Source3:        plater.desktop
 
 BuildArch:      noarch
 BuildRequires:  python2-devel
@@ -157,6 +156,9 @@ cd -
 %doc README* COPYING
 
 %changelog
+* Sun Dec 30 2012 Miro Hrončok <miro@hroncok.cz> - 0.0-13.20121103git6fa47668f2
+- Do not download the desktop files from my GitHub
+
 * Fri Nov 23 2012 Miro Hrončok <miro@hroncok.cz> - 0.0-12.20121103git6fa47668f2
 - Fixing a source mistake
 - Redone, using setup.py now
