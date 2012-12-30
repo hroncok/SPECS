@@ -1,6 +1,6 @@
 Name:           perl-Math-NumSeq
-Version:        52
-Release:        2%{?dist}
+Version:        55
+Release:        1%{?dist}
 Summary:        Number sequences
 License:        GPLv3+
 Group:          Development/Libraries
@@ -9,48 +9,57 @@ Source0:        http://www.cpan.org/authors/id/K/KR/KRYDE/Math-NumSeq-%{version}
 BuildArch:      noarch
 BuildRequires:  perl >= 0:5.004
 BuildRequires:  perl(constant::defer) >= 1
+BuildRequires:  perl(Carp)
+BuildRequires:  perl(Cwd)
+BuildRequires:  perl(Data::Dumper)
+BuildRequires:  perl(Devel::FindRef)
+BuildRequires:  perl(Devel::StackTrace)
+BuildRequires:  perl(Exporter)
 BuildRequires:  perl(ExtUtils::MakeMaker)
+BuildRequires:  perl(ExtUtils::Manifest)
 BuildRequires:  perl(File::HomeDir)
+BuildRequires:  perl(File::Path)
 BuildRequires:  perl(File::Spec)
+BuildRequires:  perl(File::Temp)
+BuildRequires:  perl(FindBin)
+BuildRequires:  perl(Getopt::Long)
+BuildRequires:  perl(Language::Expr)
+BuildRequires:  perl(Language::Expr::Compiler::Perl)
 BuildRequires:  perl(List::Util)
+BuildRequires:  perl(Math::BigInt)
+BuildRequires:  perl(Math::Expression::Evaluator)
 BuildRequires:  perl(Math::Factor::XS) >= 0.40
 BuildRequires:  perl(Math::Libm)
 BuildRequires:  perl(Math::Prime::XS) >= 0.23
+BuildRequires:  perl(Math::Symbolic)
+BuildRequires:  perl(Math::Trig)
 BuildRequires:  perl(Module::Load)
 BuildRequires:  perl(Module::Pluggable)
+BuildRequires:  perl(Module::Pluggable)
 BuildRequires:  perl(Module::Util)
+BuildRequires:  perl(Parse::CPAN::Meta)
+BuildRequires:  perl(POSIX)
+BuildRequires:  perl(Scalar::Util)
+BuildRequires:  perl(SDBM_File)
+BuildRequires:  perl(Test)
 BuildRequires:  perl(Test::ConsistentVersion)
+BuildRequires:  perl(Test::More)
+BuildRequires:  perl(Test::Synopsis)
+BuildRequires:  perl(Test::YAML::Meta)
 BuildRequires:  perl(YAML)
 BuildRequires:  perl(YAML::Syck)
 BuildRequires:  perl(YAML::Tiny)
 BuildRequires:  perl(YAML::XS)
-BuildRequires:  perl(Parse::CPAN::Meta)
-BuildRequires:  perl(ExtUtils::Manifest)
-BuildRequires:  perl(Test::Synopsis)
-BuildRequires:  perl(Test::More)
-BuildRequires:  perl(Test::YAML::Meta)
-BuildRequires:  perl(Devel::StackTrace)
-BuildRequires:  perl(Scalar::Util)
-BuildRequires:  perl(Devel::FindRef)
-BuildRequires:  perl(Carp)
-BuildRequires:  perl(Math::Symbolic)
-BuildRequires:  perl(Math::Expression::Evaluator)
-BuildRequires:  perl(Language::Expr)
-BuildRequires:  perl(Language::Expr::Compiler::Perl)
-BuildRequires:  perl(Module::Pluggable)
-BuildRequires:  perl(Cwd)
 Requires:       perl(File::HomeDir)
-Requires:       perl(Module::Load)
-Requires:       perl(Math::Trig)
-Requires:       perl(Math::Symbolic)
-Requires:       perl(Math::Expression::Evaluator)
+Requires:       perl(File::Temp)
 Requires:       perl(Language::Expr)
 Requires:       perl(Language::Expr::Compiler::Perl)
+Requires:       perl(Math::Expression::Evaluator)
+Requires:       perl(Math::Symbolic)
+Requires:       perl(Math::Trig)
+Requires:       perl(Module::Load)
 Requires:       perl(SDBM_File)
-Requires:       perl(File::Temp)
 Requires:       perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
-
-%{?perl_default_filter} # Filters (not)shared c libs
 
 %description
 This is a base class for some number sequences. Sequence objects can
@@ -65,11 +74,10 @@ predicate test.
 make %{?_smp_mflags}
 
 %install
-make pure_install PERL_INSTALL_ROOT=%{buildroot}
+make pure_install DESTDIR=%{buildroot}
 
 find %{buildroot} -type f -name .packlist -exec rm -f {} \;
 find %{buildroot} -type f -name '*.bs' -size 0 -exec rm -f {} \;
-find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null \;
 
 %{_fixperms} %{buildroot}/*
 
@@ -82,6 +90,14 @@ make test
 %{_mandir}/man3/*
 
 %changelog
+* Sun Dec 30 2012 Miro Hrončok <miro@hroncok.cz> - 55-1
+- New release
+- Removed shared libs filter, noarch
+- Removed deleting empty directories
+- PERL_INSTALL_ROOT changed to DESTDIR
+- Added some of previously removed BRs
+- Sort (B)Rs lexicographically 
+
 * Fri Nov 16 2012 Miro Hrončok <miro@hroncok.cz> - 52-2
 - Removed BRs provided by perl package
 
