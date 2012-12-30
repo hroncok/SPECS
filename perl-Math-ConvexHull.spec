@@ -7,11 +7,11 @@ Group:          Development/Libraries
 URL:            http://search.cpan.org/dist/Math-ConvexHull/
 Source0:        http://www.cpan.org/authors/id/S/SM/SMUELLER/Math-ConvexHull-%{version}.tar.gz
 BuildArch:      noarch
+BuildRequires:  perl(Data::Dumper)
 BuildRequires:  perl(Exporter)
 BuildRequires:  perl(ExtUtils::MakeMaker)
 BuildRequires:  perl(List::Util)
 BuildRequires:  perl(Test::More)
-BuildRequires:  perl(XSLoader)
 BuildRequires:  dos2unix
 Requires:       perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
 
