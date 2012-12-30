@@ -1,20 +1,18 @@
 Name:           slic3r
-Version:        0.9.5
-Release:        2%{?dist}
+Version:        0.9.7
+Release:        1%{?dist}
 Summary:        G-code generator for 3D printers (RepRap, Makerbot, Ultimaker etc.)
 License:        AGPLv3 and CC-BY
 # Images are CC-BY, code is AGPLv3
 Group:          Applications/Engineering
 URL:            http://slic3r.org/
 # git clone git://github.com/alexrj/Slic3r.git && cd Slic3r
-# git archive %{version} --format tar.gz > ../%{name}-%{version}.tar.gz
+# git archive %%{version} --format tar.gz > ../%%{name}-%%{version}.tar.gz
 Source0:        %{name}-%{version}.tar.gz
-
-%global         additional https://raw.github.com/hroncok/RPMAdditionalSources/master/
 # Bash runners
-Source1:        %{additional}%{name}
+Source1:        %{name}
 # Desktop files
-Source2:        %{additional}%{name}.desktop
+Source2:        %{name}.desktop
 BuildArch:      noarch
 BuildRequires:  perl(Module::Build)
 BuildRequires:  perl(List::Util)
@@ -35,6 +33,7 @@ BuildRequires:  perl(Boost::Geometry::Utils)
 BuildRequires:  perl(Math::Geometry::Voronoi)
 BuildRequires:  perl(Growl::GNTP)
 BuildRequires:  perl(Net::DBus)
+BuildRequires:  perl(IO::Scalar)
 BuildRequires:  desktop-file-utils
 Requires:       perl(XML::SAX)
 Requires:       perl(Growl::GNTP)
@@ -43,7 +42,7 @@ Requires:       perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $versi
 
 # There is no such module on CPAN and it works like a charm without it
 %filter_from_requires /perl(Wx::Dialog)/d
-# This is provided by XML::SAX (but not statet there)
+# This is provided by XML::SAX (but not stated there)
 %filter_from_requires /perl(XML::SAX::PurePerl)/d
 %filter_setup
 
@@ -65,7 +64,6 @@ for more information.
 %install
 ./Build install destdir=%{buildroot} create_packlist=0
 find %{buildroot} -type f -name '*.bs' -size 0 -exec rm -f {} \;
-find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null \;
 %{__mkdir} -p %{buildroot}%{_datadir}/%{name}
 %{__cp} %{SOURCE1} %{buildroot}%{_bindir}
 %{__mv} -f %{buildroot}%{_bindir}/%{name}.pl %{buildroot}%{_datadir}/%{name}
@@ -89,6 +87,11 @@ desktop-file-install --dir=%{buildroot}%{_datadir}/applications %{SOURCE2} # des
 %{_mandir}/man3/*
 
 %changelog
+* Sun Dec 30 2012 Miro Hrončok <miro@hroncok.cz> - 0.9.7-1
+- New version
+- Do not download additional sources from GitHub
+- Removed deleting empty directories
+
 * Fri Nov 16 2012 Miro Hrončok <miro@hroncok.cz> - 0.9.5-2
 - Removed BRs provided by perl package
 
