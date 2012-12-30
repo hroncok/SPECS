@@ -6,8 +6,8 @@ Summary:        C# library that wraps OpenGL, OpenCL and OpenAL
 # See License.txt for more information
 License:        MIT and BSD
 URL:            http://www.opentk.com/
-# svn export https://opentk.svn.sourceforge.net/svnroot/opentk/trunk opentk
-# tar czf %%{name}-%%{snapshot}.tar.gz opentk
+# svn export https://%%{name}.svn.sourceforge.net/svnroot/%%{name}/trunk %%{name}
+# tar czf %%{name}-%%{snapshot}.tar.gz %%{name}
 Source0:        %{name}-%{snapshot}.tar.gz
 BuildArch:      noarch
 BuildRequires:  mono(xbuild)
