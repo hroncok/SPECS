@@ -25,16 +25,18 @@ iconv -f iso8859-1 -t utf-8 License.txt > License.txt.conv && mv -f License.txt.
 cd -
 
 %build
+export LANG=en_US.utf8 # Otherwise there are errors
 xbuild OpenTK.sln /p:Configuration=Release
 
 %install
 mkdir -p %{buildroot}/usr/lib/mono/gac/
 gacutil -i Binaries/OpenTK/Release/OpenTK.dll -f -package %{name} -root %{buildroot}/usr/lib
+gacutil -i Binaries/OpenTK/Release/OpenTK.GLControl.dll -f -package %{name} -root %{buildroot}/usr/lib
 
 %files
 %doc Documentation/*[^.csproj]
-/usr/lib/mono/gac/OpenTK
-/usr/lib/mono/opentk/OpenTK.dll
+/usr/lib/mono/gac/OpenTK*
+/usr/lib/mono/opentk/*
 
 %changelog
 * Sun Dec 30 2012 Miro Hrončok <miro@hroncok.cz> - 0.0-1.20120523svn3125
