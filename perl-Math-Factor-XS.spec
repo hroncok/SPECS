@@ -1,6 +1,6 @@
 Name:           perl-Math-Factor-XS
 Version:        0.40
-Release:        4%{?dist}
+Release:        5%{?dist}
 Summary:        Factorize numbers and calculate matching multiplications
 License:        GPL+ or Artistic
 Group:          Development/Libraries
@@ -32,15 +32,10 @@ Math::Factor::XS factorizes numbers by applying trial divisions.
 
 %build
 %{__perl} Build.PL installdirs=vendor optimize="$RPM_OPT_FLAGS"
-# Dirty hack for F17
-%if 0%{?fedora} < 18
-  sed -i 's/q{0.40}/q{0.38}/' Build
-%endif
+
 ./Build
 
 %install
-rm -rf %{buildroot}
-
 ./Build install destdir=%{buildroot} create_packlist=0
 find %{buildroot} -type f -name '*.bs' -size 0 -exec rm -f {} \;
 
@@ -56,6 +51,10 @@ find %{buildroot} -type f -name '*.bs' -size 0 -exec rm -f {} \;
 %{_mandir}/man3/*
 
 %changelog
+* Mon Dec 31 2012 Miro Hrončok <miro@hroncok.cz> - 0.40-5
+- Do not delete %%{buildroot} in %%install
+- Removed "dirty hack" (overwriting Module::Build min version in Build script)
+
 * Sun Dec 30 2012 Miro Hrončok <miro@hroncok.cz> - 0.40-4
 - Removed deleting empty directories
 - Removed run-time Test Requires
