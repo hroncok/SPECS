@@ -1,6 +1,6 @@
 Name:           skeinforge
 Version:        12.03.14
-Release:        9%{?dist}
+Release:        10%{?dist}
 Summary:        Converts 3D model into G-Code for RepRap
 License:        AGPLv3
 Group:          Applications/Engineering
@@ -38,20 +38,25 @@ cp -a %{SOURCE1} license.txt
 
 %install
 rm -rf models terminal.sh test.stl %{name}_application/terminal.sh %{name}_application/test.stl # removes stupid useless files
-mkdir -p %{buildroot}%{_datadir}/%{name}
-cp -ar * %{buildroot}%{_datadir}/%{name}
+mkdir -p %{buildroot}%{python_sitelib}/%{name}
+cp -ar * %{buildroot}%{python_sitelib}/%{name}
+rm -f %{python_sitelib}/%{name}/license.txt
 desktop-file-install --dir=%{buildroot}%{_datadir}/applications %{SOURCE2} # desktop file
 
 %files
 %doc license.txt
-%{_datadir}/%{name}/
+%{python_sitelib}/%{name}
 %{_datadir}/applications/skeinforge.desktop
-%exclude %{_datadir}/%{name}/documentation/
+%exclude %{python_sitelib}/%{name}/documentation/
 
 %files      doc
-%{_datadir}/%{name}/documentation/
+%{python_sitelib}/%{name}/documentation/
 
 %changelog
+* Mon Dec 31 2012 Miro Hrončok <miro@hroncok.cz> - 12.03.14-10
+- Changed location of skeinforge from %{_datadir}/%{name}/
+                                   to %{python_sitelib}/%{name}
+
 * Sun Dec 30 2012 Miro Hrončok <miro@hroncok.cz> - 12.03.14-9
 - Do not download the desktop file from my GitHub.
 

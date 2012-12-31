@@ -2,7 +2,7 @@
 %global         snapshot 20121103git%{githash}
 Name:           printrun
 Version:        0.0
-Release:        13.%{snapshot}%{?dist}
+Release:        14.%{snapshot}%{?dist}
 Summary:        RepRap printer interface and tools
 License:        GPLv3+
 Group:          Applications/Engineering
@@ -105,7 +105,7 @@ cp pronsole.ico %{buildroot}%{_datadir}/pixmaps/
 cp gcoder.* %{buildroot}%{_bindir}
 
 # use absolute path for skeinforge
-sed -i 's|python skeinforge/skeinforge_application|python %{_datadir}/skeinforge/skeinforge_application|' %{buildroot}%{_bindir}/pronsole.py
+sed -i 's|python skeinforge/skeinforge_application|python %{python_sitelib}/skeinforge/skeinforge_application|' %{buildroot}%{_bindir}/pronsole.py
 
 # desktop files
 desktop-file-install --dir=%{buildroot}%{_datadir}/applications %{SOURCE1}
@@ -156,6 +156,10 @@ cd -
 %doc README* COPYING
 
 %changelog
+* Mon Dec 31 2012 Miro Hrončok <miro@hroncok.cz> - 0.0-14.20121103git6fa47668f2
+- Changed location of skeinforge from %{_datadir}/%{name}/
+                                   to %{python_sitelib}/%{name}
+
 * Sun Dec 30 2012 Miro Hrončok <miro@hroncok.cz> - 0.0-13.20121103git6fa47668f2
 - Do not download the desktop files from my GitHub
 
