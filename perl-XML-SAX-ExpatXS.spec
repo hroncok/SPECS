@@ -1,6 +1,6 @@
 Name:           perl-XML-SAX-ExpatXS
 Version:        1.33
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        Perl SAX 2 XS extension to Expat parser
 License:        GPL+ or Artistic
 Group:          Development/Libraries
@@ -32,7 +32,7 @@ specification are considered as bugs.
 chmod -x ExpatXS.xs
 
 %build
-yes | %{__perl} Makefile.PL INSTALLDIRS=vendor OPTIMIZE="$RPM_OPT_FLAGS"
+echo n | %{__perl} Makefile.PL INSTALLDIRS=vendor OPTIMIZE="$RPM_OPT_FLAGS"
 make %{?_smp_mflags}
 
 %install
@@ -46,6 +46,17 @@ find $RPM_BUILD_ROOT -type f -name '*.bs' -size 0 -exec rm -f {} \;
 %check
 make test
 
+%triggerin -- perl-XML-SAX
+%{__perl} -MXML::SAX -e \
+  'XML::SAX->add_parser(q(XML::SAX::ExpatXS))->save_parsers()' 2>/dev/null || :
+
+%preun
+if [ $1 -eq 0 ]; then
+ %{__perl} -MXML::SAX -e \
+    'XML::SAX->remove_parser(q(XML::SAX::ExpatXS))->save_parsers()' \
+    2>/dev/null || :
+fi
+
 %files
 %doc Changes README
 %{perl_vendorarch}/auto/*
@@ -53,6 +64,9 @@ make test
 %{_mandir}/man3/*
 
 %changelog
+* Mon Dec 31 2012 Ville Skyttä <ville.skytta@iki.fi> - 1.33-4
+- Register/unregister XML::SAX parser properly
+
 * Sun Dec 30 2012 Miro Hrončok <miro@hroncok.cz> - 1.33-3
 - PERL_INSTALL_ROOT changed to DESTDIR
 - Removed the deleting empty directories
