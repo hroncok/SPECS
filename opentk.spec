@@ -31,6 +31,7 @@ xbuild OpenTK.sln /p:Configuration=Release
 %install
 mkdir -p %{buildroot}/usr/lib/mono/gac/
 gacutil -i Binaries/OpenTK/Release/OpenTK.dll -f -package %{name} -root %{buildroot}/usr/lib
+gacutil -i Binaries/OpenTK/Release/OpenTK.Compatibility.dll -f -package %{name} -root %{buildroot}/usr/lib
 gacutil -i Binaries/OpenTK/Release/OpenTK.GLControl.dll -f -package %{name} -root %{buildroot}/usr/lib
 
 %files
