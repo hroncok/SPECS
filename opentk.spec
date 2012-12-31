@@ -1,7 +1,7 @@
 Name:           opentk
 Version:        0.0
 %global         snapshot 20120523svn3125
-Release:        1.%{snapshot}%{?dist}
+Release:        2.%{snapshot}%{?dist}
 Summary:        C# library that wraps OpenGL, OpenCL and OpenAL
 # See License.txt for more information
 License:        MIT and BSD
@@ -36,8 +36,11 @@ gacutil -i Binaries/OpenTK/Release/OpenTK.GLControl.dll -f -package %{name} -roo
 %files
 %doc Documentation/*[^.csproj]
 /usr/lib/mono/gac/OpenTK*
-/usr/lib/mono/opentk/*
+/usr/lib/mono/opentk
 
 %changelog
+* Mon Dec 31 2012 Miro Hrončok <miro@hroncok.cz> - 0.0-2.20120523svn3125
+- The package now owns /usr/lib/mono/opentk directory
+
 * Sun Dec 30 2012 Miro Hrončok <miro@hroncok.cz> - 0.0-1.20120523svn3125
 - First try
