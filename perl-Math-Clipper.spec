@@ -1,23 +1,24 @@
 Name:           perl-Math-Clipper
 Version:        1.16
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Perl wrapper around Clipper library
 License:        Boost
 Group:          Development/Libraries
 URL:            http://search.cpan.org/dist/Math-Clipper/
 Source0:        http://www.cpan.org/authors/id/A/AA/AAR/Math-Clipper-%{version}.tar.gz
 Patch0:         %{name}-1.16-1.no-c-sources.patch
-BuildRequires:  perl(ExtUtils::Typemaps::Default) >= 0.05
-BuildRequires:  perl(ExtUtils::XSpp) >= 0.16
-BuildRequires:  perl(Module::Build)
-BuildRequires:  perl(Module::Build::WithXSpp)
-BuildRequires:  perl(Test::More)
-BuildRequires:  perl(Test::Deep)
-BuildRequires:  perl(File::Spec)
 BuildRequires:  perl(Carp)
 BuildRequires:  perl(Config)
+BuildRequires:  perl(constant)
 BuildRequires:  perl(Exporter)
-BuildRequires:  polyclipping-devel
+BuildRequires:  perl(ExtUtils::Typemaps::Default) >= 0.05
+BuildRequires:  perl(File::Spec)
+BuildRequires:  perl(Module::Build)
+BuildRequires:  perl(Module::Build::WithXSpp) >= 0.10
+BuildRequires:  perl(Test::Deep)
+BuildRequires:  perl(Test::More)
+BuildRequires:  perl(XSLoader)
+BuildRequires:  polyclipping-devel >= 4.10
 Requires:       perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
 
 %{?perl_default_filter} # Filters (not)shared c libs
@@ -45,12 +46,18 @@ find %{buildroot} -type f -name '*.bs' -size 0 -exec rm -f {} \;
 ./Build test
 
 %files
-%doc Changes META.json xsp
+%doc Changes
 %{perl_vendorarch}/auto/*
 %{perl_vendorarch}/Math*
 %{_mandir}/man3/*
 
 %changelog
+* Thu Jan 03 2013 Miro Hrončok <miro@hroncok.cz> - 1.16-2
+- Removed META.json and xsp from doc
+- Specified version for perl(Module::Build::WithXSpp) BR
+- Removed perl(ExtUtils::XSpp) BR
+- Added BRs perl(XSLoader) and perl(constant)
+
 * Fri Dec 28 2012 Miro Hrončok <miro@hroncok.cz> - 1.16-1
 - New version
 - Removed boundled C clipper and using the distribution one
