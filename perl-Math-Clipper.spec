@@ -54,6 +54,7 @@ find %{buildroot} -type f -name '*.bs' -size 0 -exec rm -f {} \;
 %changelog
 * Thu Jan 03 2013 Miro Hrončok <miro@hroncok.cz> - 1.16-2
 - Removed META.json and xsp from doc
+- Specified version for polyclipping-devel BR
 - Specified version for perl(Module::Build::WithXSpp) BR
 - Removed perl(ExtUtils::XSpp) BR
 - Added BRs perl(XSLoader) and perl(constant)
