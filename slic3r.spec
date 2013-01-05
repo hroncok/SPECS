@@ -1,6 +1,6 @@
 Name:           slic3r
 Version:        0.9.7
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        G-code generator for 3D printers (RepRap, Makerbot, Ultimaker etc.)
 License:        AGPLv3 and CC-BY
 # Images are CC-BY, code is AGPLv3
@@ -38,6 +38,7 @@ BuildRequires:  desktop-file-utils
 Requires:       perl(XML::SAX)
 Requires:       perl(Growl::GNTP)
 Requires:       perl(Net::DBus)
+Requires:       perl(Math::Clipper)
 Requires:       perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
 
 # There is no such module on CPAN and it works like a charm without it
@@ -87,6 +88,9 @@ desktop-file-install --dir=%{buildroot}%{_datadir}/applications %{SOURCE2} # des
 %{_mandir}/man3/*
 
 %changelog
+* Sat Jan 05 2013 Miro Hrončok <miro@hroncok.cz> - 0.9.7-2
+- Added Require perl(Math::Clipper)
+
 * Sun Dec 30 2012 Miro Hrončok <miro@hroncok.cz> - 0.9.7-1
 - New version
 - Do not download additional sources from GitHub
