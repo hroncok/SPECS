@@ -1,6 +1,6 @@
 Name:           perl-ExtUtils-Typemaps-Default
 Version:        1.01
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Set of useful typemaps
 License:        GPL+ or Artistic
 Group:          Development/Libraries
@@ -12,6 +12,9 @@ BuildRequires:  perl(Module::Build)
 BuildRequires:  perl(Test::More)
 Requires:       perl(ExtUtils::Typemaps) >= 1.00
 Requires:       perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
+
+# Filtering unversioned requires
+%global __requires_exclude %{?__requires_exclude:%__requires_exclude|}^perl\\(ExtUtils::Typemaps\\)$
 
 %description
 ExtUtils::Typemaps::Default is an ExtUtils::Typemaps subclass that provides
@@ -33,7 +36,6 @@ ExtUtils::Typemaps::Basic
 
 %install
 ./Build install destdir=%{buildroot} create_packlist=0
-find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null \;
 
 %{_fixperms} %{buildroot}/*
 
@@ -41,11 +43,16 @@ find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null \;
 ./Build test
 
 %files
-%doc Changes META.json
+%doc Changes
 %{perl_vendorlib}/*
 %{_mandir}/man3/*
 
 %changelog
+* Sun Jan 06 2013 Miro Hrončok <miro@hroncok.cz> - 1.01-3
+- Removed deleting empty dirs
+- Removed META.json from doc
+- Filtered unversioned requires
+
 * Fri Nov 16 2012 Miro Hrončok <miro@hroncok.cz> - 1.01-2
 - Removed BRs provided by perl package
 - Removed perl autofilter
