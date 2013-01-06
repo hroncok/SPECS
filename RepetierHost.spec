@@ -1,6 +1,6 @@
 Name:           RepetierHost
 Version:        0.82b
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        3D printer control software
 License:        ASL 2.0
 URL:            http://www.repetier.com/
@@ -12,7 +12,10 @@ Source1:        %{name}.desktop
 BuildArch:      noarch
 BuildRequires:  mono(xbuild)
 BuildRequires:  mono(OpenTK)
+BuildRequires:  font(freesans)
 BuildRequires:  dos2unix
+BuildRequires:  desktop-file-utils
+Requires:       font(freesans)
 
 %description
 Software for controlling RepRap style 3D-printer like Mendel, Darwin or Prusa
@@ -29,7 +32,13 @@ dos2unix Repetier-Host-licence.txt README* changelog.txt
 
 %build
 cd src/%{name}
+
+# Linux is case sensitive
 sed -i 's/ColorSlider.designer.cs/ColorSlider.Designer.cs/' %{name}.csproj
+
+# Overwrite Arial with something more free
+sed -i 's/Arial/FreeSans/g' view/utils/ArrowButton.cs view/RepetierEditor.Designer.cs view/PrintPanel.Designer.cs
+
 xbuild %{name}.sln /p:Configuration=Release
 cd -
 
@@ -61,5 +70,8 @@ chmod +x %{buildroot}%{_bindir}/%{name}
 %{_datadir}/pixmaps/%{name}.ico
 
 %changelog
+* Sun Jan 06 2013 Miro Hrončok <miro@hroncok.cz> - 0.82b-2
+- Overwrite Arial with something more free
+
 * Mon Dec 31 2012 Miro Hrončok <miro@hroncok.cz> - 0.82b-1
 - First try
