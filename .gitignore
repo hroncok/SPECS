@@ -1,1 +1,3 @@
 enum.spec
+cpanspec.spec
+nodejs*.spec
