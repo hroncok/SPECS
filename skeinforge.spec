@@ -1,16 +1,15 @@
 Name:           skeinforge
 Version:        12.03.14
-Release:        10%{?dist}
+Release:        11%{?dist}
 Summary:        Converts 3D model into G-Code for RepRap
+# Asked author for LICENSE file - will be in next release
+# Dev version for check: http://members.axion.net/~enrique/reprap_python_beanshell.zip
+# Don't ask me, why the dev version isn't on the same website :(
 License:        AGPLv3
 Group:          Applications/Engineering
 URL:            http://fabmetheus.crsndoo.com/wiki/index.php/Skeinforge
 Source0:        http://fabmetheus.crsndoo.com/files/50_reprap_python_beanshell.zip
-# Asked author for LICENSE file - will be in next release
-Source1:        http://www.gnu.org/licenses/agpl.txt
-
-# Desktop file
-Source2:        skeinforge.desktop
+Source1:        skeinforge.desktop
 BuildArch:      noarch
 BuildRequires:  python2-devel
 BuildRequires:  desktop-file-utils
@@ -32,7 +31,6 @@ This is the documentation.
 
 %prep
 %setup -cq
-cp -a %{SOURCE1} license.txt
 
 %build
 
@@ -40,11 +38,10 @@ cp -a %{SOURCE1} license.txt
 rm -rf models terminal.sh test.stl %{name}_application/terminal.sh %{name}_application/test.stl # removes stupid useless files
 mkdir -p %{buildroot}%{python_sitelib}/%{name}
 cp -ar * %{buildroot}%{python_sitelib}/%{name}
-rm -f %{python_sitelib}/%{name}/license.txt
-desktop-file-install --dir=%{buildroot}%{_datadir}/applications %{SOURCE2} # desktop file
+desktop-file-install --dir=%{buildroot}%{_datadir}/applications %{SOURCE1} # desktop file
 
 %files
-%doc license.txt
+%doc
 %{python_sitelib}/%{name}
 %{_datadir}/applications/skeinforge.desktop
 %exclude %{python_sitelib}/%{name}/documentation/
@@ -53,6 +50,9 @@ desktop-file-install --dir=%{buildroot}%{_datadir}/applications %{SOURCE2} # des
 %{python_sitelib}/%{name}/documentation/
 
 %changelog
+* Tue Jan 08 2013 Miro Hrončok <mhroncok@redhat.com> - 12.03.14-11
+- Don't add license.txt as a separate source
+
 * Mon Dec 31 2012 Miro Hrončok <miro@hroncok.cz> - 12.03.14-10
 - Changed location of skeinforge from %{_datadir}/%{name}/
                                    to %{python_sitelib}/%{name}
