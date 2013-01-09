@@ -1,13 +1,12 @@
 Name:           RepetierHost
 Version:        0.82b
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        3D printer control software
 License:        ASL 2.0
 URL:            http://www.repetier.com/
-# git hash 54ff8a364f
-# git clone git://github.com/repetier/Repetier-Host.git; cd Repetier-Host
-# git archive master --format tar.gz > ../%%{name}-%%{version}.tar.gz
-Source0:        %{name}-%{version}.tar.gz
+%global commit dff824fad56a992c845b4d9fae815c4527ab6285
+%global shortcommit %(c=%{commit}; echo ${c:0:7})
+Source0:        https://github.com/repetier/Repetier-Host/archive/%{commit}/%{name}-%{version}-%{shortcommit}.tar.gz
 Source1:        %{name}.desktop
 BuildArch:      noarch
 BuildRequires:  mono(xbuild)
@@ -24,7 +23,7 @@ Repetier-Firmware Other working firmware is Sprinter, Teacup, Marlin and all
 compatible firmwares.
 
 %prep
-%setup -cq
+%setup -qn Repetier-Host-%{commit}
 # Drop Slic3r and OpenTK licenses
 head -16 Repetier-Host-licence.txt > Repetier-Host-licence.txt.short \
 && mv -f Repetier-Host-licence.txt.short Repetier-Host-licence.txt
@@ -70,6 +69,9 @@ chmod +x %{buildroot}%{_bindir}/%{name}
 %{_datadir}/pixmaps/%{name}.ico
 
 %changelog
+* Wed Jan 09 2013 Miro Hrončok <mhroncok@redhat.com> - 0.82b-3
+- Updated to respect new GitHub rule
+
 * Sun Jan 06 2013 Miro Hrončok <miro@hroncok.cz> - 0.82b-2
 - Overwrite Arial with something more free
 
