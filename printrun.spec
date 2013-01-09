@@ -1,15 +1,14 @@
-%global         githash  6fa47668f2
-%global         snapshot 20121103git%{githash}
+%global commit 6fa47668f28178dd44c4518f352ef05318975a7a
+%global shortcommit %(c=%{commit}; echo ${c:0:7})
+%global snapshot 20121103git%{shortcommit}
 Name:           printrun
 Version:        0.0
-Release:        14.%{snapshot}%{?dist}
+Release:        15.%{snapshot}%{?dist}
 Summary:        RepRap printer interface and tools
 License:        GPLv3+
 Group:          Applications/Engineering
 URL:            https://github.com/kliment/Printrun
-# git clone https://github.com/kliment/Printrun.git; cd Printrun
-# git archive --format tar.gz master > ../%%{name}-%%{snapshot}.tar.gz
-Source0:        %{name}-%{snapshot}.tar.gz
+Source0:        https://github.com/kliment/Printrun/archive/%{commit}/%{name}-%{version}-%{shortcommit}.tar.gz
 
 # Desktop files
 Source1:        pronsole.desktop
@@ -86,7 +85,7 @@ It is a part of Printrun.
 
 
 %prep
-%setup -cq
+%setup -qn Printrun-%{commit}
 
 %build
 CFLAGS="$RPM_OPT_FLAGS" %{__python} setup.py build
@@ -156,6 +155,9 @@ cd -
 %doc README* COPYING
 
 %changelog
+* Wed Jan 09 2013 Miro Hrončok <mhroncok@redhat.com> - 0.0-15.20121103git6fa4766
+- Updated to respect new GitHub rule
+
 * Mon Dec 31 2012 Miro Hrončok <miro@hroncok.cz> - 0.0-14.20121103git6fa47668f2
 - Changed location of skeinforge from %{_datadir}/%{name}/
                                    to %{python_sitelib}/%{name}
