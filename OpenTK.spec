@@ -1,7 +1,7 @@
 Name:           OpenTK
 Version:        0.0
-%global         snapshot 20120523svn3125
-Release:        3.%{snapshot}%{?dist}
+%global         snapshot 20130108svn3126
+Release:        4.%{snapshot}%{?dist}
 Summary:        C# library that wraps OpenGL, OpenCL and OpenAL
 # See License.txt for more information
 License:        MIT and BSD
@@ -40,6 +40,9 @@ gacutil -i Binaries/OpenTK/Release/%{name}.GLControl.dll -f -package %{name} -ro
 /usr/lib/mono/%{name}
 
 %changelog
+* Thu Jan 10 2013 Miro Hrončok <mhroncok@redhat.com> - 0.0-4.20130108svn3126
+- New revision
+
 * Mon Dec 31 2012 Miro Hrončok <miro@hroncok.cz> - 0.0-3.20120523svn3125
 - Renamed from opentk to OpenTK
 
