@@ -1,6 +1,6 @@
 %global commit 5897fbc60f761dd273c6692b7bf1d75bce981351
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
-%global snapshot 20121103git%{shortcommit}
+%global snapshot 20130113git%{shortcommit}
 Name:           printrun
 Version:        0.0
 Release:        17.%{snapshot}%{?dist}
@@ -153,10 +153,10 @@ cd -
 %doc README* COPYING
 
 %changelog
-* Sun Jan 13 2013 Miro Hrončok <mhroncok@redhat.com> - 0.0-17.20121103git5897fbc
+* Sun Jan 13 2013 Miro Hrončok <mhroncok@redhat.com> - 0.0-17.20130113git5897fbc
 - New "version" (bugfix)
 
-* Sun Jan 13 2013 Miro Hrončok <mhroncok@redhat.com> - 0.0-16.20121103git094dffa
+* Sun Jan 13 2013 Miro Hrončok <mhroncok@redhat.com> - 0.0-16.20130113git094dffa
 - New upstream "version", where everything is GPLv3+
 - pronsole.ico and gcoder.py now part of setup.py
 - Skeinforge path changing moved from %%install to %%prep
