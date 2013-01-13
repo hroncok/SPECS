@@ -3,9 +3,21 @@
 %global snapshot 20121103git%{shortcommit}
 Name:           printrun
 Version:        0.0
-Release:        15.%{snapshot}%{?dist}
+Release:        16.%{snapshot}%{?dist}
 Summary:        RepRap printer interface and tools
-License:        GPLv3+
+
+License:        GPLv3+ and (CC-BY-SA or GPLv2+) and GPLv2+ with exceptions
+# calibratextruder.py: CC-BY-SA or GPLv2+
+# bufferedcanvas.py: GPLv2+ with exceptions (you can use Section 3 of LGPL2+)
+# the rest is GPLv3+
+## Unknown stuff:
+# bmpDisplay.py
+# webinterface.py
+# printrun_utils.py
+# gcview.py
+# SkeinforgeQuickEditDialog.py
+# svg/*.py
+
 Group:          Applications/Engineering
 URL:            https://github.com/kliment/Printrun
 Source0:        https://github.com/kliment/Printrun/archive/%{commit}/%{name}-%{version}-%{shortcommit}.tar.gz
@@ -155,6 +167,9 @@ cd -
 %doc README* COPYING
 
 %changelog
+* Sat Jan 12 2013 Miro Hrončok <mhroncok@redhat.com> - 0.0-16.20121103git6fa4766
+- rebuilt
+
 * Wed Jan 09 2013 Miro Hrončok <mhroncok@redhat.com> - 0.0-15.20121103git6fa4766
 - Updated to respect new GitHub rule
 
