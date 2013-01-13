@@ -11,11 +11,13 @@ URL:            http://fabmetheus.crsndoo.com/wiki/index.php/Skeinforge
 Source0:        http://fabmetheus.crsndoo.com/files/50_reprap_python_beanshell.zip
 Source1:        skeinforge.desktop
 Source2:        skeinforge
+Source3:        skeinforge-craft
 Patch0:         skeinforge-12.03.14-12.remove-help-button.patch
 BuildArch:      noarch
 BuildRequires:  python2-devel
 BuildRequires:  desktop-file-utils
 Requires:       python2
+Requires:       pypy
 Requires:       tkinter
 
 %description
@@ -59,13 +61,13 @@ mkdir -p %{buildroot}%{python_sitelib}/%{name}
 mkdir -p %{buildroot}%{_bindir}
 cp -ar [fs_]* %{buildroot}%{python_sitelib}/%{name}
 desktop-file-install --dir=%{buildroot}%{_datadir}/applications %{SOURCE1} # desktop file
-cp -a %{SOURCE2} %{buildroot}%{_bindir} # launcher 
+cp -a %{SOURCE2} %{SOURCE3} %{buildroot}%{_bindir} # launchers
 
 %files
 %doc
 %{python_sitelib}/%{name}
 %{_datadir}/applications/%{name}.desktop
-%{_bindir}/%{name}
+%{_bindir}/%{name}*
 
 %files      doc
 %doc documentation
@@ -75,10 +77,11 @@ cp -a %{SOURCE2} %{buildroot}%{_bindir} # launcher
 - Comment macros in changelog
 - Remove shebangs from nonexecutable files
 - Move deleting files from %%install to %%prep
-- Added bash launcher to /usr/bin
+- Added bash launchers to /usr/bin
 - Modified .desktop file to use that launcher
 - Moved documentation to %doc (help button in the app doesn't work anyway)
 - Patch0: Remove non-working help button
+- Require pypy (used in craft launcher)
 
 * Tue Jan 08 2013 Miro Hrončok <mhroncok@redhat.com> - 12.03.14-11
 - Don't add license.txt as a separate source
