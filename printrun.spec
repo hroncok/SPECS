@@ -1,23 +1,11 @@
-%global commit 6fa47668f28178dd44c4518f352ef05318975a7a
+%global commit 094dffa53bfbbf1df0ab67b0a1b05523dacf011c
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 %global snapshot 20121103git%{shortcommit}
 Name:           printrun
 Version:        0.0
 Release:        16.%{snapshot}%{?dist}
 Summary:        RepRap printer interface and tools
-
-License:        GPLv3+ and (CC-BY-SA or GPLv2+) and GPLv2+ with exceptions
-# calibratextruder.py: CC-BY-SA or GPLv2+
-# bufferedcanvas.py: GPLv2+ with exceptions (you can use Section 3 of LGPL2+)
-# the rest is GPLv3+
-## Unknown stuff:
-# bmpDisplay.py
-# webinterface.py
-# printrun_utils.py
-# gcview.py
-# SkeinforgeQuickEditDialog.py
-# svg/*.py
-
+License:        GPLv3+
 Group:          Applications/Engineering
 URL:            https://github.com/kliment/Printrun
 Source0:        https://github.com/kliment/Printrun/archive/%{commit}/%{name}-%{version}-%{shortcommit}.tar.gz
@@ -98,6 +86,9 @@ It is a part of Printrun.
 
 %prep
 %setup -qn Printrun-%{commit}
+# use launchers for skeinforge
+sed -i 's|python skeinforge/skeinforge_application/skeinforge.py|skeinforge|' pronsole.py
+sed -i 's|python skeinforge/skeinforge_application/skeinforge_utilities/skeinforge_craft.py|skeinforge-craft|' pronsole.py
 
 %build
 CFLAGS="$RPM_OPT_FLAGS" %{__python} setup.py build
@@ -112,11 +103,6 @@ cd ..
 
 %install
 %{__python} setup.py install --skip-build --prefix %{buildroot}%{_prefix}
-cp pronsole.ico %{buildroot}%{_datadir}/pixmaps/
-cp gcoder.* %{buildroot}%{_bindir}
-
-# use absolute path for skeinforge
-sed -i 's|python skeinforge/skeinforge_application|python %{python_sitelib}/skeinforge/skeinforge_application|' %{buildroot}%{_bindir}/pronsole.py
 
 # desktop files
 desktop-file-install --dir=%{buildroot}%{_datadir}/applications %{SOURCE1}
@@ -140,13 +126,14 @@ cd -
 %files
 %doc README* COPYING
 
-%files common -f pronterface.lang
+%files common
 %{python_sitelib}/%{name}
 %{python_sitelib}/Printrun*
 %{_bindir}/printcore.*
 %doc README* COPYING
 
-%files -n pronsole
+# pronterface.lang includes lang for both pronterface and pronsole
+%files -n pronsole -f pronterface.lang
 %{_bindir}/pronsole.*
 %{_bindir}/gcoder.*
 %{_datadir}/pixmaps/pronsole.ico
@@ -167,15 +154,20 @@ cd -
 %doc README* COPYING
 
 %changelog
-* Sat Jan 12 2013 Miro Hrončok <mhroncok@redhat.com> - 0.0-16.20121103git6fa4766
-- rebuilt
+* Sun Jan 13 2013 Miro Hrončok <mhroncok@redhat.com> - 0.0-16.20121103git094dffa
+- New upstream "version", where everything is GPLv3+
+- pronsole.ico and gcoder.py now part of setup.py
+- Skeinforge path changing moved from %%install to %%prep
+- Commented macros in changelog
+- Use skeinforge launchers in default settings
+- Pronterface lang moved from common to pronsole, as pronsole is required by pronterface
 
 * Wed Jan 09 2013 Miro Hrončok <mhroncok@redhat.com> - 0.0-15.20121103git6fa4766
 - Updated to respect new GitHub rule
 
 * Mon Dec 31 2012 Miro Hrončok <miro@hroncok.cz> - 0.0-14.20121103git6fa47668f2
-- Changed location of skeinforge from %{_datadir}/%{name}/
-                                   to %{python_sitelib}/%{name}
+- Changed location of skeinforge from %%{_datadir}/%%{name}/
+                                   to %%{python_sitelib}/%%{name}
 
 * Sun Dec 30 2012 Miro Hrončok <miro@hroncok.cz> - 0.0-13.20121103git6fa47668f2
 - Do not download the desktop files from my GitHub
