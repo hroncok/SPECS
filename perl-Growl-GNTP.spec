@@ -1,6 +1,6 @@
 Name:           perl-Growl-GNTP
-Version:        0.15
-Release:        4%{?dist}
+Version:        0.16
+Release:        1%{?dist}
 Summary:        Perl implementation of GNTP Protocol (Client Part)
 License:        GPL+ or Artistic
 Group:          Development/Libraries
@@ -48,6 +48,9 @@ make test
 %{_mandir}/man3/*
 
 %changelog
+* Fri Jan 11 2013 Miro Hrončok <mhroncok@redhat.com> - 0.16-1
+- New version
+
 * Tue Nov 20 2012 Miro Hrončok <miro@hroncok.cz> - 0.15-4
 - perl(inc::Module::Install) to perl(Module::Install)
 
