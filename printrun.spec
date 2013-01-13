@@ -132,15 +132,14 @@ cd -
 %{_bindir}/printcore.*
 %doc README* COPYING
 
-# pronterface.lang includes lang for both pronterface and pronsole
-%files -n pronsole -f pronterface.lang
+%files -n pronsole
 %{_bindir}/pronsole.*
 %{_bindir}/gcoder.*
 %{_datadir}/pixmaps/pronsole.ico
 %{_datadir}/applications/pronsole.desktop
 %doc README* COPYING
 
-%files -n pronterface
+%files -n pronterface -f pronterface.lang
 %{_bindir}/pronterface.*
 %{_datadir}/pronterface
 %{_datadir}/pixmaps/P-face.ico
@@ -160,7 +159,7 @@ cd -
 - Skeinforge path changing moved from %%install to %%prep
 - Commented macros in changelog
 - Use skeinforge launchers in default settings
-- Pronterface lang moved from common to pronsole, as pronsole is required by pronterface
+- Pronterface lang moved from common to pronterface, is not needed by pronsole any more
 
 * Wed Jan 09 2013 Miro Hrončok <mhroncok@redhat.com> - 0.0-15.20121103git6fa4766
 - Updated to respect new GitHub rule
