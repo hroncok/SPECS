@@ -1,9 +1,9 @@
-%global commit 094dffa53bfbbf1df0ab67b0a1b05523dacf011c
+%global commit 5897fbc60f761dd273c6692b7bf1d75bce981351
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 %global snapshot 20121103git%{shortcommit}
 Name:           printrun
 Version:        0.0
-Release:        16.%{snapshot}%{?dist}
+Release:        17.%{snapshot}%{?dist}
 Summary:        RepRap printer interface and tools
 License:        GPLv3+
 Group:          Applications/Engineering
@@ -153,6 +153,9 @@ cd -
 %doc README* COPYING
 
 %changelog
+* Sun Jan 13 2013 Miro Hrončok <mhroncok@redhat.com> - 0.0-17.20121103git5897fbc
+- New "version" (bugfix)
+
 * Sun Jan 13 2013 Miro Hrončok <mhroncok@redhat.com> - 0.0-16.20121103git094dffa
 - New upstream "version", where everything is GPLv3+
 - pronsole.ico and gcoder.py now part of setup.py
