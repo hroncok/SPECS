@@ -3,7 +3,7 @@
 %global snapshot 20121103git%{shortcommit}
 Name:           python-power
 Version:        1.1
-Release:        0.%{snapshot}%{?dist}.2
+Release:        1.%{snapshot}%{?dist}
 Summary:        Cross-platform system power status information
 License:        MIT
 URL:            https://github.com/Kentzo/Power
@@ -29,5 +29,5 @@ cp -ar build/lib/power %{buildroot}%{python_sitelib}
 %{python_sitelib}/power
 
 %changelog
-* Sun Jan 13 2013 Miro Hrončok <mhroncok@redhat.com> - 1.1-0.20121103git2cfe611.2
+* Sun Jan 13 2013 Miro Hrončok <mhroncok@redhat.com> - 1.1-1.20121103git2cfe611
 - First version
