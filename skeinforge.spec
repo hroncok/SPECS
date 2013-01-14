@@ -79,7 +79,7 @@ cp -a %{SOURCE2} %{SOURCE3} %{buildroot}%{_bindir} # launchers
 - Move deleting files from %%install to %%prep
 - Added bash launchers to /usr/bin
 - Modified .desktop file to use that launcher
-- Moved documentation to %doc (help button in the app doesn't work anyway)
+- Moved documentation to %%doc (help button in the app doesn't work anyway)
 - Patch0: Remove non-working help button
 - Require pypy (used in craft launcher)
 
