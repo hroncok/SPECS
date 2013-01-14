@@ -1,6 +1,6 @@
 Name:           RepetierHost
 Version:        0.82b
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        3D printer control software
 License:        ASL 2.0
 URL:            http://www.repetier.com/
@@ -29,7 +29,6 @@ head -16 Repetier-Host-licence.txt > Repetier-Host-licence.txt.short \
 && mv -f Repetier-Host-licence.txt.short Repetier-Host-licence.txt
 dos2unix Repetier-Host-licence.txt README* changelog.txt
 
-%build
 cd src/%{name}
 
 # Linux is case sensitive
@@ -38,6 +37,10 @@ sed -i 's/ColorSlider.designer.cs/ColorSlider.Designer.cs/' %{name}.csproj
 # Overwrite Arial with something more free
 sed -i 's/Arial/FreeSans/g' view/utils/ArrowButton.cs view/RepetierEditor.Designer.cs view/PrintPanel.Designer.cs
 
+cd -
+
+%build
+cd src/%{name}
 xbuild %{name}.sln /p:Configuration=Release
 cd -
 
@@ -69,6 +72,9 @@ chmod +x %{buildroot}%{_bindir}/%{name}
 %{_datadir}/pixmaps/%{name}.ico
 
 %changelog
+* Mon Jan 14 2013 Miro Hrončok <mhroncok@redhat.com> - 0.82b-4
+- Moved some of the code modifications to %%prep
+
 * Wed Jan 09 2013 Miro Hrončok <mhroncok@redhat.com> - 0.82b-3
 - Updated to respect new GitHub rule
 
