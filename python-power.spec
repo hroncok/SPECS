@@ -3,13 +3,14 @@
 %global snapshot 20121103git%{shortcommit}
 Name:           python-power
 Version:        1.1
-Release:        1.%{snapshot}%{?dist}
+Release:        2.%{snapshot}%{?dist}
 Summary:        Cross-platform system power status information
 License:        MIT
 URL:            https://github.com/Kentzo/Power
 Source0:        https://github.com/Kentzo/Power/archive/%{commit}/%{name}-%{version}-%{shortcommit}.tar.gz
 BuildArch:      noarch
 BuildRequires:  python2-devel
+BuildRequires:  python-setuptools
 
 %description
 Python module that allows you to get power and battery status of the system.
@@ -29,5 +30,8 @@ cp -ar build/lib/power %{buildroot}%{python_sitelib}
 %{python_sitelib}/power
 
 %changelog
+* Mon Jan 14 2013 Miro Hrončok <mhroncok@redhat.com> - 1.1-2.20121103git2cfe611
+- Added python-setuptools BR
+
 * Sun Jan 13 2013 Miro Hrončok <mhroncok@redhat.com> - 1.1-1.20121103git2cfe611
 - First version
