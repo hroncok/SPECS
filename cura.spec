@@ -5,6 +5,7 @@ Summary:        3D printer control software
 # Code is AGPLv3
 # Example models are CC
 # Firmware UNKNOWN (daid has been asked)
+# Ultimaker platform model UNKNOWN (daid has been asked)
 License:        AGPLv3 and CC-BY-SA
 URL:            http://daid.github.com/Cura/
 Source0:        http://software.ultimaker.com/current/Cura-%{version}-linux.tar.gz
@@ -45,7 +46,7 @@ settings and send this G-Code to the 3D printer for printing.
 dos2unix resources/example/Attribution.txt
 
 # Until we know the license:
-rm -rf resources/firmware
+rm -rf resources/firmware resources/meshes
 
 # CC-BY-NC is not possible in Fedora
 rm -rf resources/example/UltimakerRobot_support.stl
