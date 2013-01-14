@@ -3,12 +3,12 @@ Version:        12.12
 Release:        1%{?dist}
 Summary:        3D printer control software
 # Code is AGPLv3
-# Example models are CC
-# Firmware UNKNOWN (daid has been asked)
-# Ultimaker platform model UNKNOWN (daid has been asked)
+# Icons AGPLv3 https://github.com/daid/Cura/issues/231#issuecomment-12209683
+# Example models are CC-BY-SA
 License:        AGPLv3 and CC-BY-SA
 URL:            http://daid.github.com/Cura/
-Source0:        http://software.ultimaker.com/current/Cura-%{version}-linux.tar.gz
+#Source0:        http://software.ultimaker.com/current/Cura-%{version}-linux.tar.gz
+Source0:        Cura-%{version}-linux-fedora.tar.gz
 Source1:        cura
 Source2:        cura.desktop
 BuildArch:      noarch
@@ -44,14 +44,6 @@ settings and send this G-Code to the 3D printer for printing.
 %setup -qn Cura-%{version}-linux/Cura
 
 dos2unix resources/example/Attribution.txt
-
-# Until we know the license:
-rm -rf resources/firmware resources/meshes
-
-# CC-BY-NC is not possible in Fedora
-rm -rf resources/example/UltimakerRobot_support.stl
-echo -e '\n\nPlease note, that files under the terms of CC BY-NC has been removed form this Fedora package for legal reasons.' >> resources/example/Attribution.txt
-sed -i 's/UltimakerRobot_support.stl/UltimakerHandle.stl/g' util/profile.py gui/app.py
 
 # Remove useless shebangs
 cd cura_sf/skeinforge_application/skeinforge_plugins/craft_plugins
