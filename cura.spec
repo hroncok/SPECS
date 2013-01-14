@@ -3,14 +3,16 @@ Version:        12.12
 Release:        1%{?dist}
 Summary:        3D printer control software
 # Code is AGPLv3
+# Example models are CC
 # Firmware UNKNOWN (daid has been asked)
-License:        AGPLv3
+License:        AGPLv3 and CC-BY-SA
 URL:            http://daid.github.com/Cura/
 Source0:        http://software.ultimaker.com/current/Cura-%{version}-linux.tar.gz
 Source1:        cura
 Source2:        cura.desktop
 BuildArch:      noarch
 BuildRequires:  python2-devel
+BuildRequires:  dos2unix
 BuildRequires:  desktop-file-utils
 Requires:       PyOpenGL
 Requires:       wxPython
@@ -40,14 +42,15 @@ settings and send this G-Code to the 3D printer for printing.
 %prep
 %setup -qn Cura-%{version}-linux/Cura
 
+dos2unix resources/example/Attribution.txt
+
 # Until we know the license:
 rm -rf resources/firmware
 
-# Drop the examples, one of them is CC BY-ND and the second is ugly :)
-rm -rf resources/example
-
-# Drop Ultimaker platform model, it is most probably not free
-rm -rf resources/meshes
+# CC-BY-NC is not possible in Fedora
+rm -rf resources/example/UltimakerRobot_support.stl
+echo -e '\n\nPlease note, that files under the terms of CC BY-NC has been removed form this Fedora package for legal reasons.' >> resources/example/Attribution.txt
+sed -i 's/UltimakerRobot_support.stl/UltimakerHandle.stl/g' util/profile.py gui/app.py
 
 # Remove useless shebangs
 cd cura_sf/skeinforge_application/skeinforge_plugins/craft_plugins
@@ -74,7 +77,7 @@ ln -s %{_datadir}/%{name}/%{name}.ico %{buildroot}%{_datadir}/pixmaps
 desktop-file-install --dir=%{buildroot}%{_datadir}/applications %{SOURCE2}
 
 %files
-%doc LICENSE
+%doc LICENSE resources/example/Attribution.txt
 %{python_sitelib}/Cura
 %{_datadir}/%{name}
 %{_datadir}/pixmaps/%{name}.ico
