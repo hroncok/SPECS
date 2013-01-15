@@ -20,6 +20,7 @@ Requires:       wxPython
 Requires:       pyserial
 Requires:       numpy
 Requires:       python-power
+Requires:       pypy
 
 ## Note about bundling:
 # It might seem like bundling skeinforge, but author of this software has said:
