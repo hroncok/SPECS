@@ -1,12 +1,12 @@
 Name:           slic3r
-Version:        0.9.7
-Release:        3%{?dist}
+Version:        0.9.8
+Release:        1%{?dist}
 Summary:        G-code generator for 3D printers (RepRap, Makerbot, Ultimaker etc.)
 License:        AGPLv3 and CC-BY
 # Images are CC-BY, code is AGPLv3
 Group:          Applications/Engineering
 URL:            http://slic3r.org/
-%global commit 452b62e53d449ebfca00922f7cc3319f291f0afb
+%global commit 71052433de0ff1f3da04471ccbb572babafc3cae
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 Source0:        https://github.com/alexrj/Slic3r/archive/%{commit}/%{name}-%{version}-%{shortcommit}.tar.gz
 # Bash runners
@@ -17,7 +17,7 @@ BuildArch:      noarch
 BuildRequires:  perl(Module::Build)
 BuildRequires:  perl(List::Util)
 BuildRequires:  perl(Test::More)
-BuildRequires:  perl(Math::Clipper) >= 1.14
+BuildRequires:  perl(Math::Clipper) >= 1.17
 BuildRequires:  perl(Moo) >= 0.091009
 BuildRequires:  perl(File::Spec)
 BuildRequires:  perl(Math::ConvexHull) >= 1.0.4
@@ -38,7 +38,7 @@ BuildRequires:  desktop-file-utils
 Requires:       perl(XML::SAX)
 Requires:       perl(Growl::GNTP)
 Requires:       perl(Net::DBus)
-Requires:       perl(Math::Clipper) >= 1.14
+Requires:       perl(Math::Clipper) >= 1.17
 Requires:       perl(:MODULE_COMPAT_%(eval "`perl -V:version`"; echo $version))
 
 # There is no such module on CPAN and it works like a charm without it
@@ -90,6 +90,10 @@ desktop-file-install --dir=%{buildroot}%{_datadir}/applications %{SOURCE2}
 %{_mandir}/man3/*
 
 %changelog
+* Thu Jan 17 2013 Miro Hrončok <mhroncok@redhat.com> - 0.9.8-1
+- New version
+- (Build)Requires Math::Clipper 1.17
+
 * Thu Jan 17 2013 Miro Hrončok <mhroncok@redhat.com> - 0.9.7-3
 - Updated source to respect GitHub rule
 - Dropped mkdir, ln -s, cp, mv, perl macros
