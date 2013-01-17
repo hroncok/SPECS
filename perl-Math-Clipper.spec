@@ -1,6 +1,6 @@
 Name:           perl-Math-Clipper
-Version:        1.16
-Release:        2%{?dist}
+Version:        1.17
+Release:        1%{?dist}
 Summary:        Perl wrapper around Clipper library
 License:        Boost
 Group:          Development/Libraries
@@ -18,7 +18,7 @@ BuildRequires:  perl(Module::Build::WithXSpp) >= 0.10
 BuildRequires:  perl(Test::Deep)
 BuildRequires:  perl(Test::More)
 BuildRequires:  perl(XSLoader)
-BuildRequires:  polyclipping-devel >= 4.10
+BuildRequires:  polyclipping-devel >= 5.0.3
 Requires:       perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
 
 %{?perl_default_filter} # Filters (not)shared c libs
@@ -52,6 +52,10 @@ find %{buildroot} -type f -name '*.bs' -size 0 -exec rm -f {} \;
 %{_mandir}/man3/*
 
 %changelog
+* Thu Jan 17 2013 Miro Hrončok <mhroncok@redhat.com> - 1.17-1
+- New release
+- Wants newer polyclipping
+
 * Thu Jan 03 2013 Miro Hrončok <miro@hroncok.cz> - 1.16-2
 - Removed META.json and xsp from doc
 - Specified version for polyclipping-devel BR
