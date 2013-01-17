@@ -1,14 +1,14 @@
 Name:           slic3r
 Version:        0.9.7
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        G-code generator for 3D printers (RepRap, Makerbot, Ultimaker etc.)
 License:        AGPLv3 and CC-BY
 # Images are CC-BY, code is AGPLv3
 Group:          Applications/Engineering
 URL:            http://slic3r.org/
-# git clone git://github.com/alexrj/Slic3r.git && cd Slic3r
-# git archive %%{version} --format tar.gz > ../%%{name}-%%{version}.tar.gz
-Source0:        %{name}-%{version}.tar.gz
+%global commit 452b62e53d449ebfca00922f7cc3319f291f0afb
+%global shortcommit %(c=%{commit}; echo ${c:0:7})
+Source0:        https://github.com/alexrj/Slic3r/archive/%{commit}/%{name}-%{version}-%{shortcommit}.tar.gz
 # Bash runners
 Source1:        %{name}
 # Desktop files
@@ -38,8 +38,8 @@ BuildRequires:  desktop-file-utils
 Requires:       perl(XML::SAX)
 Requires:       perl(Growl::GNTP)
 Requires:       perl(Net::DBus)
-Requires:       perl(Math::Clipper)
-Requires:       perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
+Requires:       perl(Math::Clipper) >= 1.14
+Requires:       perl(:MODULE_COMPAT_%(eval "`perl -V:version`"; echo $version))
 
 # There is no such module on CPAN and it works like a charm without it
 %filter_from_requires /perl(Wx::Dialog)/d
@@ -56,22 +56,24 @@ See the project homepage at slic3r.org and the documentation on the Slic3r wiki
 for more information.
 
 %prep
-%setup -cq
+%setup -qn Slic3r-%{commit}
 
 %build
-%{__perl} Build.PL installdirs=vendor optimize="$RPM_OPT_FLAGS"
+perl Build.PL installdirs=vendor optimize="$RPM_OPT_FLAGS"
 ./Build
 
 %install
 ./Build install destdir=%{buildroot} create_packlist=0
 find %{buildroot} -type f -name '*.bs' -size 0 -exec rm -f {} \;
-%{__mkdir} -p %{buildroot}%{_datadir}/%{name}
-%{__cp} %{SOURCE1} %{buildroot}%{_bindir}
-%{__mv} -f %{buildroot}%{_bindir}/%{name}.pl %{buildroot}%{_datadir}/%{name}
-%{__cp} -ar var %{buildroot}%{_datadir}/%{name}
-%{__mkdir} -p %{buildroot}%{_datadir}/pixmaps # /usr/share/pixmaps
-%{__ln_s} ../%{name}/var/Slic3r.ico %{buildroot}%{_datadir}/pixmaps/%{name}.ico
-desktop-file-install --dir=%{buildroot}%{_datadir}/applications %{SOURCE2} # desktop file
+
+mkdir -p %{buildroot}%{_datadir}/%{name}
+mkdir -p %{buildroot}%{_datadir}/pixmaps
+
+cp %{SOURCE1} %{buildroot}%{_bindir}
+mv -f %{buildroot}%{_bindir}/%{name}.pl %{buildroot}%{_datadir}/%{name}
+cp -ar var %{buildroot}%{_datadir}/%{name}
+ln -s ../%{name}/var/Slic3r.ico %{buildroot}%{_datadir}/pixmaps/%{name}.ico
+desktop-file-install --dir=%{buildroot}%{_datadir}/applications %{SOURCE2}
 
 %{_fixperms} %{buildroot}/*
 
@@ -88,6 +90,12 @@ desktop-file-install --dir=%{buildroot}%{_datadir}/applications %{SOURCE2} # des
 %{_mandir}/man3/*
 
 %changelog
+* Thu Jan 17 2013 Miro Hrončok <mhroncok@redhat.com> - 0.9.7-3
+- Updated source to respect GitHub rule
+- Dropped mkdir, ln -s, cp, mv, perl macros
+- Reorganised %%install section a bit
+- Added version to Require perl(Math::Clipper)
+
 * Sat Jan 05 2013 Miro Hrončok <miro@hroncok.cz> - 0.9.7-2
 - Added Require perl(Math::Clipper)
 
