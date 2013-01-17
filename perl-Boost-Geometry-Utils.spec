@@ -1,6 +1,6 @@
 Name:           perl-Boost-Geometry-Utils
 Version:        0.05
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        Boost::Geometry::Utils Perl module
 License:        GPL+ or Artistic
 Group:          Development/Libraries
@@ -11,6 +11,7 @@ BuildRequires:  perl(ExtUtils::XSpp) >= 0.16
 BuildRequires:  perl(Module::Build)
 BuildRequires:  perl(Module::Build::WithXSpp)
 BuildRequires:  perl(Test::More)
+BuildRequires:  dos2unix
 Requires:       perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
 
 %{?perl_default_filter} # Filters (not)shared c libs
@@ -21,7 +22,7 @@ Boost::Geometry::Utils Perl module
 %prep
 %setup -q -n Boost-Geometry-Utils-%{version}
 # remove Windows file endings
-find . -name '*' -exec sed -i "s/\r//" {} \; 2>/dev/null
+find . -name '*' -exec dos2unix {} \; 2>/dev/null
 # convert sources to uft8
 for FILE in `find ./src -name '*' -print`
   do iconv -f iso8859-1 -t utf-8 $FILE > $FILE.conv && mv -f $FILE.conv $FILE
@@ -30,13 +31,12 @@ done
 
 
 %build
-%{__perl} Build.PL installdirs=vendor optimize="$RPM_OPT_FLAGS"
+perl Build.PL installdirs=vendor optimize="$RPM_OPT_FLAGS"
 ./Build
 
 %install
 ./Build install destdir=%{buildroot} create_packlist=0
 find %{buildroot} -type f -name '*.bs' -size 0 -exec rm -f {} \;
-find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null \;
 
 %{_fixperms} %{buildroot}/*
 
@@ -50,6 +50,11 @@ find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null \;
 %{_mandir}/man3/*
 
 %changelog
+* Thu Jan 17 2013 Miro Hrončok <mhroncok@redhat.com> - 0.05-4
+- Using dos2unix instead of sed
+- Removed deleting empty dirs
+- Dropped perl macro
+
 * Fri Nov 16 2012 Miro Hrončok <miro@hroncok.cz> - 0.05-3
 - Removed BRs provided by perl package
 
