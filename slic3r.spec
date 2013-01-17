@@ -93,7 +93,7 @@ desktop-file-install --dir=%{buildroot}%{_datadir}/applications %{SOURCE2}
 * Thu Jan 17 2013 Miro Hrončok <mhroncok@redhat.com> - 0.9.7-3
 - Updated source to respect GitHub rule
 - Dropped mkdir, ln -s, cp, mv, perl macros
-- Reorganised %%install section a bit
+- Reorganized %%install section a bit
 - Added version to Require perl(Math::Clipper)
 
 * Sat Jan 05 2013 Miro Hrončok <miro@hroncok.cz> - 0.9.7-2
