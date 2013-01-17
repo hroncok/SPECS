@@ -1,6 +1,6 @@
 Name:           perl-Math-Clipper
 Version:        1.17
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Perl wrapper around Clipper library
 License:        Boost
 Group:          Development/Libraries
@@ -13,7 +13,6 @@ BuildRequires:  perl(constant)
 BuildRequires:  perl(Exporter)
 BuildRequires:  perl(ExtUtils::Typemaps::Default) >= 0.05
 BuildRequires:  perl(File::Spec)
-BuildRequires:  perl(Module::Build)
 BuildRequires:  perl(Module::Build::WithXSpp) >= 0.10
 BuildRequires:  perl(Test::Deep)
 BuildRequires:  perl(Test::More)
@@ -33,7 +32,7 @@ that implements polygon clipping.
 rm -f src/clipper.{c,h}pp
 
 %build
-%{__perl} Build.PL installdirs=vendor optimize="$RPM_OPT_FLAGS"
+perl Build.PL installdirs=vendor optimize="$RPM_OPT_FLAGS"
 ./Build
 
 %install
@@ -52,6 +51,10 @@ find %{buildroot} -type f -name '*.bs' -size 0 -exec rm -f {} \;
 %{_mandir}/man3/*
 
 %changelog
+* Thu Jan 17 2013 Miro Hrončok <mhroncok@redhat.com> - 1.17-2
+- %%{__perl} to perl
+- dropped perl(Module::Build) BR
+
 * Thu Jan 17 2013 Miro Hrončok <mhroncok@redhat.com> - 1.17-1
 - New release
 - Wants newer polyclipping
