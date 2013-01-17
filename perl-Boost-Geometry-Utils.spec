@@ -1,18 +1,18 @@
 Name:           perl-Boost-Geometry-Utils
 Version:        0.05
-Release:        4%{?dist}
+Release:        5%{?dist}
 Summary:        Boost::Geometry::Utils Perl module
 License:        GPL+ or Artistic
 Group:          Development/Libraries
 URL:            http://search.cpan.org/dist/Boost-Geometry-Utils/
 Source0:        http://www.cpan.org/authors/id/A/AA/AAR/Boost-Geometry-Utils-%{version}.tar.gz
-BuildRequires:  perl(ExtUtils::Typemaps::Default) >= 0.05
-BuildRequires:  perl(ExtUtils::XSpp) >= 0.16
+BuildRequires:  perl(Exporter)
+BuildRequires:  perl(File::Temp)
 BuildRequires:  perl(Module::Build)
 BuildRequires:  perl(Module::Build::WithXSpp)
 BuildRequires:  perl(Test::More)
-BuildRequires:  dos2unix
-Requires:       perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
+BuildRequires:  perl(XSLoader)
+Requires:       perl(:MODULE_COMPAT_%(eval "`perl -V:version`"; echo $version))
 
 %{?perl_default_filter} # Filters (not)shared c libs
 
@@ -21,14 +21,6 @@ Boost::Geometry::Utils Perl module
 
 %prep
 %setup -q -n Boost-Geometry-Utils-%{version}
-# remove Windows file endings
-find . -name '*' -exec dos2unix {} \; 2>/dev/null
-# convert sources to uft8
-for FILE in `find ./src -name '*' -print`
-  do iconv -f iso8859-1 -t utf-8 $FILE > $FILE.conv && mv -f $FILE.conv $FILE
-  rm -f $FILE.conv
-done
-
 
 %build
 perl Build.PL installdirs=vendor optimize="$RPM_OPT_FLAGS"
@@ -44,12 +36,24 @@ find %{buildroot} -type f -name '*.bs' -size 0 -exec rm -f {} \;
 ./Build test
 
 %files
-%doc CHANGES LICENSE README src xsp
+%doc CHANGES LICENSE README
 %{perl_vendorarch}/auto/*
 %{perl_vendorarch}/Boost*
 %{_mandir}/man3/*
 
 %changelog
+* Thu Jan 17 2013 Miro Hrončok <mhroncok@redhat.com> - 0.05-5
+- Dropped perl macro in MODULE_COMPAT
+- Removed src and xsp from %%doc
+- Dropped converting src to UTF-8
+- Dropped converting newlines and dos2unix BR
+- Dropped BRs: perl(ExtUtils::Typemaps::Default)
+               perl(ExtUtils::XSpp)
+               perl(Module::Build)
+- Added BRs:   perl(File::Temp)
+               perl(Exporter)
+               perl(XSLoader)
+
 * Thu Jan 17 2013 Miro Hrončok <mhroncok@redhat.com> - 0.05-4
 - Using dos2unix instead of sed
 - Removed deleting empty dirs
