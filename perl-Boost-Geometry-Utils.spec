@@ -1,12 +1,13 @@
 Name:           perl-Boost-Geometry-Utils
 Version:        0.05
-Release:        5%{?dist}
+Release:        6%{?dist}
 Summary:        Boost::Geometry::Utils Perl module
 License:        GPL+ or Artistic
 Group:          Development/Libraries
 URL:            http://search.cpan.org/dist/Boost-Geometry-Utils/
 Source0:        http://www.cpan.org/authors/id/A/AA/AAR/Boost-Geometry-Utils-%{version}.tar.gz
 BuildRequires:  perl(Exporter)
+BuildRequires:  perl(ExtUtils::Typemaps::Default)
 BuildRequires:  perl(File::Temp)
 BuildRequires:  perl(Module::Build)
 BuildRequires:  perl(Module::Build::WithXSpp)
@@ -42,6 +43,9 @@ find %{buildroot} -type f -name '*.bs' -size 0 -exec rm -f {} \;
 %{_mandir}/man3/*
 
 %changelog
+* Fri Jan 18 2013 Miro Hrončok <mhroncok@redhat.com> - 0.05-6
+- Added back:  perl(ExtUtils::Typemaps::Default)
+
 * Thu Jan 17 2013 Miro Hrončok <mhroncok@redhat.com> - 0.05-5
 - Dropped perl macro in MODULE_COMPAT
 - Removed src and xsp from %%doc
