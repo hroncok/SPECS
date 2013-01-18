@@ -2,15 +2,27 @@ Name:           cura
 Version:        12.12
 Release:        1%{?dist}
 Summary:        3D printer control software
+
 # Code is AGPLv3
 # Icons AGPLv3 https://github.com/daid/Cura/issues/231#issuecomment-12209683
 # Example models are CC-BY-SA
 License:        AGPLv3 and CC-BY-SA
+
 URL:            http://daid.github.com/Cura/
-#Source0:        http://software.ultimaker.com/current/Cura-%{version}-linux.tar.gz
+
+# I've stripped the source with the script in Source3
+# To remove CC BY-NC content and bundled pypy binaries
+# Already asked upstream to include free package
+#Source0:       http://software.ultimaker.com/current/Cura-%%{version}-linux.tar.gz
 Source0:        Cura-%{version}-linux-fedora.tar.gz
-Source1:        cura
-Source2:        cura.desktop
+Source1:        %{name}
+Source2:        %{name}.desktop
+Source3:        %{name}-stripper.sh
+
+# Backporting this fix, so Cura won't crash when searching a missing model
+# https://github.com/daid/Cura/commit/e861e80b780d17247f7123f77dd0eba4b5381e90
+Patch0:         %{name}-12.12-missing-platform-fix.patch
+
 BuildArch:      noarch
 BuildRequires:  python2-devel
 BuildRequires:  dos2unix
@@ -43,6 +55,7 @@ settings and send this G-Code to the 3D printer for printing.
 
 %prep
 %setup -qn Cura-%{version}-linux/Cura
+%patch0 -p1
 
 dos2unix resources/example/Attribution.txt
 
