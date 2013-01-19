@@ -3,7 +3,7 @@
 %global snapshot 20130113git%{shortcommit}
 Name:           printrun
 Version:        0.0
-Release:        17.%{snapshot}%{?dist}
+Release:        18.%{snapshot}%{?dist}
 Summary:        RepRap printer interface and tools
 License:        GPLv3+
 Group:          Applications/Engineering
@@ -14,6 +14,9 @@ Source0:        https://github.com/kliment/Printrun/archive/%{commit}/%{name}-%{
 Source1:        pronsole.desktop
 Source2:        pronterface.desktop
 Source3:        plater.desktop
+
+# https://github.com/kliment/Printrun/pull/318
+Patch0:         %{name}-pull-318.patch
 
 BuildArch:      noarch
 BuildRequires:  python2-devel
@@ -86,6 +89,8 @@ It is a part of Printrun.
 
 %prep
 %setup -qn Printrun-%{commit}
+%patch0 -p1
+
 # use launchers for skeinforge
 sed -i 's|python skeinforge/skeinforge_application/skeinforge.py|skeinforge|' pronsole.py
 sed -i 's|python skeinforge/skeinforge_application/skeinforge_utilities/skeinforge_craft.py|skeinforge-craft|' pronsole.py
@@ -153,6 +158,9 @@ cd -
 %doc README* COPYING
 
 %changelog
+* Sat Jan 19 2013 Miro Hrončok <mhroncok@redhat.com> - 0.0-18.20130113git5897fbc
+- Added patch from my pull request
+
 * Sun Jan 13 2013 Miro Hrončok <mhroncok@redhat.com> - 0.0-17.20130113git5897fbc
 - New "version" (bugfix)
 
