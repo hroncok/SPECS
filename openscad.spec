@@ -1,15 +1,14 @@
 Name:           openscad
-Version:        2013.01.08
+Version:        2013.01.17
 Release:        1%{?dist}
 Summary:        The Programmers Solid 3D CAD Modeller
 # COPYING contains a linking exception for CGAL
 License:        GPLv2 with exceptions
 Group:          Applications/Engineering
 URL:            http://www.openscad.org/
-# commit hash cd152aaefc
-# git clone git://github.com/openscad/openscad.git; cd openscad
-# git archive master --format tar.gz > ../%%{name}-%%{version}.tar.gz
-Source0:        %{name}-%{version}.tar.gz
+%global commit 6ecf96b081626c512343fc1a8f7aa4a202ffaa86
+%global shortcommit %(c=%{commit}; echo ${c:0:7})
+Source0:        https://github.com/%{name}/%{name}/archive/%{commit}/%{name}-%{version}-%{shortcommit}.tar.gz
 BuildRequires:  qt-devel >= 4.4
 BuildRequires:  bison >= 2.4
 BuildRequires:  flex >= 2.5.35
@@ -32,7 +31,7 @@ parts but pretty sure is not what you are looking for when you are more
 interested in creating computer-animated movies.
 
 %prep
-%setup -cq
+%setup -qn %{name}-%{commit}
 
 %build
 qmake-qt4 VERSION=%{version} PREFIX=%{_prefix}
@@ -58,6 +57,10 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 %{_mandir}/man1/*
 
 %changelog
+* Sat Jan 19 2013 Miro Hrončok <mhroncok@redhat.com> - 2013.01.17-1
+- New stable release 2013.01
+- Updated to respect GitHub rule
+
 * Tue Jan 08 2013 Miro Hrončok <mhroncok@redhat.com> - 2013.01.08-1
 - New version
 
