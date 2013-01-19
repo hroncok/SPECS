@@ -3,7 +3,7 @@
 %global snapshot 20130113git%{shortcommit}
 Name:           printrun
 Version:        0.0
-Release:        18.%{snapshot}%{?dist}
+Release:        19.%{snapshot}%{?dist}
 Summary:        RepRap printer interface and tools
 License:        GPLv3+
 Group:          Applications/Engineering
@@ -37,7 +37,6 @@ they form a pretty powerful softwarecombo. This package installs whole Printrun.
 
 %package        common
 Summary:        Common files for Printrun
-Requires:       python2
 Requires:       pyserial
 
 %description    common
@@ -48,7 +47,6 @@ This package contains common files.
 
 %package     -n pronsole
 Summary:        CLI interface for RepRap
-Requires:       python2
 Requires:       %{name}-common = %{version}-%{release}
 Requires:       skeinforge
 
@@ -61,11 +59,8 @@ It is a part of Printrun.
 
 %package     -n pronterface
 Summary:        GUI interface for RepRap
-Requires:       python2
 Requires:       wxPython
-Requires:       %{name}-common = %{version}-%{release}
 Requires:       pronsole = %{version}-%{release}
-Requires:       skeinforge
 
 %description -n pronterface
 Pronterface is a featured G-code sender with graphical user interface.
@@ -76,7 +71,6 @@ It is a part of Printrun.
 
 %package     -n plater
 Summary:        RepRap STL plater
-Requires:       python2
 Requires:       wxPython
 Requires:       %{name}-common = %{version}-%{release}
 
@@ -158,6 +152,9 @@ cd -
 %doc README* COPYING
 
 %changelog
+* Sat Jan 19 2013 Miro Hrončok <mhroncok@redhat.com> - 0.0-19.20130113git5897fbc
+- Removed run-time deps, that are resolved automatically
+
 * Sat Jan 19 2013 Miro Hrončok <mhroncok@redhat.com> - 0.0-18.20130113git5897fbc
 - Added patch from my pull request
 
