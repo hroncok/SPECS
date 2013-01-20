@@ -1,6 +1,6 @@
 Name:           cura
 Version:        12.12
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        3D printer control software
 
 # Code is AGPLv3
@@ -92,6 +92,9 @@ desktop-file-install --dir=%{buildroot}%{_datadir}/applications %{SOURCE2}
 %{_bindir}/%{name}
 
 %changelog
+* Sun Jan 20 2013 Miro Hrončok <mhroncok@redhat.com> - 12.12-2
+- Launcher is in Python now
+
 * Sun Jan 13 2013 Miro Hrončok <mhroncok@redhat.com> - 12.12-1
 - First version
 
