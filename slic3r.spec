@@ -1,6 +1,6 @@
 Name:           slic3r
 Version:        0.9.8
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        G-code generator for 3D printers (RepRap, Makerbot, Ultimaker etc.)
 License:        AGPLv3 and CC-BY
 # Images are CC-BY, code is AGPLv3
@@ -9,10 +9,9 @@ URL:            http://slic3r.org/
 %global commit 71052433de0ff1f3da04471ccbb572babafc3cae
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 Source0:        https://github.com/alexrj/Slic3r/archive/%{commit}/%{name}-%{version}-%{shortcommit}.tar.gz
-# Bash runners
-Source1:        %{name}
-# Desktop files
-Source2:        %{name}.desktop
+Patch0:         %{name}-datadir.patch
+Patch1:         %{name}-english-locale.patch
+Source1:        %{name}.desktop
 BuildArch:      noarch
 BuildRequires:  perl(Module::Build)
 BuildRequires:  perl(List::Util)
@@ -41,13 +40,11 @@ Requires:       perl(Net::DBus)
 Requires:       perl(Math::Clipper) >= 1.17
 Requires:       perl(:MODULE_COMPAT_%(eval "`perl -V:version`"; echo $version))
 
-# There is no such module on CPAN and it works like a charm without it
-%filter_from_requires /perl(Wx::Dialog)/d
+%if 0%{?fedora} < 18
 # This is provided by XML::SAX (but not stated there)
 %filter_from_requires /perl(XML::SAX::PurePerl)/d
 %filter_setup
-
-%{?perl_default_filter} # Filters (not)shared c libs
+%endif
 
 %description
 Slic3r is a G-code generator for 3D printers. It's compatible with RepRaps,
@@ -57,6 +54,8 @@ for more information.
 
 %prep
 %setup -qn Slic3r-%{commit}
+%patch0 -p1
+%patch1 -p1
 
 %build
 perl Build.PL installdirs=vendor optimize="$RPM_OPT_FLAGS"
@@ -69,11 +68,10 @@ find %{buildroot} -type f -name '*.bs' -size 0 -exec rm -f {} \;
 mkdir -p %{buildroot}%{_datadir}/%{name}
 mkdir -p %{buildroot}%{_datadir}/pixmaps
 
-cp %{SOURCE1} %{buildroot}%{_bindir}
-mv -f %{buildroot}%{_bindir}/%{name}.pl %{buildroot}%{_datadir}/%{name}
-cp -ar var %{buildroot}%{_datadir}/%{name}
-ln -s ../%{name}/var/Slic3r.ico %{buildroot}%{_datadir}/pixmaps/%{name}.ico
-desktop-file-install --dir=%{buildroot}%{_datadir}/applications %{SOURCE2}
+mv -f %{buildroot}%{_bindir}/%{name}.pl %{buildroot}%{_bindir}/%{name}
+cp -a var/* %{buildroot}%{_datadir}/%{name}
+ln -s ../%{name}/Slic3r.ico %{buildroot}%{_datadir}/pixmaps/%{name}.ico
+desktop-file-install --dir=%{buildroot}%{_datadir}/applications %{SOURCE1}
 
 %{_fixperms} %{buildroot}/*
 
@@ -82,7 +80,7 @@ desktop-file-install --dir=%{buildroot}%{_datadir}/applications %{SOURCE2}
 
 %files
 %doc MANIFEST README.markdown
-%attr(755,root,root) %{_bindir}/%{name}
+%{_bindir}/%{name}
 %{perl_vendorlib}/Slic3r*
 %{_datadir}/pixmaps/%{name}.ico
 %{_datadir}/applications/%{name}.desktop
@@ -90,6 +88,15 @@ desktop-file-install --dir=%{buildroot}%{_datadir}/applications %{SOURCE2}
 %{_mandir}/man3/*
 
 %changelog
+* Mon Jan 21 2013 Miro Hrončok <mhroncok@redhat.com> - 0.9.8-2
+- Added patch to grab icons from %%{datadir}/%%{name}
+- Added patch to avoid bad locales behavior
+- Removed no longer needed filtering perl(Wx::Dialog) from Requires
+- Filter perl(XML::SAX::PurePerl) only in F17
+- Removed Perl default filter
+- Removed bash launcher
+- Renamed slic3r.pl to slic3r
+
 * Thu Jan 17 2013 Miro Hrončok <mhroncok@redhat.com> - 0.9.8-1
 - New version
 - (Build)Requires Math::Clipper 1.17
