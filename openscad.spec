@@ -1,14 +1,13 @@
 Name:           openscad
-Version:        2013.01.17
-Release:        1%{?dist}
+%global shortversion 2013.01
+Version:        %{shortversion}.21
+Release:        2%{?dist}
 Summary:        The Programmers Solid 3D CAD Modeller
 # COPYING contains a linking exception for CGAL
 License:        GPLv2 with exceptions
 Group:          Applications/Engineering
 URL:            http://www.openscad.org/
-%global commit 6ecf96b081626c512343fc1a8f7aa4a202ffaa86
-%global shortcommit %(c=%{commit}; echo ${c:0:7})
-Source0:        https://github.com/%{name}/%{name}/archive/%{commit}/%{name}-%{version}-%{shortcommit}.tar.gz
+Source0:        https://openscad.googlecode.com/files/%{name}-%{shortversion}.src.tar.gz
 BuildRequires:  qt-devel >= 4.4
 BuildRequires:  bison >= 2.4
 BuildRequires:  flex >= 2.5.35
@@ -20,6 +19,7 @@ BuildRequires:  glew-devel >= 1.6
 BuildRequires:  CGAL-devel >= 3.6
 BuildRequires:  opencsg-devel >= 1.3.2
 BuildRequires:  desktop-file-utils
+BuildRequires:  ImageMagick
 
 %description
 OpenSCAD is a software for creating solid 3D CAD objects.
@@ -31,20 +31,30 @@ parts but pretty sure is not what you are looking for when you are more
 interested in creating computer-animated movies.
 
 %prep
-%setup -qn %{name}-%{commit}
+%setup -qn %{name}-%{shortversion}
 
 %build
-qmake-qt4 VERSION=%{version} PREFIX=%{_prefix}
+qmake-qt4 VERSION=%{shortversion} PREFIX=%{_prefix}
 make %{?_smp_mflags}
 
 %install
-%{__make} install INSTALL_ROOT=%{buildroot}
+make install INSTALL_ROOT=%{buildroot}
 # manpage
 mkdir -p %{buildroot}%{_mandir}/man1
 cp doc/%{name}.1 %{buildroot}%{_mandir}/man1/
 
 %check
 desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
+
+# tests
+cd tests
+cmake . -DGLEW_INCLUDE_DIR=/usr/include/GL/
+make %{?_smp_mflags}
+ctest -C All || :
+cd -
+
+# remove MCAD (separate package) after the tests
+rm -rf /libraries/MCAD
 
 %files
 %doc COPYING README.md RELEASE_NOTES
@@ -57,6 +67,11 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 %{_mandir}/man1/*
 
 %changelog
+* Tue Jan 22 2013 Miro Hrončok <mhroncok@redhat.com> - 2013.01.17-2
+- Using  source tarball
+- Reffer to the shorter version in the app
+- Run tests
+
 * Sat Jan 19 2013 Miro Hrončok <mhroncok@redhat.com> - 2013.01.17-1
 - New stable release 2013.01
 - Updated to respect GitHub rule
