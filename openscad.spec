@@ -1,6 +1,6 @@
 Name:           openscad
 %global shortversion 2013.01
-Version:        %{shortversion}.21
+Version:        %{shortversion}.17
 Release:        2%{?dist}
 Summary:        The Programmers Solid 3D CAD Modeller
 # COPYING contains a linking exception for CGAL
