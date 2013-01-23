@@ -1,10 +1,10 @@
 Name:           RepetierHost
-Version:        0.82b
-Release:        4%{?dist}
+Version:        0.83
+Release:        2%{?dist}
 Summary:        3D printer control software
 License:        ASL 2.0
 URL:            http://www.repetier.com/
-%global commit dff824fad56a992c845b4d9fae815c4527ab6285
+%global commit bd5cbdc65fba738f0b1ae273a976c4427d0757bb
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 Source0:        https://github.com/repetier/Repetier-Host/archive/%{commit}/%{name}-%{version}-%{shortcommit}.tar.gz
 Source1:        %{name}.desktop
@@ -15,6 +15,7 @@ BuildRequires:  font(freesans)
 BuildRequires:  dos2unix
 BuildRequires:  desktop-file-utils
 Requires:       font(freesans)
+Requires:       skeinforge
 
 %description
 Software for controlling RepRap style 3D-printer like Mendel, Darwin or Prusa
@@ -72,6 +73,12 @@ chmod +x %{buildroot}%{_bindir}/%{name}
 %{_datadir}/pixmaps/%{name}.ico
 
 %changelog
+* Wed Jan 23 2013 Miro Hrončok <mhroncok@redhat.com> - 0.83-2
+- Added skeinforge to Requires
+
+* Wed Jan 23 2013 Miro Hrončok <mhroncok@redhat.com> - 0.83-1
+- New version
+
 * Mon Jan 14 2013 Miro Hrončok <mhroncok@redhat.com> - 0.82b-4
 - Moved some of the code modifications to %%prep
 
