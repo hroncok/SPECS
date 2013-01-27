@@ -5,7 +5,7 @@ Name:           sfact
 Version:        0.0
 Release:        1.%{snapshot}%{?dist}
 Summary:        Converts 3D model into G-Code for RepRap
-# Sended pull request with the license text
+# Sent pull request with the license text
 # https://github.com/ahmetcemturan/SFACT/pull/25
 # You can find the license in files
 License:        AGPLv3
