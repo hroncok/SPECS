@@ -10,7 +10,7 @@ BuildArch:      noarch
 BuildRequires:  python2-devel
 BuildRequires:  python-setuptools
 Requires:       python-jinja2 pyserial python-configobj python-ordereddict
-Requires:       avr-gcc avr-gcc-c++ avr-binutils avr-libc
+Requires:       arduino
 
 %description
 Ino is a command line toolkit for working with Arduino hardware.
