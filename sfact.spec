@@ -15,7 +15,12 @@ Source0:        https://github.com/ahmetcemturan/SFACT/archive/%{commit}/%{name}
 Source1:        %{name}.desktop
 Source2:        %{name}
 Source3:        %{name}-craft
-Patch0:         sfact-setting-dir.patch
+Patch0:         %{name}-remove-help-button.patch
+Patch1:         %{name}-setting-dir.patch
+Patch2:         %{name}-empty-extrusion-profile.patch
+Patch3:         %{name}-empty-winding-profile.patch
+Patch4:         %{name}-empty-cutting-profile.patch
+Patch5:         %{name}-empty-milling-profile.patch
 BuildArch:      noarch
 BuildRequires:  python2-devel
 BuildRequires:  desktop-file-utils
@@ -39,6 +44,11 @@ This is the documentation.
 %prep
 %setup -qn SFACT-%{commit}
 %patch0 -p1
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
 
 chmod +x sfact.py
 chmod -x fabmetheus_utilities/settings.py
@@ -82,3 +92,5 @@ cp -a %{SOURCE2} %{SOURCE3} %{buildroot}%{_bindir} # launchers
 * Sun Jan 27 2013 Miro Hrončok <mhroncok@redhat.com> - 0.0-1.20121114git89e1e76
 - Started as a fork of skeinforge.spec
 - Updated source to GitHub, SFACT has no tarballs
+- Added patches from Debain
+- Added patch to keep setting in HOME
