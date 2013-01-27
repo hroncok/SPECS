@@ -1,13 +1,14 @@
 Name:           openscad
 %global shortversion 2013.01
 Version:        %{shortversion}.17
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        The Programmers Solid 3D CAD Modeller
 # COPYING contains a linking exception for CGAL
 License:        GPLv2 with exceptions
 Group:          Applications/Engineering
 URL:            http://www.openscad.org/
 Source0:        https://openscad.googlecode.com/files/%{name}-%{shortversion}.src.tar.gz
+Patch0:         %{name}-tests-cmake-glewfix.patch
 BuildRequires:  qt-devel >= 4.4
 BuildRequires:  bison >= 2.4
 BuildRequires:  flex >= 2.5.35
@@ -19,7 +20,10 @@ BuildRequires:  glew-devel >= 1.6
 BuildRequires:  CGAL-devel >= 3.6
 BuildRequires:  opencsg-devel >= 1.3.2
 BuildRequires:  desktop-file-utils
+# For tests
 BuildRequires:  ImageMagick
+BuildRequires:  xorg-x11-server-Xvfb
+%define         X_display ":98"
 
 %description
 OpenSCAD is a software for creating solid 3D CAD objects.
@@ -32,10 +36,17 @@ interested in creating computer-animated movies.
 
 %prep
 %setup -qn %{name}-%{shortversion}
+%patch0 -p1
 
 %build
 qmake-qt4 VERSION=%{shortversion} PREFIX=%{_prefix}
 make %{?_smp_mflags}
+
+# tests
+cd tests
+cmake .
+make %{?_smp_mflags}
+cd -
 
 %install
 make install INSTALL_ROOT=%{buildroot}
@@ -48,13 +59,17 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 
 # tests
 cd tests
-cmake . -DGLEW_INCLUDE_DIR=/usr/include/GL/
-make %{?_smp_mflags}
-ctest -C All || :
+export DISPLAY=%{X_display}
+Xvfb %{X_display} >& Xvfb.log &
+trap "kill $! || true" EXIT
+sleep 10
+ctest %{?_smp_mflags} -C All || : # let the tests fail, as they probably won't work in Koji
+cat sysinfo.txt
+cat Testing/Temporary/LastTest.log
 cd -
 
 # remove MCAD (separate package) after the tests
-rm -rf /libraries/MCAD
+rm -rf %{buildroot}%{_datadir}/%{name}/libraries/MCAD
 
 %files
 %doc COPYING README.md RELEASE_NOTES
@@ -67,11 +82,14 @@ rm -rf /libraries/MCAD
 %{_mandir}/man1/*
 
 %changelog
+* Sun Jan 27 2013 Miro Hrončok <mhroncok@redhat.com> - 2013.01.17-3
+- Use Xvfb
+
 * Tue Jan 22 2013 Miro Hrončok <mhroncok@redhat.com> - 2013.01.17-2
 - Using  source tarball
 - Reffer to the shorter version in the app
 - Run tests
-
+- Added patch so test will compile
 * Sat Jan 19 2013 Miro Hrončok <mhroncok@redhat.com> - 2013.01.17-1
 - New stable release 2013.01
 - Updated to respect GitHub rule
