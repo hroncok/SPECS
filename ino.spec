@@ -1,5 +1,5 @@
 Name:           ino
-Version:        0.3.4
+Version:        0.3.5
 Release:        1%{?dist}
 Summary:        Command line toolkit for working with Arduino hardware
 # See README.rst
@@ -10,7 +10,7 @@ BuildArch:      noarch
 BuildRequires:  python2-devel
 BuildRequires:  python-setuptools
 Requires:       python-jinja2 pyserial python-configobj python-ordereddict
-Requires:       arduino
+Requires:       arduino-core
 
 %description
 Ino is a command line toolkit for working with Arduino hardware.
@@ -31,6 +31,7 @@ automatically and you'll never see them if you don't want to.
 %prep
 %setup -q
 sed -i 's|/usr/bin/env python|/usr/bin/python|' ino/runner.py
+rm -f ino/templates/*/lib/.holder
 
 %build
 CFLAGS="$RPM_OPT_FLAGS" python setup.py build
@@ -40,10 +41,15 @@ python setup.py install -O1 --skip-build --root %{buildroot}
 chmod +x %{buildroot}%{python_sitelib}/%{name}/runner.py
 
 %files
-%doc README.rst
+%doc README.rst MIT-LICENSE.txt
 %{_bindir}/%{name}
 %{python_sitelib}/%{name}*
 
 %changelog
+* Tue Jan 29 2013 Miro Hrončok <mhroncok@redhat.com> - 0.3.5-1
+- New version with license file
+- Removed empty hidden files
+- Require arduino -> arduino-core
+
 * Sun Jan 27 2013 Miro Hrončok <mhroncok@redhat.com> - 0.3.4-1
 - Started
