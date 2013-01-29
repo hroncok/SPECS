@@ -1,13 +1,10 @@
-%global commit 89e1e76d35899ad21516a2facc75df274c5550e1
+%global commit bc56c6882269fb14e36bc7bd6582c19be6114c06
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
-%global snapshot 20121114git%{shortcommit}
+%global snapshot 20130128git%{shortcommit}
 Name:           sfact
 Version:        0.0
 Release:        2.%{snapshot}%{?dist}
 Summary:        Converts 3D model into G-Code for RepRap
-# Sent pull request with the license text
-# https://github.com/ahmetcemturan/SFACT/pull/25
-# You can find the license in files
 License:        AGPLv3
 Group:          Applications/Engineering
 URL:            http://www.reprapfordummies.net/
@@ -80,7 +77,7 @@ desktop-file-install --dir=%{buildroot}%{_datadir}/applications %{SOURCE1} # des
 cp -a %{SOURCE2} %{SOURCE3} %{buildroot}%{_bindir} # launchers
 
 %files
-%doc SFACT?Readme.txt
+%doc SFACT?Readme.txt COPYING
 %{python_sitelib}/%{name}
 %{_datadir}/applications/%{name}.desktop
 %{_bindir}/%{name}*
@@ -89,8 +86,9 @@ cp -a %{SOURCE2} %{SOURCE3} %{buildroot}%{_bindir} # launchers
 %doc documentation
 
 %changelog
-* Tue Jan 29 2013 Miro Hrončok <mhroncok@redhat.com> - 0.0-2.20121114git89e1e76
+* Tue Jan 29 2013 Miro Hrončok <mhroncok@redhat.com> - 0.0-2.20130128gitbc56c688
 - SFACT?Readme.txt instead of SFACT\ Readme.txt in %%doc to make this work in rawhide
+- New commit including COPYING
 
 * Sun Jan 27 2013 Miro Hrončok <mhroncok@redhat.com> - 0.0-1.20121114git89e1e76
 - Started as a fork of skeinforge.spec
