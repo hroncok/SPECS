@@ -3,7 +3,7 @@
 %global snapshot 20121114git%{shortcommit}
 Name:           sfact
 Version:        0.0
-Release:        1.%{snapshot}%{?dist}
+Release:        2.%{snapshot}%{?dist}
 Summary:        Converts 3D model into G-Code for RepRap
 # Sent pull request with the license text
 # https://github.com/ahmetcemturan/SFACT/pull/25
@@ -80,7 +80,7 @@ desktop-file-install --dir=%{buildroot}%{_datadir}/applications %{SOURCE1} # des
 cp -a %{SOURCE2} %{SOURCE3} %{buildroot}%{_bindir} # launchers
 
 %files
-%doc SFACT\ Readme.txt
+%doc SFACT?Readme.txt
 %{python_sitelib}/%{name}
 %{_datadir}/applications/%{name}.desktop
 %{_bindir}/%{name}*
@@ -89,6 +89,9 @@ cp -a %{SOURCE2} %{SOURCE3} %{buildroot}%{_bindir} # launchers
 %doc documentation
 
 %changelog
+* Tue Jan 29 2013 Miro Hrončok <mhroncok@redhat.com> - 0.0-2.20121114git89e1e76
+- SFACT?Readme.txt instead of SFACT\ Readme.txt in %%doc to make this work in rawhide
+
 * Sun Jan 27 2013 Miro Hrončok <mhroncok@redhat.com> - 0.0-1.20121114git89e1e76
 - Started as a fork of skeinforge.spec
 - Updated source to GitHub, SFACT has no tarballs
