@@ -11,6 +11,7 @@ URL:            https://sourceforge.net/projects/%{name}/
 # tar -pczf %%{name}-%%{svn}.tar.gz %%{name}
 Source0:        %{name}-%{svn}.tar.gz
 Source1:        %{name}-Makefile
+BuildRequires:  mesa-libGL-devel, libzip-devel, muParser-devel
 
 %description
 C++ tools for implementing AMF file format for the interchange of geometry
@@ -27,12 +28,24 @@ Development files for AMF tools.
 %setup -qn %{name}
 cp %{SOURCE1} Makefile
 
+# Bundling
+rm -rf */muparser
+sed -i 's|muparser/muParser.h|muParser.h|g' include/Equation.h
+
+# Might be bundling, isn't needed on non-Windows OS.
+# Keeping empty files there, so I don't need to modify other sources
+rm -rf */muparser src/zip
+echo > include/zip/zip-win.h
+echo > include/zip/unzip-win.h
+
 %build
 make %{?_smp_mflags}
-strip --strip-all ./libamf.so.0.0.0
 
 %install
-install -Dpm0644 libamf.so.0.0.0 %{buildroot}%{_libdir}/libamf.so.0.0.0
+# Remove useless empty files previously keeped
+rm -rf include/zip
+
+install -Dpm0755 libamf.so.0.0.0 %{buildroot}%{_libdir}/libamf.so.0.0.0
 ln -s libamf.so.0.0.0 %{buildroot}%{_libdir}/libamf.so.0
 ln -s libamf.so.0.0.0 %{buildroot}%{_libdir}/libamf.so
 mkdir -p %{buildroot}%{_includedir}
@@ -51,5 +64,5 @@ cp -arp include %{buildroot}%{_includedir}/amf
 
 %changelog
 * Fri Feb 01 2013 Miro Hrončok <mhroncok@redhat.com> - 0.0-1.20121220svn32
-- rebuilt
+- Started
 
