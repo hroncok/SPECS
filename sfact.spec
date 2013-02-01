@@ -3,7 +3,7 @@
 %global snapshot 20130128git%{shortcommit}
 Name:           sfact
 Version:        0.0
-Release:        2.%{snapshot}%{?dist}
+Release:        3.%{snapshot}%{?dist}
 Summary:        Converts 3D model into G-Code for RepRap
 License:        AGPLv3
 Group:          Applications/Engineering
@@ -86,7 +86,11 @@ cp -a %{SOURCE2} %{SOURCE3} %{buildroot}%{_bindir} # launchers
 %doc documentation
 
 %changelog
-* Tue Jan 29 2013 Miro Hrončok <mhroncok@redhat.com> - 0.0-2.20130128gitbc56c688
+* Fri Feb 01 2013 Miro Hrončok <mhroncok@redhat.com> - 0.0-3.20130128gitbc56c68
+- Corrected version in %%changelog
+- Use exec in launchers
+
+* Tue Jan 29 2013 Miro Hrončok <mhroncok@redhat.com> - 0.0-2.20130128gitbc56c68
 - SFACT?Readme.txt instead of SFACT\ Readme.txt in %%doc to make this work in rawhide
 - New commit including COPYING
 
