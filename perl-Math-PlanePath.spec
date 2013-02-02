@@ -58,6 +58,7 @@ make test
 - Replaced obsoleted PERL_INSTALL_ROOT with DESTDIR
 - Removed deleting empty dirs
 - Replaced BRs with BRs from Michal Ingeli <mi@v3.sk>
+- Filter unversioned deps and provides
 
 * Fri Nov 16 2012 Miro Hrončok <miro@hroncok.cz> - 90-2
 - Removed BRs provided by perl package
