@@ -5,7 +5,7 @@ Release:        1%{?dist}
 Summary:        JPEG/PNG reader
 License:        Public Domain
 URL:            http://nothings.org/%{name}.c
-Source0:        http://nothings.org/%{name}.c
+Source0:        %{url}
 BuildRequires:  dos2unix
 
 %description
