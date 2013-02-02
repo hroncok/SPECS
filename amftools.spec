@@ -11,7 +11,7 @@ URL:            https://sourceforge.net/projects/%{name}/
 # tar -pczf %%{name}-%%{svn}.tar.gz %%{name}
 Source0:        %{name}-%{svn}.tar.gz
 Source1:        %{name}-Makefile
-BuildRequires:  mesa-libGL-devel, libzip-devel, muParser-devel
+BuildRequires:  mesa-libGL-devel, libzip-devel, muParser-devel, stbi-devel, rapidxml-devel
 
 %description
 C++ tools for implementing AMF file format for the interchange of geometry
@@ -29,12 +29,14 @@ Development files for AMF tools.
 cp %{SOURCE1} Makefile
 
 # Bundling
-rm -rf */muparser
+rm -rf */muparser */stb_image include/rapidxml
 sed -i 's|muparser/muParser.h|muParser.h|g' include/Equation.h
+sed -i 's|stb_image/stb_image.h|stb_image.h|g' src/SimpleImage.cpp
+sed -i 's|rapidxml/||g' include/XmlStream.h src/XmlStream.cpp
 
 # Might be bundling, isn't needed on non-Windows OS.
 # Keeping empty files there, so I don't need to modify other sources
-rm -rf */muparser src/zip
+rm -rf src/zip
 echo > include/zip/zip-win.h
 echo > include/zip/unzip-win.h
 
