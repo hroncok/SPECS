@@ -1,6 +1,6 @@
 Name:           repsnapper
 Version:        2.1.0
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        RepRap control software
 License:        GPLv2
 URL:            https://github.com/timschmidt/%{name}
@@ -20,11 +20,11 @@ BuildRequires:  gettext
 BuildRequires:  libtool
 BuildRequires:  intltool
 BuildRequires:  polyclipping-devel >= 4.6.3
+BuildRequires:  vmmlib-devel
 BuildRequires:  desktop-file-utils
 
 %description
-RepSnapper is an alternative host software for controlling the RepRap
-(http://reprap.org) open source 3D printer.
+RepSnapper is a host software for controlling the RepRap 3D printer.
 
 %prep
 %setup -qn %{name}-%{commit}
@@ -32,8 +32,11 @@ RepSnapper is an alternative host software for controlling the RepRap
 %patch0 -p1
 rm -rf libraries/clipper/
 rm -rf libraries/vmmlib/
+rm -rf libraries/amf/
+rm -rf libraries/lmfit/
 
 sed -i 's/Utility;/Graphics;/' %{name}.desktop.in
+sed -i 's/_Name=repsnapper/_Name=Repsnapper/' %{name}.desktop.in
 
 %build
 ./autogen.sh
@@ -50,13 +53,17 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 
 %files -f %{name}.lang
 %doc HACKING licensing.txt README.asciidoc TODO todo.txt licenses
-%{_sysconfdir}/xdg/%{name}/%{name}.conf
+%config %{_sysconfdir}/xdg/%{name}/%{name}.conf
 %{_bindir}/%{name}
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/%{name}/%{name}.ui
 
 
 %changelog
+* Thu Jan 31 2013 Miro Hrončok <mhroncok@redhat.com> - 2.1.0-3
+- Using system vmmlib, amftools, lmfit
+- Polished description a bit
+
 * Thu Jan 30 2013 Volker Fröhlich <volker27@gmx.at> - 2.1.0-2
 - Correct patch to link polyclipping
 - Make build verbose
