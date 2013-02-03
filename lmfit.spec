@@ -6,7 +6,6 @@ Summary:        Levenberg-Marquardt least-squares minimization and curve fitting
 License:        BSD and CC-BY
 URL:            http://joachimwuttke.de/%{name}/
 Source0:        http://joachimwuttke.de/src/%{name}-%{version}.tgz
-BuildRequires:  chrpath
 
 %description
 C/C++ library for Levenberg-Marquardt least-squares minimization and curve
