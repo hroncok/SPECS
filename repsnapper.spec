@@ -21,6 +21,8 @@ BuildRequires:  libtool
 BuildRequires:  intltool
 BuildRequires:  polyclipping-devel >= 4.6.3
 BuildRequires:  vmmlib-devel
+BuildRequires:  amftools-devel
+BuildRequires:  lmfit-devel
 BuildRequires:  desktop-file-utils
 
 %description
