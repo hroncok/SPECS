@@ -1,10 +1,11 @@
-Name:           stb_image
-%global soname  libstbi
+Name:           stbi
+%global soname  lib%{name}
+%global srcname stb_image
 Version:        1.33
 Release:        1%{?dist}
 Summary:        JPEG/PNG reader
 License:        Public Domain
-URL:            http://nothings.org/%{name}.c
+URL:            http://nothings.org/%{srcname}.c
 Source0:        %{url}
 BuildRequires:  dos2unix
 
@@ -25,26 +26,26 @@ Development files for %{name}.
 head -62 %{SOURCE0} > README
 head -184 %{SOURCE0} | tail -112 >> README
  
-head -65 %{SOURCE0} | tail -2 > %{name}.h
-head -332 %{SOURCE0} | tail -146 >> %{name}.h
+head -65 %{SOURCE0} | tail -2 > %{srcname}.h
+head -332 %{SOURCE0} | tail -146 >> %{srcname}.h
 
-echo '#include "stb_image.h"' > %{name}.c
-head -4586 %{SOURCE0} | tail -4254 >> %{name}.c
+echo '#include "stb_image.h"' > %{srcname}.c
+head -4586 %{SOURCE0} | tail -4254 >> %{srcname}.c
 
 tail -86 %{SOURCE0} > CHANGES
 
 dos2unix *
 
 %build
-gcc -O2 -g -pipe -Wall -I. -fPIC -c %{name}.c
-gcc -O2 -g -pipe -Wall -I. -shared -Wl,-soname,%{soname}.so.1 %{name}.o -o %{soname}.so.1.0.0
+gcc -O2 -g -pipe -Wall -I. -fPIC -c %{srcname}.c
+gcc -O2 -g -pipe -Wall -I. -shared -Wl,-soname,%{soname}.so.1 %{srcname}.o -o %{soname}.so.1.0.0
 
 
 %install
 install -Dpm0755 %{soname}.so.1.0.0 %{buildroot}%{_libdir}/%{soname}.so.1.0.0
 ln -s %{soname}.so.1.0.0 %{buildroot}%{_libdir}/%{soname}.so.1
 ln -s %{soname}.so.1.0.0 %{buildroot}%{_libdir}/%{soname}.so
-install -Dpm0644 %{name}.h %{buildroot}%{_includedir}/%{name}.h
+install -Dpm0644 %{srcname}.h %{buildroot}%{_includedir}/%{srcname}.h
 
 %post -p /sbin/ldconfig
 
