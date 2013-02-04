@@ -21,6 +21,8 @@ URL:            https://github.com/timschmidt/%{name}
 %global         commit 4f0ca972f5e0ef69d7a86fa3d1222c2482d9afd8
 %global         shortcommit %(c=%{commit}; echo ${c:0:7})
 Source0:        https://github.com/timschmidt/%{name}/archive/%{commit}/%{name}-%{version}-%{shortcommit}.tar.gz
+Source1:        %{name}-48.png
+Source2:        %{name}-128.png
 Patch0:         %{name}-use-system-libs.patch
 BuildRequires:  gtkmm24-devel
 BuildRequires:  gtkglext-devel
@@ -54,7 +56,8 @@ rm -f licenses/{BSL-1.0.txt,LGPL-2.0.txt,vmmlib-license.txt}
 grep -v VMMLib licensing.txt > licensing-no-vmmlib.txt && mv -f licensing-no-vmmlib.txt licensing.txt
 
 sed -i 's/Utility;/Graphics;/' %{name}.desktop.in
-sed -i 's/_Name=repsnapper/_Name=RepSnapper/' %{name}.desktop.in
+sed -i 's/_Name=%{name}/_Name=RepSnapper/' %{name}.desktop.in
+sed -i 's/# Icon=%{name}/Icon=%{name}/' %{name}.desktop.in
 
 %build
 ./autogen.sh
@@ -64,16 +67,37 @@ make %{?_smp_mflags} V=1
 %install
 make install DESTDIR=%{buildroot}
 
+mkdir -p %{buildroot}%{_datadir}/icons/hicolor/48x48/apps
+mkdir -p %{buildroot}%{_datadir}/icons/hicolor/128x128/apps
+install -p -m 644 %{SOURCE1} \
+  %{buildroot}%{_datadir}/icons/hicolor/48x48/apps/%{name}.png
+install -p -m 644 %{SOURCE2} \
+  %{buildroot}%{_datadir}/icons/hicolor/128x128/apps/%{name}.png
+
 %check
 desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 %find_lang %{name}
+
+%post
+touch --no-create %{_datadir}/icons/hicolor || :
+if [ -x %{_bindir}/gtk-update-icon-cache ]; then
+   %{_bindir}/gtk-update-icon-cache --quiet %{_datadir}/icons/hicolor || :
+fi
+
+%postun
+touch --no-create %{_datadir}/icons/hicolor || :
+if [ -x %{_bindir}/gtk-update-icon-cache ]; then
+   %{_bindir}/gtk-update-icon-cache --quiet %{_datadir}/icons/hicolor || :
+fi
 
 %files -f %{name}.lang
 %doc HACKING licensing.txt README.asciidoc TODO todo.txt licenses
 %config(noreplace) %{_sysconfdir}/xdg/%{name}/%{name}.conf
 %{_bindir}/%{name}
-%{_datadir}/applications/%{name}.desktop
 %{_datadir}/%{name}/%{name}.ui
+%{_datadir}/applications/%{name}.desktop
+%{_datadir}/icons/hicolor/48x48/apps/%{name}.png
+%{_datadir}/icons/hicolor/128x128/apps/%{name}.png
 
 %changelog
 * Thu Jan 31 2013 Miro Hrončok <mhroncok@redhat.com> - 2.1.0-3
@@ -82,6 +106,7 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 - Change name in .desktop to RepSnapper
 - Added comment about license
 - Using %%config(noreplace)
+- Added icons from #679273
 
 * Thu Jan 30 2013 Volker Fröhlich <volker27@gmx.at> - 2.1.0-2
 - Correct patch to link polyclipping
