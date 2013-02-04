@@ -2,7 +2,21 @@ Name:           repsnapper
 Version:        2.1.0
 Release:        3%{?dist}
 Summary:        RepRap control software
-License:        GPLv2
+
+# repsnapper is GPLv2 as noted in licensing.txt
+#
+# arcball.cpp and arcball.h are
+#      (C) 1999-2003 Tatewake.com and licensed under the MIT license
+#      as noted in licensing.txt
+#
+# libreprap is MIT (C) Benjamin Saunders and others
+#      as noted here https://github.com/Ralith/libreprap/issues/4#issuecomment-13059313
+#
+# Several functions in slicer/geometry.cpp are licensed with non stock MIT-like license
+#      as noted in licensing.txt
+#      I've asked Fedora Legal list
+License:        GPLv2 and MIT
+
 URL:            https://github.com/timschmidt/%{name}
 %global         commit 4f0ca972f5e0ef69d7a86fa3d1222c2482d9afd8
 %global         shortcommit %(c=%{commit}; echo ${c:0:7})
@@ -23,6 +37,7 @@ BuildRequires:  polyclipping-devel >= 4.6.3
 BuildRequires:  vmmlib-devel
 BuildRequires:  amftools-devel
 BuildRequires:  lmfit-devel
+BuildRequires:  poly2tri-devel
 BuildRequires:  desktop-file-utils
 
 %description
@@ -32,19 +47,19 @@ RepSnapper is a host software for controlling the RepRap 3D printer.
 %setup -qn %{name}-%{commit}
 
 %patch0 -p1
-rm -rf libraries/clipper/
-rm -rf libraries/vmmlib/
-rm -rf libraries/amf/
-rm -rf libraries/lmfit/
+rm -rf libraries/{clipper,vmmlib,amf,lmfit,poly2tri}
+
+# Remove license information of bundled libs
+rm -f licenses/{BSL-1.0.txt,LGPL-2.0.txt,vmmlib-license.txt}
+grep -v VMMLib licensing.txt > licensing-no-vmmlib.txt && mv -f licensing-no-vmmlib.txt licensing.txt
 
 sed -i 's/Utility;/Graphics;/' %{name}.desktop.in
-sed -i 's/_Name=repsnapper/_Name=Repsnapper/' %{name}.desktop.in
+sed -i 's/_Name=repsnapper/_Name=RepSnapper/' %{name}.desktop.in
 
 %build
 ./autogen.sh
 %configure
 make %{?_smp_mflags} V=1
-
 
 %install
 make install DESTDIR=%{buildroot}
@@ -55,16 +70,18 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 
 %files -f %{name}.lang
 %doc HACKING licensing.txt README.asciidoc TODO todo.txt licenses
-%config %{_sysconfdir}/xdg/%{name}/%{name}.conf
+%config(noreplace) %{_sysconfdir}/xdg/%{name}/%{name}.conf
 %{_bindir}/%{name}
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/%{name}/%{name}.ui
 
-
 %changelog
 * Thu Jan 31 2013 Miro Hrončok <mhroncok@redhat.com> - 2.1.0-3
-- Using system vmmlib, amftools, lmfit
+- Using system vmmlib, amftools, lmfit, poly2tri
 - Polished description a bit
+- Change name in .desktop to RepSnapper
+- Added comment about license
+- Using %%config(noreplace)
 
 * Thu Jan 30 2013 Volker Fröhlich <volker27@gmx.at> - 2.1.0-2
 - Correct patch to link polyclipping
