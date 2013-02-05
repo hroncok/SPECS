@@ -1,6 +1,6 @@
 Name:           repsnapper
 Version:        2.1.0
-Release:        4%{?dist}
+Release:        5%{?dist}
 Summary:        RepRap control software
 
 # repsnapper is GPLv2 as noted in licensing.txt
@@ -80,9 +80,10 @@ install -p -m 644 %{SOURCE1} \
 install -p -m 644 %{SOURCE2} \
   %{buildroot}%{_datadir}/icons/hicolor/16x16/apps/%{name}.png
 
+%find_lang %{name}
+
 %check
 desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
-%find_lang %{name}
 
 %post
 touch --no-create %{_datadir}/icons/hicolor || :
@@ -106,6 +107,9 @@ fi
 %{_datadir}/icons/hicolor/16x16/apps/%{name}.png
 
 %changelog
+* Tue Feb 05 2013 Miro Hrončok <mhroncok@redhat.com> - 2.1.0-5
+- Moved %%find_lang to %%install
+
 * Tue Feb 05 2013 Miro Hrončok <mhroncok@redhat.com> - 2.1.0-4
 - Using new RepSnapper icon
 
