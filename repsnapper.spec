@@ -1,6 +1,6 @@
 Name:           repsnapper
 Version:        2.1.0
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        RepRap control software
 
 # repsnapper is GPLv2 as noted in licensing.txt
@@ -15,15 +15,17 @@ Summary:        RepRap control software
 # Several functions in slicer/geometry.cpp are licensed with non stock MIT-like license
 #      as noted in licensing.txt
 #      I've asked Fedora Legal list
-License:        GPLv2 and MIT
+#
+# Icon is CC-BY, infile metadata
+License:        GPLv2 and MIT and CC-BY
 
 URL:            https://github.com/timschmidt/%{name}
 %global         commit 4f0ca972f5e0ef69d7a86fa3d1222c2482d9afd8
 %global         shortcommit %(c=%{commit}; echo ${c:0:7})
 Source0:        https://github.com/timschmidt/%{name}/archive/%{commit}/%{name}-%{version}-%{shortcommit}.tar.gz
-Source1:        %{name}-48.png
-Source2:        %{name}-128.png
+Source1:        %{name}-icon.svg
 Patch0:         %{name}-use-system-libs.patch
+Patch1:         %{name}-icon.patch
 BuildRequires:  gtkmm24-devel
 BuildRequires:  gtkglext-devel
 BuildRequires:  cairomm-devel
@@ -55,9 +57,12 @@ rm -rf libraries/{clipper,vmmlib,amf,lmfit,poly2tri}
 rm -f licenses/{BSL-1.0.txt,LGPL-2.0.txt,vmmlib-license.txt}
 grep -v VMMLib licensing.txt > licensing-no-vmmlib.txt && mv -f licensing-no-vmmlib.txt licensing.txt
 
+%patch1 -p1
+
 sed -i 's/Utility;/Graphics;/' %{name}.desktop.in
 sed -i 's/_Name=%{name}/_Name=RepSnapper/' %{name}.desktop.in
 sed -i 's/# Icon=%{name}/Icon=%{name}/' %{name}.desktop.in
+
 
 %build
 ./autogen.sh
@@ -67,12 +72,9 @@ make %{?_smp_mflags} V=1
 %install
 make install DESTDIR=%{buildroot}
 
-mkdir -p %{buildroot}%{_datadir}/icons/hicolor/48x48/apps
-mkdir -p %{buildroot}%{_datadir}/icons/hicolor/128x128/apps
+mkdir -p %{buildroot}%{_datadir}/icons/hicolor/scalable/apps
 install -p -m 644 %{SOURCE1} \
-  %{buildroot}%{_datadir}/icons/hicolor/48x48/apps/%{name}.png
-install -p -m 644 %{SOURCE2} \
-  %{buildroot}%{_datadir}/icons/hicolor/128x128/apps/%{name}.png
+  %{buildroot}%{_datadir}/icons/hicolor/scalable/apps/%{name}.png
 
 %check
 desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
@@ -96,10 +98,12 @@ fi
 %{_bindir}/%{name}
 %{_datadir}/%{name}/%{name}.ui
 %{_datadir}/applications/%{name}.desktop
-%{_datadir}/icons/hicolor/48x48/apps/%{name}.png
-%{_datadir}/icons/hicolor/128x128/apps/%{name}.png
+%{_datadir}/icons/hicolor/scalable/apps/%{name}.png
 
 %changelog
+* Tue Feb 05 2013 Miro Hrončok <mhroncok@redhat.com> - 2.1.0-4
+- Using new RepSnapper icon
+
 * Thu Jan 31 2013 Miro Hrončok <mhroncok@redhat.com> - 2.1.0-3
 - Using system vmmlib, amftools, lmfit, poly2tri
 - Polished description a bit
