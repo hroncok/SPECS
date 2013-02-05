@@ -24,6 +24,7 @@ URL:            https://github.com/timschmidt/%{name}
 %global         shortcommit %(c=%{commit}; echo ${c:0:7})
 Source0:        https://github.com/timschmidt/%{name}/archive/%{commit}/%{name}-%{version}-%{shortcommit}.tar.gz
 Source1:        %{name}-icon.svg
+Source2:        %{name}-icon16.png
 Patch0:         %{name}-use-system-libs.patch
 Patch1:         %{name}-icon.patch
 BuildRequires:  gtkmm24-devel
@@ -73,8 +74,11 @@ make %{?_smp_mflags} V=1
 make install DESTDIR=%{buildroot}
 
 mkdir -p %{buildroot}%{_datadir}/icons/hicolor/scalable/apps
+mkdir -p %{buildroot}%{_datadir}/icons/hicolor/16x16/apps
 install -p -m 644 %{SOURCE1} \
-  %{buildroot}%{_datadir}/icons/hicolor/scalable/apps/%{name}.png
+  %{buildroot}%{_datadir}/icons/hicolor/scalable/apps/%{name}.svg
+install -p -m 644 %{SOURCE2} \
+  %{buildroot}%{_datadir}/icons/hicolor/16x16/apps/%{name}.png
 
 %check
 desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
@@ -98,7 +102,8 @@ fi
 %{_bindir}/%{name}
 %{_datadir}/%{name}/%{name}.ui
 %{_datadir}/applications/%{name}.desktop
-%{_datadir}/icons/hicolor/scalable/apps/%{name}.png
+%{_datadir}/icons/hicolor/scalable/apps/%{name}.svg
+%{_datadir}/icons/hicolor/16x16/apps/%{name}.png
 
 %changelog
 * Tue Feb 05 2013 Miro Hrončok <mhroncok@redhat.com> - 2.1.0-4
