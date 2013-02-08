@@ -35,7 +35,9 @@ sed -i "s|ABSTRACT_FROM  => 'lib/ExtUtils/ParseXS.pod',||" Makefile.PL
 sed "/lib\/ExtUtils\/xsubpp/d" Makefile.PL > Makefile.PL.tmp && mv -f Makefile.PL.tmp Makefile.PL
 
 # Remove ExtUtils::ParseXS specific tests, keep others
-rm -f t/00*.t t/1*.t
+for FILE in t/*.t; do
+  grep -q "ExtUtils::ParseXS::" $FILE || grep -q "ExtUtils::Typemaps" $FILE || rm -f $FILE
+done
 
 %build
 perl Makefile.PL INSTALLDIRS=vendor OPTIMIZE="$RPM_OPT_FLAGS"
@@ -65,6 +67,7 @@ make test
 - Updated comments
 - Updated bogus date in %%changelog
 - %%{perl_vendorlib}/ExtUtils/ParseXS* - removed asterisk, it is 1 dir
+- Remove tests in much more cooler way
 
 * Fri Jan 04 2013 Miro Hrončok <miro@hroncok.cz> - 3.18-3
 - Forked from perl-ExtUtils-ParseXS
