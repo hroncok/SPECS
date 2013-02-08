@@ -1,6 +1,6 @@
 Name:           perl-ExtUtils-Typemaps
 Version:        3.18
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        Reads, modifies, creates and writes Perl XS typemap files
 License:        GPL+ or Artistic
 Group:          Development/Libraries
@@ -10,7 +10,7 @@ BuildArch:      noarch
 BuildRequires:  perl(ExtUtils::MakeMaker) >= 6.46
 BuildRequires:  perl(ExtUtils::ParseXS)
 BuildRequires:  perl(Test::More) >= 0.47
-Requires:       perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
+Requires:       perl(:MODULE_COMPAT_%(eval "`perl -V:version`"; echo $version))
 
 %description
 ExtUtils::Typemaps can read, modify, create and write Perl XS typemap files.
@@ -24,20 +24,21 @@ in a different typemap.
 
 %prep
 %setup -q -n ExtUtils-ParseXS-%{version}
-# Remove ExtUtils::ParseXS
+# Remove ExtUtils::ParseXS parts from this package, keep the rest
+# This means ExtUtils::Typemaps and ExtUtils::ParseXS::* stay
 rm -f lib/ExtUtils/ParseXS.* lib/ExtUtils/xsubpp
 
-# Modifiy Makefile.PL
+# Modifiy Makefile.PL to successfully compile without removed parts
 sed -i 's/ExtUtils::ParseXS/ExtUtils::Typemaps/' Makefile.PL
 sed -i 's/ParseXS.pm/Typemaps.pm/' Makefile.PL
 sed -i "s|ABSTRACT_FROM  => 'lib/ExtUtils/ParseXS.pod',||" Makefile.PL
 sed "/lib\/ExtUtils\/xsubpp/d" Makefile.PL > Makefile.PL.tmp && mv -f Makefile.PL.tmp Makefile.PL
 
-# Remove ExtUtils::ParseXS tests
+# Remove ExtUtils::ParseXS specific tests, keep others
 rm -f t/00*.t t/1*.t
 
 %build
-%{__perl} Makefile.PL INSTALLDIRS=vendor OPTIMIZE="$RPM_OPT_FLAGS"
+perl Makefile.PL INSTALLDIRS=vendor OPTIMIZE="$RPM_OPT_FLAGS"
 make %{?_smp_mflags}
 
 %install
@@ -54,11 +55,17 @@ make test
 %files
 %doc Changes META.json README
 #%%{perl_vendorlib}/auto/*
-%{perl_vendorlib}/ExtUtils/ParseXS*
+%{perl_vendorlib}/ExtUtils/ParseXS
 %{perl_vendorlib}/ExtUtils/Typemaps*
 %{_mandir}/man3/*
 
 %changelog
+* Fri Feb 08 2013 Miro Hrončok <mhroncok@redhat.com> - 3.18-4
+- %%{_perl} to perl
+- Updated comments
+- Updated bogus date in %%changelog
+- %%{perl_vendorlib}/ExtUtils/ParseXS* - removed asterisk, it is 1 dir
+
 * Fri Jan 04 2013 Miro Hrončok <miro@hroncok.cz> - 3.18-3
 - Forked from perl-ExtUtils-ParseXS
 - Removed ExtUtils::ParseXS module and tests
@@ -80,7 +87,7 @@ make test
 * Fri Nov 16 2012 Miro Hrončok <miro@hroncok.cz> - 3.15-11
 - Removed BRs provided by perl package
 
-* Tue Sep 28 2012 Miro Hrončok <miro@hroncok.cz> 3.15-10
+* Fri Sep 28 2012 Miro Hrončok <miro@hroncok.cz> 3.15-10
 - Release changed to 10, so i can update.
 
 * Tue Sep 25 2012 Miro Hrončok <miro@hroncok.cz> 3.15-1
