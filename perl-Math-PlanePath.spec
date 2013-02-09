@@ -1,21 +1,29 @@
 Name:           perl-Math-PlanePath
 Version:        98
-Release:        1%{?dist}
-Summary:        Points on a path through the 2D plane
+Release:        2%{?dist}
+Summary:        Mathematical paths through the 2-D plane
 License:        GPLv3+
 Group:          Development/Libraries
-URL:            http://search.cpan.org/dist/Math-PlanePath/
+URL:            http://user42.tuxfamily.org/math-planepath/index.html
 Source0:        http://www.cpan.org/authors/id/K/KR/KRYDE/Math-PlanePath-%{version}.tar.gz
 BuildArch:      noarch
-BuildRequires:  perl >= 0:5.004
+BuildRequires:  perl(Carp)
+BuildRequires:  perl(constant) >= 1.02
 BuildRequires:  perl(constant::defer) >= 5
+BuildRequires:  perl(Exporter)
 BuildRequires:  perl(ExtUtils::MakeMaker)
+BuildRequires:  perl(File::Spec)
+BuildRequires:  perl(lib)
 BuildRequires:  perl(List::Util)
-BuildRequires:  perl(Math::BigFloat)
+BuildRequires:  perl(Math::BigFloat) >= 1.993
 BuildRequires:  perl(Math::BigInt)
-BuildRequires:  perl(Math::BigRat)
 BuildRequires:  perl(Math::Libm)
+BuildRequires:  perl(Scalar::Util)
+BuildRequires:  perl(Test)
 Requires:       perl(constant::defer) >= 5
+Requires:       perl(Math::Factor::XS)
+Requires:       perl(Math::NumSeq::Modulo)
+Requires:       perl(Module::Load)
 Requires:       perl(:MODULE_COMPAT_%(eval "`perl -V:version`"; echo $version))
 
 # Filtering unversioned provides and requires
@@ -24,8 +32,8 @@ Requires:       perl(:MODULE_COMPAT_%(eval "`perl -V:version`"; echo $version))
 %global __requires_exclude %{?__requires_exclude:%__requires_exclude|}^perl\\(constant\\)$
 
 %description
-This is a base class for some mathematical paths which map an integer
-position $n to and from coordinates $x,$y in the 2D plane.
+This spot of Perl code calculates various mathematical paths through a 2-D X,Y
+plane. There's no drawing in Math-PlanePath, just coordinate calculations.
 
 %prep
 %setup -q -n Math-PlanePath-%{version}
@@ -46,11 +54,29 @@ find %{buildroot} -type f -name '*.bs' -size 0 -exec rm -f {} \;
 make test
 
 %files
-%doc Changes COPYING
+%doc Changes COPYING debian/copyright
 %{perl_vendorlib}/Math*
 %{_mandir}/man3/*
 
 %changelog
+* Sat Feb 09 2013 Miro Hrončok <mhroncok@redhat.com> - 98-2
+- Using original homepage for URL
+- Updated summary and description to suit whole package
+- Packaged debian/copyright as documentation
+- Quallified BR perl(Math::BigFloat) with >= 1.993
+- Build-required perl(constant) >= 1.02
+                 perl(Test)
+                 perl(Scalar::Util)
+                 perl(Carp)
+                 perl(File::Spec)
+                 perl(Exporter)
+                 perl(lib)
+- Run-required   perl(Math::Factor::XS)
+                 perl(Math::NumSeq::Modulo)
+                 perl(Module::Load)
+- Removed BR     perl(Math::BigRat)
+                 perl >= 0:5.004
+
 * Sat Feb 02 2013 Miro Hrončok <mhroncok@redhat.com> - 98-1
 - New release
 - Removed perl default filter
