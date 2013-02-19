@@ -1,6 +1,6 @@
 Name:           cura
 Version:        12.12
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        3D printer control software
 
 # Code is AGPLv3
@@ -33,16 +33,7 @@ Requires:       pyserial
 Requires:       numpy
 Requires:       python-power
 Requires:       pypy
-
-## Note about bundling:
-# It might seem like bundling skeinforge, but author of this software has said:
-# 
-# Mine is different, next to a bunch of bug fixes on SF50, I also made a lot of
-# changes to add features. I also changed stuff to make it better integrated
-# into Cura, so you cannot drop-in an SF version without changes. But I'm
-# up-to-date with SF50.
-#
-# https://github.com/daid/Cura/issues/231#issuecomment-9317695
+Requires:       ultimaker-marlin-firmware
 
 %description
 Cura is a project which aims to be an single software solution for 3D printing.
@@ -71,7 +62,7 @@ cd -
 
 %install
 mkdir -p %{buildroot}%{python_sitelib}/Cura
-mkdir -p %{buildroot}%{_datadir}/%{name}
+mkdir -p %{buildroot}%{_datadir}/%{name}/firmware
 mkdir -p %{buildroot}%{_datadir}/pixmaps
 mkdir -p %{buildroot}%{_bindir}
 
@@ -80,6 +71,7 @@ cp -apr resources/* %{buildroot}%{_datadir}/%{name}
 cp -ap %{SOURCE1} %{buildroot}%{_bindir}
 ln -s %{_datadir}/%{name} %{buildroot}%{python_sitelib}/Cura/resources
 ln -s %{_datadir}/%{name}/%{name}.ico %{buildroot}%{_datadir}/pixmaps
+ln -s %{_datadir}/ultimaker-marlin-firmware/ultimaker-marlin-firmware.hex %{buildroot}%{_datadir}/%{name}/firmware/ultimaker_115200.hex
 
 desktop-file-install --dir=%{buildroot}%{_datadir}/applications %{SOURCE2}
 
@@ -92,6 +84,11 @@ desktop-file-install --dir=%{buildroot}%{_datadir}/applications %{SOURCE2}
 %{_bindir}/%{name}
 
 %changelog
+* Tue Feb 19 2013 Miro Hrončok <mhroncok@redhat.com> - 12.12-3
+- chmod 755 cura-stripper.sh
+- Use firmware from ultimaker-marlin-firmware package
+- removed bundling note
+
 * Sun Jan 20 2013 Miro Hrončok <mhroncok@redhat.com> - 12.12-2
 - Launcher is in Python now
 
