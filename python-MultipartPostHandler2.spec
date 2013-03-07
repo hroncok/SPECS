@@ -16,6 +16,7 @@ BuildRequires:  python-setuptools
 %if 0%{with_python3}
 BuildRequires:  python3-devel
 BuildRequires:  python3-setuptools
+BuildRequires:  python-tools
 %endif
 
 %description
@@ -38,7 +39,8 @@ rm -rf doc # no real doc there
 %if 0%{?with_python3}
 rm -rf %{py3dir}
 cp -a . %{py3dir}
-find %{py3dir} -name '*.py' | xargs sed -i '1s|^#!python|#!%{__python3}|'
+find %{py3dir} -name '*.py' | xargs sed -i '1s|^#!%{__python}|#!%{__python3}|'
+2to3 --write --nobackup %{py3dir}/MultipartPostHandler.py
 %endif # with_python3
 
 %build
@@ -58,15 +60,15 @@ chmod +x %{buildroot}%{python3_sitelib}/MultipartPostHandler.py
 cd -
 %endif # with_python3
 
-chmod +x %{buildroot}%{python_sitelib}/MultipartPostHandler.py
 %{__python} setup.py install --skip-build --root %{buildroot}
+chmod +x %{buildroot}%{python_sitelib}/MultipartPostHandler.py
 
 %files
 %doc README.txt
-%{python_sitelib}/MultipartPostHandler*
+%{python_sitelib}/*
 %files -n python3-%{pypi_name}
 %doc README.txt
-%{python3_sitelib}/MultipartPostHandler*
+%{python3_sitelib}/*
 
 %changelog
 * Wed Feb 20 2013 Miro Hrončok <mhroncok@redhat.com> - 0.1.1-2
