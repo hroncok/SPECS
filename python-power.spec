@@ -17,6 +17,7 @@ BuildRequires:  python-setuptools
 %if 0%{with_python3}
 BuildRequires:  python3-devel
 BuildRequires:  python3-setuptools
+BuildRequires:  python-tools
 %endif
 
 %description
@@ -37,6 +38,7 @@ Python module that allows you to get power and battery status of the system.
 rm -rf %{py3dir}
 cp -a . %{py3dir}
 find %{py3dir} -name '*.py' | xargs sed -i '1s|^#!%{__python}|#!%{__python3}|'
+2to3 --write --nobackup %{py3dir}/power/tests.py
 %endif # with_python3
 
 %build
