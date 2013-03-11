@@ -1,6 +1,6 @@
 Name:           slic3r
 Version:        0.9.8
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        G-code generator for 3D printers (RepRap, Makerbot, Ultimaker etc.)
 License:        AGPLv3 and CC-BY
 # Images are CC-BY, code is AGPLv3
@@ -88,6 +88,9 @@ desktop-file-install --dir=%{buildroot}%{_datadir}/applications %{SOURCE1}
 %{_mandir}/man3/*
 
 %changelog
+* Mon Mar 11 2013 Miro Hrončok <mhroncok@redhat.com> - 0.9.8-3
+- In-file justification provided for patches
+
 * Mon Jan 21 2013 Miro Hrončok <mhroncok@redhat.com> - 0.9.8-2
 - Added patch to grab icons from %%{datadir}/%%{name}
 - Added patch to avoid bad locales behavior
