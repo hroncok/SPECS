@@ -41,6 +41,7 @@ rm -rf %{py3dir}
 cp -a . %{py3dir}
 find %{py3dir} -name '*.py' | xargs sed -i '1s|^#!%{__python}|#!%{__python3}|'
 2to3 --write --nobackup %{py3dir}/MultipartPostHandler.py
+sed -i 's/import mimetools/import email/' %{py3dir}/MultipartPostHandler.py
 %endif # with_python3
 
 %build
