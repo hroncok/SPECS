@@ -1,6 +1,6 @@
 Name:           perl-Math-Clipper
-Version:        1.17
-Release:        2%{?dist}
+Version:        1.15
+Release:        1%{?dist}
 Summary:        Perl wrapper around Clipper library
 License:        Boost
 Group:          Development/Libraries
@@ -17,7 +17,7 @@ BuildRequires:  perl(Module::Build::WithXSpp) >= 0.10
 BuildRequires:  perl(Test::Deep)
 BuildRequires:  perl(Test::More)
 BuildRequires:  perl(XSLoader)
-BuildRequires:  polyclipping-devel >= 5.0.3
+BuildRequires:  polyclipping-devel >= 4.9.6
 Requires:       perl(:MODULE_COMPAT_%(eval "`%{__perl} -V:version`"; echo $version))
 
 %{?perl_default_filter} # Filters (not)shared c libs
@@ -51,31 +51,20 @@ find %{buildroot} -type f -name '*.bs' -size 0 -exec rm -f {} \;
 %{_mandir}/man3/*
 
 %changelog
-* Thu Jan 17 2013 Miro Hrončok <mhroncok@redhat.com> - 1.17-2
-- %%{__perl} to perl
-- dropped perl(Module::Build) BR
-
-* Thu Jan 17 2013 Miro Hrončok <mhroncok@redhat.com> - 1.17-1
-- New release
-- Wants newer polyclipping
-
-* Thu Jan 03 2013 Miro Hrončok <miro@hroncok.cz> - 1.16-2
-- Removed META.json and xsp from doc
-- Specified version for polyclipping-devel BR
-- Specified version for perl(Module::Build::WithXSpp) BR
-- Removed perl(ExtUtils::XSpp) BR
-- Added BRs perl(XSLoader) and perl(constant)
-
-* Fri Dec 28 2012 Miro Hrončok <miro@hroncok.cz> - 1.16-1
-- New version
-- Removed boundled C clipper and using the distribution one
-- Removed no longer needed dos2unix
-
 * Mon Dec 17 2012 Miro Hrončok <miro@hroncok.cz> - 1.15-1
 - New version
 - Added perl(Config) and perl(Exporter) to BRs
 - Removed deleting empty directories
 - using dos2unix instead of sed
+- Removed no longer needed dos2unix
+- Removed boundled C clipper and using the distribution one
+- Added BRs perl(XSLoader) and perl(constant)
+- Removed META.json and xsp from doc
+- Specified version for polyclipping-devel BR
+- Specified version for perl(Module::Build::WithXSpp) BR
+- Removed perl(ExtUtils::XSpp) BR
+- %%{__perl} to perl
+- dropped perl(Module::Build) BR
 
 * Fri Nov 16 2012 Miro Hrončok <miro@hroncok.cz> - 1.14-2
 - Removed BRs provided by perl package

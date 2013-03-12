@@ -1,6 +1,6 @@
 Name:           perl-ExtUtils-Typemaps
 Version:        3.18
-Release:        4%{?dist}
+Release:        5%{?dist}
 Summary:        Reads, modifies, creates and writes Perl XS typemap files
 License:        GPL+ or Artistic
 Group:          Development/Libraries
@@ -38,6 +38,7 @@ sed "/lib\/ExtUtils\/xsubpp/d" Makefile.PL > Makefile.PL.tmp && mv -f Makefile.P
 for FILE in t/*.t; do
   grep -q "ExtUtils::ParseXS::" $FILE || grep -q "ExtUtils::Typemaps" $FILE || rm -f $FILE
 done
+rm -f t/002-more.t t/114-blurt_death_Warn.t
 
 %build
 perl Makefile.PL INSTALLDIRS=vendor OPTIMIZE="$RPM_OPT_FLAGS"
@@ -62,6 +63,9 @@ make test
 %{_mandir}/man3/*
 
 %changelog
+* Mon Feb 18 2013 Miro Hrončok <mhroncok@redhat.com> - 3.18-5
+- More tests testing ParseXS removed
+
 * Fri Feb 08 2013 Miro Hrončok <mhroncok@redhat.com> - 3.18-4
 - %%{_perl} to perl
 - Updated comments

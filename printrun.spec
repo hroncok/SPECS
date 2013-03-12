@@ -1,9 +1,9 @@
-%global commit 5897fbc60f761dd273c6692b7bf1d75bce981351
+%global commit 71e5da009ae8de5e09cbb6dabf46a90cd2e8a62c
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
-%global snapshot 20130113git%{shortcommit}
+%global snapshot 20130123git%{shortcommit}
 Name:           printrun
 Version:        0.0
-Release:        19.%{snapshot}%{?dist}
+Release:        22.%{snapshot}%{?dist}
 Summary:        RepRap printer interface and tools
 License:        GPLv3+
 Group:          Applications/Engineering
@@ -14,9 +14,6 @@ Source0:        https://github.com/kliment/Printrun/archive/%{commit}/%{name}-%{
 Source1:        pronsole.desktop
 Source2:        pronterface.desktop
 Source3:        plater.desktop
-
-# https://github.com/kliment/Printrun/pull/318
-Patch0:         %{name}-pull-318.patch
 
 BuildArch:      noarch
 BuildRequires:  python2-devel
@@ -83,7 +80,6 @@ It is a part of Printrun.
 
 %prep
 %setup -qn Printrun-%{commit}
-%patch0 -p1
 
 # use launchers for skeinforge
 sed -i 's|python skeinforge/skeinforge_application/skeinforge.py|skeinforge|' pronsole.py
@@ -152,6 +148,17 @@ cd -
 %doc README* COPYING
 
 %changelog
+* Wed Jan 23 2013 Miro Hrončok <mhroncok@redhat.com> - 0.0-22.20130123git71e5da0
+- Pull request merged
+- Updated to new commit
+- Removed pacth (no longer needed)
+
+* Wed Jan 23 2013 Miro Hrončok <mhroncok@redhat.com> - 0.0-21.20130113git5897fbc
+- Handle UTF-8 encode better in patch
+
+* Wed Jan 23 2013 Miro Hrončok <mhroncok@redhat.com> - 0.0-20.20130113git5897fbc
+- Removing UTF-8 removal from patch
+
 * Sat Jan 19 2013 Miro Hrončok <mhroncok@redhat.com> - 0.0-19.20130113git5897fbc
 - Removed run-time deps, that are resolved automatically
 

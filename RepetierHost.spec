@@ -1,10 +1,10 @@
 Name:           RepetierHost
-Version:        0.83
-Release:        3%{?dist}
+Version:        0.84
+Release:        1%{?dist}
 Summary:        3D printer control software
 License:        ASL 2.0
 URL:            http://www.repetier.com/
-%global commit ed72690afdabc68219b4c798ba7354c6d4333ef1
+%global commit a19d77627b9063212434b6916581660e2b983c82
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 Source0:        https://github.com/repetier/Repetier-Host/archive/%{commit}/%{name}-%{version}-%{shortcommit}.tar.gz
 Source1:        %{name}.desktop
@@ -73,6 +73,9 @@ chmod +x %{buildroot}%{_bindir}/%{name}
 %{_datadir}/pixmaps/%{name}.ico
 
 %changelog
+* Wed Feb 20 2013 Miro Hrončok <mhroncok@redhat.com> - 0.84-1
+- New version
+
 * Fri Jan 25 2013 Miro Hrončok <mhroncok@redhat.com> - 0.83-3
 - Fixing small issues
 

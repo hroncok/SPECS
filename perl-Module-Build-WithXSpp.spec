@@ -1,6 +1,6 @@
 Name:           perl-Module-Build-WithXSpp
-Version:        0.12
-Release:        3%{?dist}
+Version:        0.13
+Release:        1%{?dist}
 Summary:        XS++ enhanced flavor of Module::Build
 License:        GPL+ or Artistic
 Group:          Development/Libraries
@@ -49,6 +49,9 @@ easier to use for wrapping C++ using XS++ (ExtUtils::XSpp).
 %{_mandir}/man3/*
 
 %changelog
+* Tue Jan 29 2013 Miro Hrončok <mhroncok@redhat.com> - 0.13-1
+- New version
+
 * Thu Dec 20 2012 Miro Hrončok <miro@hroncok.cz> - 0.12-3
 - Removed deleting empty dirs in %%install section
 - Do not package META.json
