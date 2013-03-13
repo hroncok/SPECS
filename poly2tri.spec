@@ -3,7 +3,7 @@ Version:        0.0
 %global         rev acf81f1f1764
 %global         date 20120407
 %global         snapshot %{date}hg%{rev}
-Release:        2.%{snapshot}%{?dist}
+Release:        3.%{snapshot}%{?dist}
 Summary:        A 2D constrained Delaunay triangulation library
 License:        BSD
 URL:            https://code.google.com/p/%{name}
@@ -40,9 +40,9 @@ CFLAGS="%{optflags}" make %{?_smp_mflags}
 cd -
 
 %install
-install -Dpm0755 %{name}/lib%{name}.so.0.0.0 %{buildroot}%{_libdir}/lib%{name}.so.0.0.0
-ln -s lib%{name}.so.0.0.0 %{buildroot}%{_libdir}/lib%{name}.so.0
-ln -s lib%{name}.so.0.0.0 %{buildroot}%{_libdir}/lib%{name}.so
+install -Dpm0755 %{name}/lib%{name}.so.1.0.0 %{buildroot}%{_libdir}/lib%{name}.so.1.0.0
+ln -s lib%{name}.so.1.0.0 %{buildroot}%{_libdir}/lib%{name}.so.1
+ln -s lib%{name}.so.1.0.0 %{buildroot}%{_libdir}/lib%{name}.so
 
 for H in %{name}/*/*.h %{name}/*.h; do
   install -Dpm0644 $H %{buildroot}%{_includedir}/$H
@@ -62,6 +62,9 @@ done
 %{_includedir}/%{name}
 
 %changelog
+* Wed Mar 13 2013 Miro Hrončok <mhroncok@redhat.com> - 0.0-3.20120407hgacf81f1f1764
+- Using soname version 1.0.0 as upstream suggests so: http://code.google.com/p/poly2tri/issues/detail?id=66#c1
+
 * Thu Mar 07 2013 Miro Hrončok <mhroncok@redhat.com> - 0.0-2.20120407hgacf81f1f1764
 - Preserve AUTHORS timestamp
 - Use %%{optflags}
