@@ -1,6 +1,6 @@
 Name:           slic3r
 Version:        0.9.8
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        G-code generator for 3D printers (RepRap, Makerbot, Ultimaker etc.)
 License:        AGPLv3 and CC-BY
 # Images are CC-BY, code is AGPLv3
@@ -9,8 +9,14 @@ URL:            http://slic3r.org/
 %global commit 71052433de0ff1f3da04471ccbb572babafc3cae
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 Source0:        https://github.com/alexrj/Slic3r/archive/%{commit}/%{name}-%{version}-%{shortcommit}.tar.gz
+
+# Use /usr/share to store icons
 Patch0:         %{name}-datadir.patch
+
+# Use English decimal separator for numbers
+# Reasons are a bit complicated and are described in the patch
 Patch1:         %{name}-english-locale.patch
+
 Source1:        %{name}.desktop
 BuildArch:      noarch
 BuildRequires:  perl(Module::Build)
@@ -88,6 +94,9 @@ desktop-file-install --dir=%{buildroot}%{_datadir}/applications %{SOURCE1}
 %{_mandir}/man3/*
 
 %changelog
+* Wed Mar 20 2013 Miro Hrončok <mhroncok@redhat.com> - 0.9.8-4
+- Comments added about patches
+
 * Mon Mar 11 2013 Miro Hrončok <mhroncok@redhat.com> - 0.9.8-3
 - In-file justification provided for patches
 
