@@ -1,10 +1,10 @@
 %global with_python3 1
 # comment this out in koji
-#%%global locally 1
+%global locally 1
 %global pypi_name MultipartPostHandler2
 Name:           python-%{pypi_name}
 Version:        0.1.1
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        A handler for urllib2 to enable multipart form uploading
 # License note in MultipartPostHandler.py
 License:        LGPLv2+
@@ -80,7 +80,7 @@ cd -
 %{__python} MultipartPostHandler-example.py
 %if 0%{?with_python3}
 cd %{py3dir}
-%{__python3} MultipartPostHandler-example.py
+env LANG=en_US.utf8 %{__python3} MultipartPostHandler-example.py
 cd -
 %endif # with_python3
 %endif # locally
@@ -93,6 +93,9 @@ cd -
 %{python3_sitelib}/*
 
 %changelog
+* Fri Mar 22 2013 Miro Hrončok <mhroncok@redhat.com> - 0.1.1-4
+- Dealing with more Pyhton 3 stuff
+
 * Thu Mar 21 2013 Miro Hrončok <mhroncok@redhat.com> - 0.1.1-3
 - Remove the example in main() from the library and keep it separated
 - Added patch witch Python 3 specific things
