@@ -1,6 +1,6 @@
 Name:          rapidxml
 Version:       1.13
-Release:       1%{?dist}
+Release:       2%{?dist}
 Summary:       Fast XML parser
 License:       Boost or MIT
 URL:           http://rapidxml.sourceforge.net/
@@ -17,6 +17,7 @@ strlen function executed on the same data.
 
 %package devel
 Summary:       Fast XML parser
+Provides:      %{name}-static = %{version}-%{release}
 
 %description devel
 RapidXml is an attempt to create the fastest XML parser possible, while
@@ -59,5 +60,8 @@ cd -
 %{_includedir}/*
 
 %changelog
+* Sat Apr 20 2013 Miro Hrončok <mhroncok@redhat.com> - 1.13-2
+- devel subpackage now provides -static.
+
 * Sat Feb 02 2013 Miro Hrončok <mhroncok@redhat.com> - 1.13-1
 - Initial release
