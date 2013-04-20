@@ -1,6 +1,6 @@
 Name:           cura
-Version:        12.12
-Release:        3%{?dist}
+Version:        13.03
+Release:        1%{?dist}
 Summary:        3D printer control software
 
 # Code is AGPLv3
@@ -19,10 +19,6 @@ Source1:        %{name}
 Source2:        %{name}.desktop
 Source3:        %{name}-stripper.sh
 
-# Backporting this fix, so Cura won't crash when searching a missing model
-# https://github.com/daid/Cura/commit/e861e80b780d17247f7123f77dd0eba4b5381e90
-Patch0:         %{name}-12.12-missing-platform-fix.patch
-
 BuildArch:      noarch
 BuildRequires:  python2-devel
 BuildRequires:  dos2unix
@@ -33,7 +29,7 @@ Requires:       pyserial
 Requires:       numpy
 Requires:       python-power
 Requires:       pypy
-Requires:       ultimaker-marlin-firmware
+Requires:       ultimaker-marlin-firmware >= 12.12-0.5.RC1
 
 %description
 Cura is a project which aims to be an single software solution for 3D printing.
@@ -46,13 +42,12 @@ settings and send this G-Code to the 3D printer for printing.
 
 %prep
 %setup -qn Cura-%{version}-linux/Cura
-%patch0 -p1
 
 dos2unix resources/example/Attribution.txt
 
 # Remove useless shebangs
-cd cura_sf/skeinforge_application/skeinforge_plugins/craft_plugins
-for FILE in alteration.py scale.py dimension.py limit.py fill.py inset.py widen.py bottom.py preface.py ../../../../cura.py; do
+cd slice/cura_sf/skeinforge_application/skeinforge_plugins/craft_plugins
+for FILE in alteration.py scale.py dimension.py limit.py fill.py inset.py widen.py bottom.py preface.py ../../../../../cura.py ../../../../../util/pymclevel/mce.py; do
   awk 'FNR>1' $FILE > $FILE.nobang && mv -f $FILE.nobang $FILE
 done
 cd -
@@ -62,7 +57,7 @@ cd -
 
 %install
 mkdir -p %{buildroot}%{python_sitelib}/Cura
-mkdir -p %{buildroot}%{_datadir}/%{name}/firmware
+mkdir -p %{buildroot}%{_datadir}/%{name}
 mkdir -p %{buildroot}%{_datadir}/pixmaps
 mkdir -p %{buildroot}%{_bindir}
 
@@ -71,7 +66,7 @@ cp -apr resources/* %{buildroot}%{_datadir}/%{name}
 cp -ap %{SOURCE1} %{buildroot}%{_bindir}
 ln -s %{_datadir}/%{name} %{buildroot}%{python_sitelib}/Cura/resources
 ln -s %{_datadir}/%{name}/%{name}.ico %{buildroot}%{_datadir}/pixmaps
-ln -s %{_datadir}/ultimaker-marlin-firmware/ultimaker-marlin-firmware.hex %{buildroot}%{_datadir}/%{name}/firmware/ultimaker_115200.hex
+ln -s %{_datadir}/ultimaker-marlin-firmware %{buildroot}%{_datadir}/%{name}/firmware
 
 desktop-file-install --dir=%{buildroot}%{_datadir}/applications %{SOURCE2}
 
@@ -84,6 +79,9 @@ desktop-file-install --dir=%{buildroot}%{_datadir}/applications %{SOURCE2}
 %{_bindir}/%{name}
 
 %changelog
+* Sat Apr 20 2013 Miro Hrončok <mhroncok@redhat.com> - 13.03-1
+- New upstream release
+
 * Tue Feb 19 2013 Miro Hrončok <mhroncok@redhat.com> - 12.12-3
 - chmod 755 cura-stripper.sh
 - Use firmware from ultimaker-marlin-firmware package
