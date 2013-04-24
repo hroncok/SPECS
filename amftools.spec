@@ -59,6 +59,7 @@ cp -arp include %{buildroot}%{_includedir}/amf
 * Wed Apr 24 2013 Miro Hrončok <mhroncok@redhat.com> - 0.0-2.20121220svn32
 - Soname version 0.0.0 -> 0.0
 - Removing include/zip in %%prep, as it works fine
+- Added -lmuparser to Makefile
 
 * Fri Feb 01 2013 Miro Hrončok <mhroncok@redhat.com> - 0.0-1.20121220svn32
 - Started
