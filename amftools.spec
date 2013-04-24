@@ -2,7 +2,7 @@ Name:           amftools
 Version:        0.0
 %global         svn svn32
 %global         snapshot 20121220%{svn}
-Release:        1.%{snapshot}%{?dist}
+Release:        2.%{snapshot}%{?dist}
 Summary:        AMF file library
 # License is in files
 License:        LGPLv3+
@@ -29,27 +29,18 @@ Development files for AMF tools.
 cp %{SOURCE1} Makefile
 
 # Bundling
-rm -rf */muparser */stb_image include/rapidxml
+rm -rf */muparser */stb_image include/rapidxml */zip
 sed -i 's|muparser/muParser.h|muParser.h|g' include/Equation.h
 sed -i 's|stb_image/stb_image.h|stb_image.h|g' src/SimpleImage.cpp
 sed -i 's|rapidxml/||g' include/XmlStream.h src/XmlStream.cpp
-
-# Might be bundling, isn't needed on non-Windows OS.
-# Keeping empty files there, so I don't need to modify other sources
-rm -rf src/zip
-echo > include/zip/zip-win.h
-echo > include/zip/unzip-win.h
 
 %build
 make %{?_smp_mflags}
 
 %install
-# Remove useless empty files previously keeped
-rm -rf include/zip
-
-install -Dpm0755 libamf.so.0.0.0 %{buildroot}%{_libdir}/libamf.so.0.0.0
-ln -s libamf.so.0.0.0 %{buildroot}%{_libdir}/libamf.so.0
-ln -s libamf.so.0.0.0 %{buildroot}%{_libdir}/libamf.so
+install -Dpm0755 libamf.so.0.0 %{buildroot}%{_libdir}/libamf.so.0.0
+ln -s libamf.so.0.0 %{buildroot}%{_libdir}/libamf.so.0
+ln -s libamf.so.0.0 %{buildroot}%{_libdir}/libamf.so
 mkdir -p %{buildroot}%{_includedir}
 cp -arp include %{buildroot}%{_includedir}/amf
 
@@ -65,6 +56,10 @@ cp -arp include %{buildroot}%{_includedir}/amf
 %{_includedir}/amf
 
 %changelog
+* Wed Apr 24 2013 Miro Hrončok <mhroncok@redhat.com> - 0.0-2.20121220svn32
+- Soname version 0.0.0 -> 0.0
+- Removing include/zip in %%prep, as it works fine
+
 * Fri Feb 01 2013 Miro Hrončok <mhroncok@redhat.com> - 0.0-1.20121220svn32
 - Started
 
