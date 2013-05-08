@@ -1,6 +1,6 @@
 Name:           repsnapper
-Version:        2.1.0
-Release:        5%{?dist}
+Version:        2.2.0
+Release:        0.1.a2%{?dist}
 Summary:        RepRap control software
 
 # repsnapper is GPLv2 as noted in licensing.txt
@@ -9,47 +9,46 @@ Summary:        RepRap control software
 #      (C) 1999-2003 Tatewake.com and licensed under the MIT license
 #      as noted in licensing.txt
 #
-# libreprap is MIT (C) Benjamin Saunders and others
-#      as noted here https://github.com/Ralith/libreprap/issues/4#issuecomment-13059313
-#
 # Several functions in slicer/geometry.cpp are licensed with non stock MIT-like license
 #      as noted in licensing.txt
-#      I've asked Fedora Legal list
+#      and attached e-mail
 #
 # Icon is CC-BY, infile metadata
-License:        GPLv2 and MIT and CC-BY
+License:        GPLv2 and MIT and softSurfer and CC-BY
 
 URL:            https://github.com/timschmidt/%{name}
-%global         commit 4f0ca972f5e0ef69d7a86fa3d1222c2482d9afd8
+%global         commit 65a056a7255ee17f7908db763460a4e8a515e6dc
 %global         shortcommit %(c=%{commit}; echo ${c:0:7})
 Source0:        https://github.com/timschmidt/%{name}/archive/%{commit}/%{name}-%{version}-%{shortcommit}.tar.gz
-Source1:        %{name}-icon.svg
-Source2:        %{name}-icon16.png
+Source1:        %{name}-softsurfer-copyright-email.txt
 Patch0:         %{name}-use-system-libs.patch
-Patch1:         %{name}-icon.patch
-BuildRequires:  gtkmm24-devel
-BuildRequires:  gtkglext-devel
+BuildRequires:  amftools-devel
 BuildRequires:  cairomm-devel
-BuildRequires:  glibmm24-devel
-BuildRequires:  glib2-devel
-BuildRequires:  libxml++-devel
-BuildRequires:  libzip-devel
+BuildRequires:  desktop-file-utils
 BuildRequires:  freeglut-devel
 BuildRequires:  gettext
-BuildRequires:  libtool
+BuildRequires:  glibmm24-devel
+BuildRequires:  glib2-devel
+BuildRequires:  gtkglext-devel
+BuildRequires:  gtkglextmm-devel >= 1.2
+BuildRequires:  gtkmm24-devel
 BuildRequires:  intltool
-BuildRequires:  polyclipping-devel >= 4.6.3
-BuildRequires:  vmmlib-devel
-BuildRequires:  amftools-devel
+BuildRequires:  libtool
+BuildRequires:  libxml++-devel
+BuildRequires:  libzip-devel
 BuildRequires:  lmfit-devel
+BuildRequires:  muParser-devel
+BuildRequires:  polyclipping-devel >= 5.1
 BuildRequires:  poly2tri-devel
-BuildRequires:  desktop-file-utils
+BuildRequires:  rapidxml-devel
+BuildRequires:  vmmlib-devel
 
 %description
 RepSnapper is a host software for controlling the RepRap 3D printer.
 
 %prep
 %setup -qn %{name}-%{commit}
+cp %SOURCE1 .
 
 %patch0 -p1
 rm -rf libraries/{clipper,vmmlib,amf,lmfit,poly2tri}
@@ -58,12 +57,9 @@ rm -rf libraries/{clipper,vmmlib,amf,lmfit,poly2tri}
 rm -f licenses/{BSL-1.0.txt,LGPL-2.0.txt,vmmlib-license.txt}
 grep -v VMMLib licensing.txt > licensing-no-vmmlib.txt && mv -f licensing-no-vmmlib.txt licensing.txt
 
-%patch1 -p1
-
+# Move it to Graphics category
 sed -i 's/Utility;/Graphics;/' %{name}.desktop.in
 sed -i 's/_Name=%{name}/_Name=RepSnapper/' %{name}.desktop.in
-sed -i 's/# Icon=%{name}/Icon=%{name}/' %{name}.desktop.in
-
 
 %build
 ./autogen.sh
@@ -72,13 +68,6 @@ make %{?_smp_mflags} V=1
 
 %install
 make install DESTDIR=%{buildroot}
-
-mkdir -p %{buildroot}%{_datadir}/icons/hicolor/scalable/apps
-mkdir -p %{buildroot}%{_datadir}/icons/hicolor/16x16/apps
-install -p -m 644 %{SOURCE1} \
-  %{buildroot}%{_datadir}/icons/hicolor/scalable/apps/%{name}.svg
-install -p -m 644 %{SOURCE2} \
-  %{buildroot}%{_datadir}/icons/hicolor/16x16/apps/%{name}.png
 
 %find_lang %{name}
 
@@ -98,15 +87,19 @@ if [ -x %{_bindir}/gtk-update-icon-cache ]; then
 fi
 
 %files -f %{name}.lang
-%doc HACKING licensing.txt README.asciidoc TODO todo.txt licenses
+%doc HACKING licensing.txt README.asciidoc TODO todo.txt licenses %{name}-softsurfer-copyright-email.txt
 %config(noreplace) %{_sysconfdir}/xdg/%{name}/%{name}.conf
 %{_bindir}/%{name}
 %{_datadir}/%{name}/%{name}.ui
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/icons/hicolor/scalable/apps/%{name}.svg
-%{_datadir}/icons/hicolor/16x16/apps/%{name}.png
 
 %changelog
+* Wed May 08 2013 Miro Hrončok <mhroncok@redhat.com> - 2.2.0-0.1.a2
+- Updated to 2.2.0a2
+- Removed adding icon manually, as it is in this release
+- Added e-mail with updated copyright information of softSurfer code
+
 * Tue Feb 05 2013 Miro Hrončok <mhroncok@redhat.com> - 2.1.0-5
 - Moved %%find_lang to %%install
 
@@ -121,7 +114,7 @@ fi
 - Using %%config(noreplace)
 - Added icons from #679273
 
-* Thu Jan 30 2013 Volker Fröhlich <volker27@gmx.at> - 2.1.0-2
+* Wed Jan 30 2013 Volker Fröhlich <volker27@gmx.at> - 2.1.0-2
 - Correct patch to link polyclipping
 - Make build verbose
 
