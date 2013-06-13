@@ -4,9 +4,15 @@ Release:        1%{?dist}
 Summary:        Freeware suite for STL editing
 License:        Redistributable
 URL:            http://www.netfabb.com/
-Source0:        netfabb_linux64.tar.gz
+%ifarch x86_64
+Source0:        http://www.netfabb.com/download/netfabb_linux64.tar.gz
+%endif
+%ifarch i686
+Source0:        http://www.netfabb.com/download/netfabb_linux.tar.gz
+%endif
 BuildRequires:  desktop-file-utils
-ExclusiveArch:  x86_64
+
+%global debug_package %{nil}
 
 %description
 This is a Linux release of netfabb Studio Basic, a freeware suite for STL 
@@ -40,8 +46,10 @@ sed -i 's|Exec=$ROOT/usr|Exec=/usr|g' install-fedora.sh
 sed -i 's|LD_LIBRARY_PATH=$ROOT/usr|LD_LIBRARY_PATH=/usr|g' install-fedora.sh
 sed -i 's|echo exec $ROOT/usr|echo exec /usr|g' install-fedora.sh
 
+%ifarch x86_64
 # Use lib64 as it is a 64bit build
 sed -i 's|/lib/|/lib64/|g' install-fedora.sh
+%endif
 
 chmod +x install-fedora.sh
 
@@ -67,4 +75,4 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 
 %changelog
 * Tue Mar 26 2013 Miro Hrončok <mhroncok@redhat.com> - 4.9.5-1
-- First try, 64bit only
+- Initial release.

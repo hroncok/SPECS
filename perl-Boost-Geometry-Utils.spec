@@ -1,6 +1,6 @@
 Name:           perl-Boost-Geometry-Utils
-Version:        0.05
-Release:        6%{?dist}
+Version:        0.06
+Release:        1%{?dist}
 Summary:        Boost::Geometry::Utils Perl module
 License:        GPL+ or Artistic
 Group:          Development/Libraries
@@ -43,6 +43,9 @@ find %{buildroot} -type f -name '*.bs' -size 0 -exec rm -f {} \;
 %{_mandir}/man3/*
 
 %changelog
+* Wed Apr 03 2013 Miro Hrončok <mhroncok@redhat.com> - 0.06-1
+- New upstream release
+
 * Fri Jan 18 2013 Miro Hrončok <mhroncok@redhat.com> - 0.05-6
 - Added back:  perl(ExtUtils::Typemaps::Default)
 

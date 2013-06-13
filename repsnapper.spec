@@ -22,6 +22,7 @@ URL:            https://github.com/timschmidt/%{name}
 Source0:        https://github.com/timschmidt/%{name}/archive/%{commit}/%{name}-%{version}-%{shortcommit}.tar.gz
 Source1:        %{name}-softsurfer-copyright-email.txt
 Patch0:         %{name}-use-system-libs.patch
+Patch1:         %{name}-old-clipper.patch
 BuildRequires:  amftools-devel
 BuildRequires:  cairomm-devel
 BuildRequires:  desktop-file-utils
@@ -38,7 +39,7 @@ BuildRequires:  libxml++-devel
 BuildRequires:  libzip-devel
 BuildRequires:  lmfit-devel
 BuildRequires:  muParser-devel
-BuildRequires:  polyclipping-devel >= 5.1
+BuildRequires:  polyclipping-devel >= 4.6
 BuildRequires:  poly2tri-devel
 BuildRequires:  rapidxml-devel
 BuildRequires:  vmmlib-devel
@@ -51,6 +52,7 @@ RepSnapper is a host software for controlling the RepRap 3D printer.
 cp %SOURCE1 .
 
 %patch0 -p1
+%patch1 -p1
 rm -rf libraries/{clipper,vmmlib,amf,lmfit,poly2tri}
 
 # Remove license information of bundled libs
