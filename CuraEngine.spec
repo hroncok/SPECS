@@ -1,11 +1,12 @@
 Name:           CuraEngine
 Version:        13.06.3
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Engine for processing 3D models into G-code instructions for 3D printers
 License:        AGPLv3
 URL:            https://github.com/Ultimaker/%{name}
 Source0:        %{url}/archive/%{version}.tar.gz
 #%%if 0%%{?fedora} > 18
+# Patch that add compatibility layer for clipper/polyclipping >= 5.1.x
 Patch0:         %{name}-clipper51x.patch
 #%%endif
 BuildRequires:  polyclipping-devel
@@ -28,6 +29,8 @@ rm -rf clipper
 sed -i 's|#include "clipper/clipper.hpp"|#include <polyclipping/clipper.hpp>|' utils/intpoint.h
 sed -i 's|$(CC)|$(CC) $(LIBS)|g' Makefile
 sed -i 's| clipper/clipper.cpp||g' Makefile
+
+# allow CFLAGS
 sed -i 's|CFLAGS=|CFLAGS?=|' Makefile
 
 # update version in main.spp
@@ -50,5 +53,8 @@ done
 %{_bindir}/%{name}
 
 %changelog
+* Thu Jul 04 2013 Miro Hrončok <mhroncok@redhat.com> - 13.06.3-2
+- Added some explaining comments
+
 * Sun Jun 23 2013 Miro Hrončok <mhroncok@redhat.com> - 13.06.3-1
 - New package
