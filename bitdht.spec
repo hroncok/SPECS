@@ -38,12 +38,16 @@ make %{?_smp_mflags}
 
 %install
 # No make install
-mkdir -p %{buildroot}/%{_libdir}
-mkdir -p %{buildroot}/%{_includedir}/%{name}/{%{name},udp,util}
-cp -pP lib/* %{buildroot}/%{_libdir}/
-cp -pP %{name}/*.h %{buildroot}/%{_includedir}/%{name}/%{name}
-cp -pP %{name}/bdboot.txt %{buildroot}/%{_includedir}/%{name}/udp
-cp -pP util/*.h %{buildroot}/%{_includedir}/%{name}/util
+mkdir -p %{buildroot}%{_libdir}
+mkdir -p %{buildroot}%{_datadir}/%{name}
+mkdir -p %{buildroot}%{_includedir}/%{name}/{%{name},udp,util}
+cp -pP lib/* %{buildroot}%{_libdir}/
+cp -pP %{name}/*.h %{buildroot}%{_includedir}/%{name}/%{name}
+cp -pP %{name}/bdboot.txt %{buildroot}%{_datadir}/%{name}
+cp -pP udp/*.h %{buildroot}%{_includedir}/%{name}/udp
+cp -pP util/*.h %{buildroot}%{_includedir}/%{name}/util
+
+
 
 %if 0%{?with_tests}
 # test appears to work only on good network
@@ -61,6 +65,7 @@ cd -
 %files
 %doc README.txt
 %{_libdir}/*so.*
+%{_datadir}/%{name}
 
 %files devel
 %doc README.txt example
