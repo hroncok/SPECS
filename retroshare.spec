@@ -60,7 +60,7 @@ So far contains LinksCloud, FeedReader and unfinished VOIP.
 
 cp %{SOURCE1} .
 
-rm -rf supportlibs # openpgpsdk
+rm -rf supportlibs rsctrl # openpgpsdk libbitdht
 sed -i 's/\r//g' %{name}-gui/src/README.txt
 find -name '*.h' -exec chmod -x {} \;
 find -name '*.cpp' -exec chmod -x {} \;
@@ -69,7 +69,7 @@ find -name '*.cpp' -exec chmod -x {} \;
 %build
 for DIR in libbitdht/src openpgpsdk/src libretroshare/src retroshare-gui/src retroshare-nogui/src plugins; do
   cd $DIR
-  qmake-qt4 CONFIG=release
+  %{_qt4_qmake} CONFIG=release
   make %{?_smp_mflags}
   cd -
 done
@@ -110,19 +110,19 @@ install -m 755 plugins/FeedReader/libFeedReader.so %{buildroot}%{_libdir}/retros
 desktop-file-install data/%{name}.desktop
 
 %files
-%doc %{name}-gui/src/README.txt %{name}-licenses
+%doc %{name}-gui/src/README.txt %{name}-gui/src/chnagelog.txt %{name}-licenses
 %attr(755,root,root) %{_bindir}/RetroShare
 %{_datadir}/pixmaps/%{name}.xpm
 %{_datadir}/icons/hicolor
 %{_datadir}/applications/%{name}.desktop
 
 %files nogui
-%doc %{name}-gui/src/README.txt %{name}-licenses
+%doc %{name}-gui/src/README.txt %{name}-gui/src/chnagelog.txt %{name}-licenses
 %attr(755,root,root) %{_bindir}/retroshare-nogui
 %{_datadir}/RetroShare
 
 %files plugins
-%doc %{name}-gui/src/README.txt %{name}-licenses
+%doc %{name}-gui/src/README.txt %{name}-gui/src/chnagelog.txt %{name}-licenses
 %{_libdir}/retroshare
 
 %changelog

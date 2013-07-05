@@ -42,7 +42,7 @@ mkdir -p %{buildroot}/%{_libdir}
 mkdir -p %{buildroot}/%{_includedir}/%{name}/{%{name},udp,util}
 cp -pP lib/* %{buildroot}/%{_libdir}/
 cp -pP %{name}/*.h %{buildroot}/%{_includedir}/%{name}/%{name}
-cp -pP udp/*.h %{buildroot}/%{_includedir}/%{name}/udp
+cp -pP %{name}/bdboot.txt %{buildroot}/%{_includedir}/%{name}/udp
 cp -pP util/*.h %{buildroot}/%{_includedir}/%{name}/util
 
 %if 0%{?with_tests}
