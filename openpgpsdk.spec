@@ -2,13 +2,17 @@ Name:           openpgpsdk
 Version:        0.9
 Release:        1%{?dist}
 Summary:        x
-License:        ALV 2.0
+License:        ASL 2.0
 URL:            http://openpgp.nominet.org.uk
 Source0:        %{url}/downloads/%{name}-%{version}.tgz
 Patch0:         %{name}-sharedlib.patch
 Patch1:         %{name}-multidef.patch
 
+BuildRequires:  bzip2-devel
 BuildRequires:  CUnit-devel
+BuildRequires:  gnupg
+BuildRequires:  openssl-devel
+Requires:       gnupg
 
 %description
 x
@@ -38,6 +42,11 @@ cp -prP include/* %{buildroot}%{_includedir}
 cp -p lib/libops.so.1.0 %{buildroot}%{_libdir}
 ln -s libops.so.1.0 %{buildroot}%{_libdir}/libops.so
 ln -s libops.so.1.0 %{buildroot}%{_libdir}/libops.so.1
+
+%check
+cd tests
+LD_LIBRARY_PATH=../lib ./tests | :
+cd -
 
 %post -p /sbin/ldconfig
 
