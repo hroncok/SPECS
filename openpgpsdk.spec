@@ -1,7 +1,7 @@
 Name:           openpgpsdk
 Version:        0.9
 Release:        1%{?dist}
-Summary:        x
+Summary:        OpenPGP library
 License:        ASL 2.0
 URL:            http://openpgp.nominet.org.uk
 Source0:        %{url}/downloads/%{name}-%{version}.tgz
@@ -12,13 +12,13 @@ BuildRequires:  bzip2-devel
 BuildRequires:  CUnit-devel
 BuildRequires:  gnupg
 BuildRequires:  openssl-devel
-Requires:       gnupg
 
 %description
-x
+The OpenPGP SDK project provides an open source library, written in C,
+which implements the OpenPGP specification.
 
 %package devel
-Summary: x development files
+Summary: OpenPGP SDK development files
 Requires: %{name}%{?_isa} = %{version}-%{release}
 
 %description devel
@@ -45,6 +45,8 @@ ln -s libops.so.1.0 %{buildroot}%{_libdir}/libops.so.1
 
 %check
 cd tests
+# tests will fail due to new gnupg
+# http://openpgp.nominet.org.uk/pipermail/openpgpsdk-dev/2010-May/000238.html
 LD_LIBRARY_PATH=../lib ./tests | :
 cd -
 
@@ -62,6 +64,6 @@ cd -
 %{_libdir}/*so
 
 %changelog
-* Fri Jul 05 2013 Miro Hrončok <mhroncok@redhat.com>
+* Fri Jul 05 2013 Miro Hrončok <mhroncok@redhat.com> - 0.9-1
 - New package
 
