@@ -81,6 +81,22 @@ Requires:      bitdht%{?_isa} = %{version}-%{release}
 Development files for BitDHT.
 
 
+%package -n openpgpsdk
+Summary:       OpenPGP library
+License:       ASL 2.0
+
+%description -n openpgpsdk
+The OpenPGP SDK project provides an open source library, written in C,
+which implements the OpenPGP specification.
+
+%package -n openpgpsdk-devel
+Summary:       OpenPGP SDK development files
+License:       ASL 2.0
+Requires:      openpgpsdk%{?_isa} = %{version}-%{release}
+
+%description -n openpgpsdk-devel
+Development files for OpenPGP SDK.
+
 %prep
 %setup -q -n %{name}-%{numeric}/src
 %patch0 -p0
@@ -88,14 +104,14 @@ Development files for BitDHT.
 
 cp %{SOURCE1} .
 
-rm -rf supportlibs rsctrl openpgpsdk
+rm -rf supportlibs rsctrl
 sed -i 's/\r//g' %{name}-gui/src/README.txt
 find -name '*.h' -exec chmod -x {} \;
 find -name '*.cpp' -exec chmod -x {} \;
 
 
 %build
-for DIR in libbitdht/src libretroshare/src retroshare-gui/src retroshare-nogui/src plugins; do
+for DIR in libbitdht/src openpgpsdk/src libretroshare/src retroshare-gui/src retroshare-nogui/src plugins; do
   cd $DIR
   %{_qt4_qmake} CONFIG=release
   make %{?_smp_mflags}
@@ -114,6 +130,7 @@ mkdir -p %{buildroot}%{_datadir}/RetroShare
 mkdir -p %{buildroot}%{_datadir}/bitdht
 mkdir -p %{buildroot}%{_libdir}/retroshare/extensions
 mkdir -p %{buildroot}%{_includedir}/bitdht/{bitdht,udp,util}
+mkdir -p %{buildroot}%{_includedir}/openpgpsdk
 
 #bin
 install -m 755 retroshare-gui/src/RetroShare %{buildroot}%{_bindir}/
@@ -146,6 +163,10 @@ cp -pP libbitdht/src/udp/*.h %{buildroot}%{_includedir}/bitdht/udp
 cp -pP libbitdht/src/util/*.h %{buildroot}%{_includedir}/bitdht/util
 ln -s %{_datadir}/bitdht/bdboot.txt %{buildroot}%{_datadir}/RetroShare/
 
+# openpgpsdk
+cp -pP openpgpsdk/src/lib/* %{buildroot}%{_libdir}/
+cp -pP openpgpsdk/src/openpgpsdk/*.h %{buildroot}%{_includedir}/openpgpsdk/
+
 %files
 %doc %{name}-gui/src/README.txt %{name}-gui/src/chnagelog.txt %{name}-licenses
 %attr(755,root,root) %{_bindir}/RetroShare
@@ -170,10 +191,17 @@ ln -s %{_datadir}/bitdht/bdboot.txt %{buildroot}%{_datadir}/RetroShare/
 %files -n bitdht-devel
 %doc libbitdht/src/README.txt libbitdht/src/example
 %{_includedir}/bitdht/
-%{_libdir}/bitdht.so
+%{_libdir}/libbitdht.so
+
+%files -n openpgpsdk
+%{_libdir}/libops.so.*
+
+%files -n openpgpsdk-devel
+%{_includedir}/openpgpsdk/
+%{_libdir}/libops.so
 
 %changelog
 * Thu Jul 04 2013 Miro Hrončok <mhroncok@redhat.com> - 0.5.4e-1
 - Got file from openSUSE build service and revised
-- Create separete bitdht packages
+- Create separete bitdht and openpgpsdk packages
 
