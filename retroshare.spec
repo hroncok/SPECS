@@ -60,6 +60,27 @@ Requires:      %{name}%{?_isa} = %{version}-%{release}
 Precompiled plugins for RetroShare.
 So far contains LinksCloud, FeedReader and unfinished VOIP.
 
+
+%package -n bitdht
+Summary:       Distributed Hash Table library
+License:       LGPLv3
+
+%description -n bitdht
+BitDHT is a LGPL'd general purpose C++ Distributed Hash Table library.
+It is designed to take hassle out over creating your own DHT.
+BitDHT is compatible with bitttorrent's DHT and can leverage this network
+to bootstrap your own personal DHT.
+
+
+%package -n bitdht-devel
+Summary:       BitDHT development files
+License:       LGPLv3
+Requires:      bitdht%{?_isa} = %{version}-%{release}
+
+%description -n bitdht-devel
+Development files for BitDHT.
+
+
 %prep
 %setup -q -n %{name}-%{numeric}/src
 %patch0 -p0
@@ -67,14 +88,14 @@ So far contains LinksCloud, FeedReader and unfinished VOIP.
 
 cp %{SOURCE1} .
 
-rm -rf supportlibs rsctrl openpgpsdk libbitdht
+rm -rf supportlibs rsctrl openpgpsdk
 sed -i 's/\r//g' %{name}-gui/src/README.txt
 find -name '*.h' -exec chmod -x {} \;
 find -name '*.cpp' -exec chmod -x {} \;
 
 
 %build
-for DIR in libretroshare/src retroshare-gui/src retroshare-nogui/src plugins; do
+for DIR in libbitdht/src libretroshare/src retroshare-gui/src retroshare-nogui/src plugins; do
   cd $DIR
   %{_qt4_qmake} CONFIG=release
   make %{?_smp_mflags}
@@ -90,7 +111,10 @@ mkdir -p %{buildroot}%{_datadir}/icons/hicolor/48x48/apps
 mkdir -p %{buildroot}%{_datadir}/icons/hicolor/64x64/apps
 mkdir -p %{buildroot}%{_datadir}/icons/hicolor/128x128/apps
 mkdir -p %{buildroot}%{_datadir}/RetroShare
+mkdir -p %{buildroot}%{_datadir}/bitdht
 mkdir -p %{buildroot}%{_libdir}/retroshare/extensions
+mkdir -p %{buildroot}%{_includedir}/bitdht/{bitdht,udp,util}
+
 #bin
 install -m 755 retroshare-gui/src/RetroShare %{buildroot}%{_bindir}/
 install -m 755 retroshare-nogui/src/retroshare-nogui %{buildroot}%{_bindir}/
@@ -106,8 +130,6 @@ install -m 644 data/48x48/%{name}.png %{buildroot}%{_datadir}/icons/hicolor/48x4
 install -m 644 data/64x64/%{name}.png %{buildroot}%{_datadir}/icons/hicolor/64x64/apps/%{name}.png
 install -m 644 data/%{name}.png %{buildroot}%{_datadir}/icons/hicolor/128x128/apps/%{name}.png
 
-ln -s %{_datadir}/bitdht/bdboot.txt %{buildroot}%{_datadir}/RetroShare/
-
 #plugins
 install -m 755 plugins/LinksCloud/libLinksCloud.so %{buildroot}%{_libdir}/retroshare/extensions/
 install -m 755 plugins/VOIP/libVOIP.so %{buildroot}%{_libdir}/retroshare/extensions/
@@ -115,6 +137,14 @@ install -m 755 plugins/FeedReader/libFeedReader.so %{buildroot}%{_libdir}/retros
 
 #menu
 desktop-file-install data/%{name}.desktop
+
+# libbitdht
+cp -pP libbitdht/src/lib/* %{buildroot}%{_libdir}/
+cp -pP libbitdht/src/bitdht/*.h %{buildroot}%{_includedir}/bitdht/bitdht
+cp -pP libbitdht/src/bitdht/bdboot.txt %{buildroot}%{_datadir}/bitdht
+cp -pP libbitdht/src/udp/*.h %{buildroot}%{_includedir}/bitdht/udp
+cp -pP libbitdht/src/util/*.h %{buildroot}%{_includedir}/bitdht/util
+ln -s %{_datadir}/bitdht/bdboot.txt %{buildroot}%{_datadir}/RetroShare/
 
 %files
 %doc %{name}-gui/src/README.txt %{name}-gui/src/chnagelog.txt %{name}-licenses
@@ -132,7 +162,18 @@ desktop-file-install data/%{name}.desktop
 %doc %{name}-gui/src/README.txt %{name}-gui/src/chnagelog.txt %{name}-licenses
 %{_libdir}/retroshare
 
+%files -n bitdht
+%doc libbitdht/src/README.txt
+%{_libdir}/libbitdht.so.*
+%{_datadir}/bitdht
+
+%files -n bitdht-devel
+%doc libbitdht/src/README.txt libbitdht/src/example
+%{_includedir}/bitdht/
+%{_libdir}/bitdht.so
+
 %changelog
 * Thu Jul 04 2013 Miro Hrončok <mhroncok@redhat.com> - 0.5.4e-1
 - Got file from openSUSE build service and revised
+- Create separete bitdht packages
 
