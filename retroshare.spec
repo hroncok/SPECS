@@ -3,12 +3,18 @@ Name:           retroshare
 Version:        %{numeric}e
 Release:        1%{?dist}
 License:        GPLv2+ and GPLv3+ and LGPLv2 and LGPLv2+ and LGPLv3
-# see licenses
+# see %%{name}-licenses
+# the license mess was already reported upstream
 Summary:        Secure chat and file sharing
 URL:            http://retroshare.sourceforge.net/
 Source0:        http://downloads.sourceforge.net/%{name}/RetroShare-v%{version}.tar.gz
 Source1:        %{name}-licenses
+
+# original patch from upstream openSUSE Build Service repo
 Patch0:         %{name}-various.patch
+
+# use system libs
+Patch1:         %{name}-unbundle.patch
 
 BuildRequires:  desktop-file-utils
 BuildRequires:  glib2-devel
@@ -57,17 +63,18 @@ So far contains LinksCloud, FeedReader and unfinished VOIP.
 %prep
 %setup -q -n %{name}-%{numeric}/src
 %patch0 -p0
+%patch1 -p1
 
 cp %{SOURCE1} .
 
-rm -rf supportlibs rsctrl # openpgpsdk libbitdht
+rm -rf supportlibs rsctrl openpgpsdk libbitdht
 sed -i 's/\r//g' %{name}-gui/src/README.txt
 find -name '*.h' -exec chmod -x {} \;
 find -name '*.cpp' -exec chmod -x {} \;
 
 
 %build
-for DIR in libbitdht/src openpgpsdk/src libretroshare/src retroshare-gui/src retroshare-nogui/src plugins; do
+for DIR in libretroshare/src retroshare-gui/src retroshare-nogui/src plugins; do
   cd $DIR
   %{_qt4_qmake} CONFIG=release
   make %{?_smp_mflags}
@@ -99,7 +106,7 @@ install -m 644 data/48x48/%{name}.png %{buildroot}%{_datadir}/icons/hicolor/48x4
 install -m 644 data/64x64/%{name}.png %{buildroot}%{_datadir}/icons/hicolor/64x64/apps/%{name}.png
 install -m 644 data/%{name}.png %{buildroot}%{_datadir}/icons/hicolor/128x128/apps/%{name}.png
 
-install -m 644 libbitdht/src/bitdht/bdboot.txt %{buildroot}%{_datadir}/RetroShare/
+ln -s %{_datadir}/bitdht/bdboot.txt %{buildroot}%{_datadir}/RetroShare/
 
 #plugins
 install -m 755 plugins/LinksCloud/libLinksCloud.so %{buildroot}%{_libdir}/retroshare/extensions/
