@@ -2,7 +2,7 @@
 %global pypi_name dropbox
 Name:           python-%{pypi_name}
 Version:        1.6
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Official Dropbox REST API Client
 
 # There is no license note in the package, however on
@@ -32,7 +32,6 @@ BuildRequires:  python-setuptools
 BuildRequires:  python-tools
 BuildRequires:  python3-devel
 BuildRequires:  python3-setuptools
-BuildRequires:  python3-setuptools
 %endif
 
 %description
@@ -49,6 +48,7 @@ A Python library that for Dropbox's HTTP-based Core API.
 %prep
 %setup -q -a1 -n %{pypi_name}-%{version}
 %patch0 -p1
+rm -rf %{pypi_name}.egg-info
 %if 0%{?with_python3}
 rm -rf %{py3dir}
 cp -a . %{py3dir}
@@ -95,6 +95,10 @@ popd
 %endif # with_python3
 
 %changelog
+* Wed Jul 10 2013 Miro Hrončok <mhroncok@redhat.com> - 1.6-2
+- Removed duplicate BR python3-setuptools
+- Delete bundled egg-info
+
 * Mon Jul 08 2013 Miro Hrončok <mhroncok@redhat.com> - 1.6-1
 - First package
 
