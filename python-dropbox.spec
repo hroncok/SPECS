@@ -90,7 +90,7 @@ popd
 
 %changelog
 * Wed Jul 17 2013 Miro Hrončok <mhroncok@redhat.com> - 1.6-3
-- Use source package from dropbox.org
+- Use source package from dropbox.com
 - Added LICENSE
 - chmod -x examples
 - Added BR python-mock
