@@ -9,26 +9,18 @@ Source0:        https://github.com/%{name}-player/%{name}/archive/v%{version}.ta
 # set defaults for Fedora
 Patch0:         %{name}-config.patch
 
-%global         faad2min 1:2.6.1
-
 BuildRequires:  aalib-devel
 BuildRequires:  alsa-lib-devel
 BuildRequires:  arts-devel
 BuildRequires:  a52dec-devel
 BuildRequires:  bzip2-devel
-BuildRequires:  desktop-file-utils
 BuildRequires:  directfb-devel
 BuildRequires:  enca-devel
 BuildRequires:  esound-devel
-BuildRequires:  faac-devel
-BuildRequires:  faad2-devel >= %{faad2min}
 BuildRequires:  ffmpeg-devel >= 0.10
-BuildRequires:  fontconfig-devel
-BuildRequires:  freetype-devel >= 2.0.9
 BuildRequires:  fribidi-devel
 BuildRequires:  giflib-devel
 BuildRequires:  gsm-devel
-BuildRequires:  gtk2-devel
 BuildRequires:  jack-audio-connection-kit-devel
 BuildRequires:  ladspa-devel
 BuildRequires:  lame-devel
@@ -63,7 +55,7 @@ BuildRequires:  lirc-devel
 BuildRequires:  lzo-devel >= 2
 BuildRequires:  openal-soft-devel
 BuildRequires:  pulseaudio-libs-devel
-BuildRequires:  SDL-devel
+BuildRequires:  python-docutils
 BuildRequires:  speex-devel >= 1.1
 BuildRequires:  svgalib-devel
 BuildRequires:  twolame-devel
@@ -71,7 +63,6 @@ BuildRequires:  xmms-devel
 BuildRequires:  xvidcore-devel >= 0.9.2
 BuildRequires:  x264-devel >= 0.0.0-0.28
 BuildRequires:  yasm
-
 
 %description
 Mpv is a movie player that plays most MPEG, VOB, AVI, OGG/OGM,
