@@ -1,6 +1,6 @@
 Name:           mpv
 Version:        0.1.2
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Movie player playing most video formats and DVDs
 License:        GPLv3+
 URL:            http://%{name}.io/
@@ -11,68 +11,28 @@ Patch0:         %{name}-config.patch
 
 BuildRequires:  aalib-devel
 BuildRequires:  alsa-lib-devel
-BuildRequires:  arts-devel
-BuildRequires:  a52dec-devel
 BuildRequires:  bzip2-devel
-BuildRequires:  directfb-devel
-BuildRequires:  enca-devel
-BuildRequires:  esound-devel
-BuildRequires:  ffmpeg-devel >= 0.10
-BuildRequires:  fribidi-devel
-BuildRequires:  giflib-devel
-BuildRequires:  gsm-devel
-BuildRequires:  jack-audio-connection-kit-devel
-BuildRequires:  ladspa-devel
-BuildRequires:  lame-devel
-BuildRequires:  libass-devel >= 0.9.10
+BuildRequires:  ffmpeg-devel
+BuildRequires:  libass-devel
 BuildRequires:  libbluray-devel
-BuildRequires:  libbs2b-devel
-BuildRequires:  libcaca-devel
-BuildRequires:  libcdio-devel
-BuildRequires:  libdca-devel
-BuildRequires:  libdv-devel
-BuildRequires:  libdvdnav-devel >= 4.1.3-1
+BuildRequires:  libdvdnav-devel
 BuildRequires:  libGL-devel
-BuildRequires:  libjpeg-devel
-BuildRequires:  libmad-devel
-BuildRequires:  libmpcdec-devel
-BuildRequires:  libmpeg2-devel
-BuildRequires:  libmpg123-devel
-BuildRequires:  libnemesi-devel >= 0.6.3
-BuildRequires:  librtmp-devel
 BuildRequires:  libsmbclient-devel
-BuildRequires:  libtheora-devel
 BuildRequires:  libvdpau-devel
-BuildRequires:  libvorbis-devel
+BuildRequires:  libvdpau-devel
 BuildRequires:  libXinerama-devel
 BuildRequires:  libXScrnSaver-devel
 BuildRequires:  libXv-devel
-BuildRequires:  libXvMC-devel
-BuildRequires:  libXxf86dga-devel
-BuildRequires:  libXxf86vm-devel
 BuildRequires:  lirc-devel
-#BuildRequires:  live555-devel #broken - see libnemesi as an alternative
-BuildRequires:  lzo-devel >= 2
-BuildRequires:  openal-soft-devel
 BuildRequires:  pulseaudio-libs-devel
 BuildRequires:  python-docutils
-BuildRequires:  speex-devel >= 1.1
-BuildRequires:  svgalib-devel
-BuildRequires:  twolame-devel
-BuildRequires:  xmms-devel
-BuildRequires:  xvidcore-devel >= 0.9.2
-BuildRequires:  x264-devel >= 0.0.0-0.28
-BuildRequires:  yasm
 
 %description
-Mpv is a movie player that plays most MPEG, VOB, AVI, OGG/OGM,
-VIVO, ASF/WMA/WMV, QT/MOV/MP4, FLI, RM, NuppelVideo, yuv4mpeg, FILM,
-RoQ, and PVA files. You can also use it to watch VCDs, SVCDs, DVDs,
-3ivx, RealMedia, and DivX movies.
-It supports a wide range of output drivers including X11, XVideo, DGA,
-OpenGL, SVGAlib, fbdev, AAlib, DirectFB etc. There are also nice
-antialiased shaded subtitles and OSD.
-It is a fork of mplayer and mplayer2.
+Mpv is a movie player based on MPlayer and mplayer2. It supports a wide variety
+of video file formats, audio and video codecs, and subtitle types. Special
+input URL types are available to read input from a variety of sources other
+than disk files. Depending on platform, a variety of different video and audio
+output methods are supported.
 
 %prep
 %setup -q
@@ -89,7 +49,9 @@ It is a fork of mplayer and mplayer2.
     --enable-lirc \
     --enable-radio \
     --enable-radio-capture \
-    --disable-termcap
+    --enable-smb \
+    --disable-termcap \
+    --extra-cflags='-I/usr/include/samba-4.0/'
 
 make %{?_smp_mflags}
 
@@ -107,6 +69,11 @@ install -Dpm 644 etc/example.conf %{buildroot}%{_sysconfdir}/%{name}/%{name}.con
 %config(noreplace) %{_sysconfdir}/%{name}/%{name}.conf
 
 %changelog
+* Tue Aug 27 2013 Miro Hrončok <mhroncok@redhat.com> - 0.1.2-2
+- Reduced BRs a lot (removed support for various stuff)
+- Make smbclient realized
+- Changed the description to the text from manual page
+
 * Mon Aug 19 2013 Miro Hrončok <mhroncok@redhat.com> - 0.1.2-1
 - Initial spec
 - Inspired a lot in mplayer.spec
