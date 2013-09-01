@@ -3,7 +3,7 @@
 Name: gnome-colors-icon-theme
 Summary: GNOME-Colors icon theme
 Version: 5.5.1
-Release: 4%{?dist}
+Release: 5%{?dist}
 Url: http://code.google.com/p/gnome-colors
 Source0: http://%{real_name}.googlecode.com/files/%{real_name}-src-%{version}.tar.gz
 License: GPLv2
@@ -30,6 +30,12 @@ can be found in the AUTHORS file.
 
 %prep
 %setup -q -c %{real_name}--icon-theme-%{version}
+# link the start-here icon to the Fedora icon
+for dir in gnome-colors-common/*/places; do
+  cd $dir
+  ln -sf ../apps/fedora-logo-icon.* start-here.*
+  cd -
+done
 
 %build
 # change name from GNOME -> GNOME-Colors
@@ -63,6 +69,9 @@ done
 %{_datadir}/icons/gnome-colors-wise/
 
 %changelog
+* Sun Sep 01 2013 Miro Hrončok <mhroncok@redhat.com> - 5.5.1-5
+- Link the start-here icon to the Fedora icon
+
 * Fri Aug 30 2013 Miro Hrončok <mhroncok@redhat.com> - 5.5.1-4
 - Removed BuildRoot definition and Group
 - Removed %%clean section
