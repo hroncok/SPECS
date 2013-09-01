@@ -36,11 +36,11 @@ for dir in gnome-colors-common/*/places; do
   ln -sf ../apps/fedora-logo-icon.* start-here.*
   cd -
 done
-
-%build
 # change name from GNOME -> GNOME-Colors
 rename 'gnome' '%{real_name}' themes/*
 sed -i -e 's/GNOME/GNOME-Colors/' themes/*
+
+%build
 make %{?_smp_mflags}
 
 %install
