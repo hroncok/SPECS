@@ -1,9 +1,9 @@
-%define real_name gnome-colors
+%global real_name gnome-colors
 
 Name: gnome-colors-icon-theme
 Summary: GNOME-Colors icon theme
 Version: 5.5.1
-Release: 5%{?dist}
+Release: 6%{?dist}
 Url: http://code.google.com/p/gnome-colors
 Source0: http://%{real_name}.googlecode.com/files/%{real_name}-src-%{version}.tar.gz
 License: GPLv2
@@ -44,15 +44,24 @@ sed -i -e 's/GNOME/GNOME-Colors/' themes/*
 make %{?_smp_mflags}
 
 %install
-make install DESTDIR=%{buildroot}
+%{make_install}
 
 %post
-for dir in /usr/share/icons/*; do
-  if test -d "$dir"; then
-    if test -f "$dir/index.theme"; then
-      /usr/bin/gtk-update-icon-cache --quiet "$dir" || :
-    fi
-  fi
+for dir in /usr/share/icons/gnome-*; do
+  /bin/touch --no-create %{_datadir}/icons/$dir &>/dev/null || :
+done
+
+%postun
+if [ $1 -eq 0 ] ; then
+  for dir in /usr/share/icons/gnome-*; do
+    /bin/touch --no-create %{_datadir}/icons/$dir &>/dev/null
+    /usr/bin/gtk-update-icon-cache %{_datadir}/icons/$dir &>/dev/null || :
+  done
+fi
+
+%posttrans
+for dir in /usr/share/icons/gnome-*; do
+  /usr/bin/gtk-update-icon-cache %{_datadir}/icons/$dir &>/dev/null || :
 done
 
 %files
@@ -69,6 +78,11 @@ done
 %{_datadir}/icons/gnome-colors-wise/
 
 %changelog
+* Fri Oct 18 2013 Miro Hrončok <mhroncok@redhat.com> - 5.5.1-6
+- Use %%global instead of %%define
+- Use %%{make_install}
+- Use icon cache scriplets form wiki
+
 * Sun Sep 01 2013 Miro Hrončok <mhroncok@redhat.com> - 5.5.1-5
 - Link the start-here icon to the Fedora icon
 
