@@ -1,32 +1,35 @@
 Name:           openscad
-%global shortversion 2013.06
-%global commit af89e263226174989bbd9d7ce993846c8fb6fc07
+%global shortversion 2013.12
+%global commit 6938ae2dfde578e3980d077adefb86a4bdbd9df1
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
+%global gittag 20131217git%{shortcommit}
 Version:        %{shortversion}
-Release:        0.1rc1%{?dist}
+Release:        0.4.%{gittag}%{?dist}
 Summary:        The Programmers Solid 3D CAD Modeller
 # COPYING contains a linking exception for CGAL
-License:        GPLv2 with exceptions
+# Appdata file is CC0
+License:        GPLv2 with exceptions and CC0
 Group:          Applications/Engineering
 URL:            http://www.openscad.org/
-Source0:        https://github.com/%{name}/%{name}/archive/%{commit}/%{name}-%{version}.tar.gz
-#Source0:        https://openscad.googlecode.com/files/%%{name}-%%{shortversion}.src.tar.gz
+Source0:        https://github.com/%{name}/%{name}/archive/%{commit}/%{name}-%{version}-%{shortcommit}.tar.gz
 Source1:        MCAD-master.zip
-BuildRequires:  qt-devel >= 4.4
-BuildRequires:  bison >= 2.4
-BuildRequires:  flex >= 2.5.35
-BuildRequires:  eigen2-devel >= 2.0.13
-BuildRequires:  boost-devel >= 1.3.5
-BuildRequires:  mpfr-devel >= 3.0.0
-BuildRequires:  gmp-devel >= 5.0.0
-BuildRequires:  glew-devel >= 1.6
 BuildRequires:  CGAL-devel >= 3.6
-BuildRequires:  opencsg-devel >= 1.3.2
-BuildRequires:  desktop-file-utils
-# For tests
 BuildRequires:  ImageMagick
-#BuildRequires:  xorg-x11-server-Xvfb
-#%%define         X_display ":98"
+BuildRequires:  Xvfb
+BuildRequires:  bison >= 2.4
+BuildRequires:  boost-devel >= 1.3.5
+BuildRequires:  desktop-file-utils
+BuildRequires:  eigen3-devel
+BuildRequires:  flex >= 2.5.35
+BuildRequires:  glew-devel >= 1.6
+BuildRequires:  glib2-devel
+BuildRequires:  gmp-devel >= 5.0.0
+BuildRequires:  mesa-dri-drivers
+BuildRequires:  mpfr-devel >= 3.0.0
+BuildRequires:  opencsg-devel >= 1.3.2
+BuildRequires:  procps-ng
+BuildRequires:  python2
+BuildRequires:  qt-devel >= 4.4
 
 %description
 OpenSCAD is a software for creating solid 3D CAD objects.
@@ -58,15 +61,16 @@ make install INSTALL_ROOT=%{buildroot}
 mkdir -p %{buildroot}%{_mandir}/man1
 cp doc/%{name}.1 %{buildroot}%{_mandir}/man1/
 
+# appdata
+mkdir -p %{buildroot}%{_datadir}/appdata
+cp *.appdata.xml %{buildroot}%{_datadir}/appdata/
+
+
 %check
 desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 
 # tests
 cd tests
-#export DISPLAY=%%{X_display}
-#Xvfb %%{X_display} >& Xvfb.log &
-#trap "kill $! || true" EXIT
-#sleep 10
 ctest %{?_smp_mflags} -C All || : # let the tests fail, as they probably won't work in Koji
 cat sysinfo.txt
 cat Testing/Temporary/LastTest.log
@@ -78,6 +82,7 @@ rm -rf %{buildroot}%{_datadir}/%{name}/libraries/MCAD
 %files
 %doc COPYING README.md RELEASE_NOTES
 %attr(755,root,root) %{_bindir}/%{name}
+%{_datadir}/appdata/%{name}.appdata.xml
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/pixmaps/%{name}.png
 %dir %{_datadir}/%{name}
@@ -86,6 +91,19 @@ rm -rf %{buildroot}%{_datadir}/%{name}/libraries/MCAD
 %{_mandir}/man1/*
 
 %changelog
+* Mon Dec 23 2013 Miro Hrončok <mhroncok@redhat.com> - 2013.12-0.4.20131217git6938ae2
+- Include appdata in the RPM
+
+* Thu Dec 19 2013 Miro Hrončok <mhroncok@redhat.com> - 2013.12-0.3.20131217git6938ae2
+- Development version
+
+* Tue Dec 17 2013 Miro Hrončok <mhroncok@redhat.com> - 2013.12-0.2.20131215gite64bf96
+- Development version
+- Added BRs for virtual framebuffer
+
+* Tue Oct 29 2013 Miro Hrončok <mhroncok@redhat.com> - 2013.10-0.1.20131029git8aa749f
+- Development version
+
 * Fri Jun 07 2013 Miro Hrončok <mhroncok@redhat.com> - 2013.06-0.1rc1
 - New version RC
 
