@@ -1,10 +1,10 @@
 Name:           openscad
 %global shortversion 2013.12
-%global commit 6938ae2dfde578e3980d077adefb86a4bdbd9df1
+%global commit 41ab9e8ab613d6d33ade2fa4db1fe93878993282
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
-%global gittag 20131217git%{shortcommit}
+%global gittag 20131223git%{shortcommit}
 Version:        %{shortversion}
-Release:        0.4.%{gittag}%{?dist}
+Release:        0.5.%{gittag}%{?dist}
 Summary:        The Programmers Solid 3D CAD Modeller
 # COPYING contains a linking exception for CGAL
 # Appdata file is CC0
@@ -57,13 +57,6 @@ cd -
 
 %install
 make install INSTALL_ROOT=%{buildroot}
-# manpage
-mkdir -p %{buildroot}%{_mandir}/man1
-cp doc/%{name}.1 %{buildroot}%{_mandir}/man1/
-
-# appdata
-mkdir -p %{buildroot}%{_datadir}/appdata
-cp *.appdata.xml %{buildroot}%{_datadir}/appdata/
 
 
 %check
@@ -82,7 +75,7 @@ rm -rf %{buildroot}%{_datadir}/%{name}/libraries/MCAD
 %files
 %doc COPYING README.md RELEASE_NOTES
 %attr(755,root,root) %{_bindir}/%{name}
-%{_datadir}/appdata/%{name}.appdata.xml
+%{_datadir}/appdata
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/pixmaps/%{name}.png
 %dir %{_datadir}/%{name}
@@ -91,6 +84,10 @@ rm -rf %{buildroot}%{_datadir}/%{name}/libraries/MCAD
 %{_mandir}/man1/*
 
 %changelog
+* Tue Dec 24 2013 Miro Hrončok <mhroncok@redhat.com> - 2013.12-0.5.20131223git41ab9e8
+- New commit
+- Manpage and appdata now installed with make install
+
 * Mon Dec 23 2013 Miro Hrončok <mhroncok@redhat.com> - 2013.12-0.4.20131217git6938ae2
 - Include appdata in the RPM
 
