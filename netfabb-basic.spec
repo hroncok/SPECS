@@ -83,10 +83,12 @@ cp -p icons/%{name}48.png %{buildroot}%{_datadir}/pixmaps/%{name}.png
 desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 
 %post
+/sbin/ldconfig
 gtk-update-icon-cache -qf %{_datadir}/icons/hicolor &>/dev/null || :
 update-desktop-database &>/dev/null || :
 
 %postun
+/sbin/ldconfig
 gtk-update-icon-cache -qf %{_datadir}/icons/hicolor &>/dev/null || :
 update-desktop-database &>/dev/null || :
 
