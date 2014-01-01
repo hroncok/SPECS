@@ -17,11 +17,9 @@ BuildRequires:  wxGTK-devel
 %if 0%{?with_tests}
 BuildRequires:  perl(base)
 BuildRequires:  perl(Test::More)
-BuildRequires:  perl(Test::NeedsDisplay)
 BuildRequires:  perl(Test::Pod)
 BuildRequires:  perl(Wx)
 BuildRequires:  perl(Wx::ScrolledWindow)
-BuildRequires:  xorg-x11-server-Xvfb
 %endif
 
 Requires:       perl(:MODULE_COMPAT_%(eval "`perl -V:version`"; echo $version))

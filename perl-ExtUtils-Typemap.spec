@@ -43,8 +43,10 @@ make test
 
 %files
 %doc Changes README
-%{perl_vendorlib}/*
-%{_mandir}/man3/*
+%{perl_vendorlib}/ExtUtils/Typemap.pm
+%{perl_vendorlib}/ExtUtils/Typemap/
+%{_mandir}/man3/ExtUtils::Typemap.3*
+%{_mandir}/man3/ExtUtils::Typemap::*
 
 %changelog
 * Tue Nov 19 2013 Miro Hrončok <mhroncok@redhat.com> 1.00-1

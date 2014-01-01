@@ -19,7 +19,6 @@ BuildRequires:  libdvdnav-devel
 BuildRequires:  libGL-devel
 BuildRequires:  libsmbclient-devel
 BuildRequires:  libvdpau-devel
-BuildRequires:  libvdpau-devel
 BuildRequires:  libXinerama-devel
 BuildRequires:  libXScrnSaver-devel
 BuildRequires:  libXv-devel

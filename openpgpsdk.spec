@@ -7,6 +7,7 @@ URL:            http://openpgp.nominet.org.uk
 Source0:        %{url}/downloads/%{name}-%{version}.tgz
 Patch0:         %{name}-sharedlib.patch
 Patch1:         %{name}-multidef.patch
+Patch2:         %{name}-c++-compat.patch
 
 BuildRequires:  bzip2-devel
 BuildRequires:  CUnit-devel
@@ -28,6 +29,7 @@ Development files for x.
 %setup -q
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 sed -i 's|-Wall -Werror -W -g|%{optflags}|g' configure
 sed -i 's|-Wall -Werror -g|%{optflags}|g' src/app/Makefile.template tests/Makefile.template
 
