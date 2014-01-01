@@ -1,78 +1,114 @@
 Name:           netfabb-basic
-Version:        4.9.5
+Version:        5.0.1
 Release:        1%{?dist}
 Summary:        Freeware suite for STL editing
 License:        Redistributable
 URL:            http://www.netfabb.com/
-%ifarch x86_64
-Source0:        http://www.netfabb.com/download/netfabb_linux64.tar.gz
-%endif
-%ifarch i686
-Source0:        http://www.netfabb.com/download/netfabb_linux.tar.gz
-%endif
+# keep both sources in the SRPM
+# both files are downloaded from http://www.netfabb.com/downloadcenter.php?basic=1
+# and have no public tarball urls
+Source0:        %{name}_%{version}_linux32.tar.gz
+Source1:        %{name}_%{version}_linux64.tar.gz
 BuildRequires:  desktop-file-utils
 
+ExclusiveArch:  %{ix86} x86_64
 %global debug_package %{nil}
 
 %description
-This is a Linux release of netfabb Studio Basic, a freeware suite for STL 
-editing. We hope you will find this software useful and enjoy its 
-functionality.
-
-Please contribute to a further development by sending any questions, feedback
-and bug reports to info@netfabb.com. Due to the diversity of environments, it
-is impossible for us to test the Linux version on more than a few selected 
-platforms.
-
-So even if you don't experience any deeper problems, it would be very valuable 
-for us to get to know your distribution and system configuration. The binary 
-has been built on Debian Squeeze.
+netfabb Basic is a free (as in free beer) software for 3D Printing
+and the STL file format. Numerous tools allow all steps of the fabrication
+process: editing, repairing, positioning, slicing and exporting triangulated
+CAD data. For professional use, the author offers commercial support and
+additional modules.
 
 %prep
-%setup -qn %{name}
 
-# Don't copy doc, let RPM do it
-# Don't install uninstall script
-grep -v '/usr/share/doc' install.sh | grep -v uninstall.sh > install-fedora.sh
-
-# Let's pretend, we are root
-sed -i 's/id -u/echo 0/' install-fedora.sh
-
-# Install to $ROOT/usr and not to /usr
-sed -i 's|/usr|$ROOT/usr|g' install-fedora.sh
-
-# But keep /usr in files
-sed -i 's|Exec=$ROOT/usr|Exec=/usr|g' install-fedora.sh
-sed -i 's|LD_LIBRARY_PATH=$ROOT/usr|LD_LIBRARY_PATH=/usr|g' install-fedora.sh
-sed -i 's|echo exec $ROOT/usr|echo exec /usr|g' install-fedora.sh
-
-%ifarch x86_64
-# Use lib64 as it is a 64bit build
-sed -i 's|/lib/|/lib64/|g' install-fedora.sh
+%ifarch %{ix86}
+%setup -qn %{name} -b0
 %endif
 
-chmod +x install-fedora.sh
+%ifarch x86_64
+%setup -qn %{name} -b1
+%endif
 
 %build
 # nothing to do
 
 %install
-env ROOT=%{buildroot} ./install-fedora.sh
+# the workflow is copied from install.sh, but we will not run it, as it doesn't respect the buildroot
+
+# create directories
+mkdir -p %{buildroot}%{_bindir}
+mkdir -p %{buildroot}%{_libdir}/%{name}
+mkdir -p %{buildroot}%{_datadir}/applications
+mkdir -p %{buildroot}%{_datadir}/icons/hicolor/scalable/apps
+for res in 16 22 24 32 48 128; do
+  mkdir -p %{buildroot}%{_datadir}/icons/hicolor/${res}x${res}/apps
+done
+mkdir -p %{buildroot}%{_mandir}/man1
+mkdir -p %{buildroot}%{_datadir}/pixmaps
+
+# script in bindir
+echo "#!/bin/sh" > %{buildroot}%{_bindir}/%{name}
+echo "export LD_LIBRARY_PATH=%{_libdir}/%{name}/" >> %{buildroot}%{_bindir}/%{name}
+echo "export LIBOVERLAY_SCROLLBAR=0" >> %{buildroot}%{_bindir}/%{name}
+echo "exec %{_libdir}/%{name}/%{name} \"\$@\"">> %{buildroot}%{_bindir}/%{name}
+
+# binary and libraries
+cp netfabb %{buildroot}%{_libdir}/%{name}/%{name}
+cp *.so.* %{buildroot}%{_libdir}/%{name}
+
+# desktopfile
+export DESKTOPFILE=%{buildroot}%{_datadir}/applications/%{name}.desktop
+echo "[Desktop Entry]">${DESKTOPFILE}
+echo "Type=Application">>${DESKTOPFILE}
+echo "Version=1.0">>${DESKTOPFILE}
+echo "Name=netfabb Basic">>${DESKTOPFILE}
+echo "GenericName=STL-Viewer">>${DESKTOPFILE}
+echo "GenericName[de]=STL-Betrachter">>${DESKTOPFILE}
+echo "Comment=View and repair STL files">>${DESKTOPFILE}
+echo "Comment[de]=STL Dateien betrachten und reparieren">>${DESKTOPFILE}
+echo "Icon=%{name}">>${DESKTOPFILE}
+echo "TryExec=%{_bindir}/%{name}">>${DESKTOPFILE}
+echo "Exec=%{_bindir}/%{name} %U">>${DESKTOPFILE}
+echo "Terminal=false">>${DESKTOPFILE}
+echo "MimeType=application/netfabb;application/sla;application/x-3ds;model/mesh;image/x-3ds;model/x3d+xml;model/x3d+binary;">>${DESKTOPFILE}
+echo "Categories=Graphics;3DGraphics;Viewer;">>${DESKTOPFILE}
+echo "StartupNotify=true">>${DESKTOPFILE}
+
+# man and icons
+cp man/%{name}.1.gz %{buildroot}%{_mandir}/man1
+cp icons/%{name}.svg %{buildroot}%{_datadir}/icons/hicolor/scalable/apps
+for res in 16 22 24 32 48 128; do
+  cp icons/%{name}${res}.png %{buildroot}%{_datadir}/icons/hicolor/${res}x${res}/apps/%{name}.png
+done
+cp icons/%{name}48.png %{buildroot}%{_datadir}/pixmaps/%{name}.png
 
 %check
 desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 
+%post
+gtk-update-icon-cache -qf %{_datadir}/icons/hicolor &>/dev/null || :
+update-desktop-database &>/dev/null || :
+
+%postun
+gtk-update-icon-cache -qf %{_datadir}/icons/hicolor &>/dev/null || :
+update-desktop-database &>/dev/null || :
+
 %files
-%doc README LICENSE changelog.gz
-%{_bindir}/%{name}
-%{_libdir}/%{name}
+%doc README LICENSE changelog.gz Examples
+%attr(0755, root, root) %{_bindir}/%{name}
+%dir %{_libdir}/%{name}
+%attr(0755, root, root) %{_libdir}/%{name}/*
 %{_datadir}/applications/*
-%{_datadir}/%{name}
 %{_datadir}/pixmaps/*
 %{_datadir}/icons/hicolor/*/apps/*
 %{_mandir}/man1/*
 
 
 %changelog
+* Tue Dec 31 2013 Miro Hrončok <mhroncok@redhat.com> - 5.0.1-1
+- New version
+
 * Tue Mar 26 2013 Miro Hrončok <mhroncok@redhat.com> - 4.9.5-1
-- Initial release.
+- Initial release
