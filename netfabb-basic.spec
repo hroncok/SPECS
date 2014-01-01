@@ -36,10 +36,11 @@ additional modules.
 
 %install
 # the workflow is copied from install.sh, but we will not run it, as it doesn't respect the buildroot
+# there are also several changes to make things more OK
 
 # create directories
 mkdir -p %{buildroot}%{_bindir}
-mkdir -p %{buildroot}%{_libdir}/%{name}
+mkdir -p %{buildroot}%{_libdir}
 mkdir -p %{buildroot}%{_datadir}/applications
 mkdir -p %{buildroot}%{_datadir}/icons/hicolor/scalable/apps
 for res in 16 22 24 32 48 128; do
@@ -48,15 +49,9 @@ done
 mkdir -p %{buildroot}%{_mandir}/man1
 mkdir -p %{buildroot}%{_datadir}/pixmaps
 
-# script in bindir
-echo "#!/bin/sh" > %{buildroot}%{_bindir}/%{name}
-echo "export LD_LIBRARY_PATH=%{_libdir}/%{name}/" >> %{buildroot}%{_bindir}/%{name}
-echo "export LIBOVERLAY_SCROLLBAR=0" >> %{buildroot}%{_bindir}/%{name}
-echo "exec %{_libdir}/%{name}/%{name} \"\$@\"">> %{buildroot}%{_bindir}/%{name}
-
 # binary and libraries
-cp netfabb %{buildroot}%{_libdir}/%{name}/%{name}
-cp *.so.* %{buildroot}%{_libdir}/%{name}
+cp -p netfabb %{buildroot}%{_bindir}/%{name}
+cp -p *.so.* %{buildroot}%{_libdir}
 
 # desktopfile
 export DESKTOPFILE=%{buildroot}%{_datadir}/applications/%{name}.desktop
@@ -77,12 +72,12 @@ echo "Categories=Graphics;3DGraphics;Viewer;">>${DESKTOPFILE}
 echo "StartupNotify=true">>${DESKTOPFILE}
 
 # man and icons
-cp man/%{name}.1.gz %{buildroot}%{_mandir}/man1
-cp icons/%{name}.svg %{buildroot}%{_datadir}/icons/hicolor/scalable/apps
+cp -p man/%{name}.1.gz %{buildroot}%{_mandir}/man1
+cp -p icons/%{name}.svg %{buildroot}%{_datadir}/icons/hicolor/scalable/apps
 for res in 16 22 24 32 48 128; do
-  cp icons/%{name}${res}.png %{buildroot}%{_datadir}/icons/hicolor/${res}x${res}/apps/%{name}.png
+  cp -p icons/%{name}${res}.png %{buildroot}%{_datadir}/icons/hicolor/${res}x${res}/apps/%{name}.png
 done
-cp icons/%{name}48.png %{buildroot}%{_datadir}/pixmaps/%{name}.png
+cp -p icons/%{name}48.png %{buildroot}%{_datadir}/pixmaps/%{name}.png
 
 %check
 desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
@@ -98,8 +93,7 @@ update-desktop-database &>/dev/null || :
 %files
 %doc README LICENSE changelog.gz Examples
 %attr(0755, root, root) %{_bindir}/%{name}
-%dir %{_libdir}/%{name}
-%attr(0755, root, root) %{_libdir}/%{name}/*
+%attr(0755, root, root) %{_libdir}/*
 %{_datadir}/applications/*
 %{_datadir}/pixmaps/*
 %{_datadir}/icons/hicolor/*/apps/*
