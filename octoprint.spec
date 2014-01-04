@@ -29,6 +29,8 @@ Requires:       python-sockjs-tornado
 Requires:       python-tornado
 Requires:       python-werkzeug
 
+Requires(postun): procps-ng
+
 %description
 OctoPrint is a so called host software for 3D printers that controls your
 3D printer and sends it the actual commands to do its job. Other tools for
@@ -67,17 +69,17 @@ touch %{buildroot}%{_sysconfdir}/sudoers.d/%{name}-shutdown
 mkdir -p %{buildroot}%{_localstatedir}/%{name}
 ln -s %{_localstatedir}/%{name}/.%{name}/config.yaml %{buildroot}%{_sysconfdir}/%{name}.yaml
 
-# pidifle
-mkdir -p %{buildroot}run/
-touch %{buildroot}run/%{name}.pid
-
 %post
-/usr/sbin/adduser -b %{_localstatedir} %{name} || :
-/usr/sbin/usermod -a -G dialout octoprint || :
-touch %{_localstatedir}/%{name}/.%{name}/config.yaml || :
+/usr/sbin/adduser -b %{_localstatedir} -K MAIL_DIR=/dev/null %{name} &> /dev/null || :
+/usr/sbin/usermod -a -G dialout octoprint &> /dev/null || :
+/usr/bin/su %{name} -c 'mkdir -p %{_localstatedir}/%{name}/.%{name}/' &> /dev/null || :
+/usr/bin/su %{name} -c 'touch %{_localstatedir}/%{name}/.%{name}/config.yaml' &> /dev/null || :
+/usr/bin/systemctl daemon-reload || :
 
 %postun
-/usr/sbin/userdel %{name} || :
+/usr/bin/systemctl stop %{name}.service &> /dev/null || :
+/usr/bin/pkill -u %{name} &> /dev/null || :
+/usr/bin/rm %{_localstatedir}/%{name}/%{name}.pid &> /dev/null || :
 
 %files
 %doc README.md LICENSE README.shutdown
@@ -87,7 +89,6 @@ touch %{_localstatedir}/%{name}/.%{name}/config.yaml || :
 %ghost %config(noreplace) %{_sysconfdir}/sudoers.d/%{name}-shutdown
 %ghost %config(noreplace) %{_localstatedir}/%{name}
 %{_sysconfdir}/%{name}.yaml
-%ghost /run/%{name}.pid
 %{_unitdir}/%{name}.service
 
 %changelog
