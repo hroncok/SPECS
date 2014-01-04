@@ -7,6 +7,10 @@ License:        AGPLv3
 
 URL:            http://octoprint.org/
 Source0:        https://github.com/foosel/OctoPrint/archive/%{version}-%{rcver}.tar.gz
+
+# currently in https://github.com/hroncok/RPMAdditionalSources
+Source1:        %{name}-README.shutdown
+
 BuildArch:      noarch
 
 BuildRequires:  python2-devel
@@ -41,6 +45,7 @@ enabled one and untether it from your laptop or work station.
 
 %prep
 %setup -q -n OctoPrint-%{version}-%{rcver}
+cp %{SOURCE1} README.shutdown
 
 %build
 %{__python2} setup.py build
@@ -50,11 +55,12 @@ enabled one and untether it from your laptop or work station.
 
 install -Dpm0755 run %{buildroot}%{_bindir}/%{name}-run
 
+# octoprint-shutdown
 mkdir -p %{buildroot}%{_sysconfdir}/sudoers.d/
 touch %{buildroot}%{_sysconfdir}/sudoers.d/%{name}-shutdown
 
 %files
-%doc README.md LICENSE
+%doc README.md LICENSE README.shutdown
 %{_bindir}/%{name}-run
 %{python2_sitelib}/%{name}
 %{python2_sitelib}/*.egg-info
