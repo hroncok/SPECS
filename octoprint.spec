@@ -64,7 +64,7 @@ touch %{buildroot}%{_sysconfdir}/sudoers.d/%{name}-shutdown
 %{_bindir}/%{name}-run
 %{python2_sitelib}/%{name}
 %{python2_sitelib}/*.egg-info
-%ghost %{_sysconfdir}/sudoers.d/%{name}-shutdown
+%ghost %config(noreplace) %{_sysconfdir}/sudoers.d/%{name}-shutdown
 
 %changelog
 * Sat Jan 04 2014 Miro Hrončok <mhroncok@redhat.com> - 1.0.0-0.1.rc1
