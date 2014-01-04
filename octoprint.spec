@@ -47,14 +47,16 @@ enabled one and untether it from your laptop or work station.
 
 %install
 %{__python2} setup.py install --skip-build --root %{buildroot}
+install -Dpm0755 run %{buildroot}%{_bindir}/%{name}-run
 
 %files
 %doc README.md LICENSE
+%{_bindir}/%{name}-run
 %{python2_sitelib}/%{name}
 %{python2_sitelib}/*.egg-info
 
 %changelog
 * Sat Jan 04 2014 Miro Hrončok <mhroncok@redhat.com> - 1.0.0-0.1.rc1
-- rebuilt
+- Initial spec.
 
 
