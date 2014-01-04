@@ -9,12 +9,14 @@ URL:            http://octoprint.org/
 Source0:        https://github.com/foosel/OctoPrint/archive/%{version}-%{rcver}.tar.gz
 
 # currently in https://github.com/hroncok/RPMAdditionalSources
-Source1:        %{name}-README.shutdown
+Source1:        %{name}.service
+Source2:        %{name}-README.shutdown
 
 BuildArch:      noarch
 
 BuildRequires:  python2-devel
 BuildRequires:  python-setuptools
+BuildRequires:  systemd
 
 Requires:       PyYAML
 Requires:       numpy
@@ -45,7 +47,7 @@ enabled one and untether it from your laptop or work station.
 
 %prep
 %setup -q -n OctoPrint-%{version}-%{rcver}
-cp %{SOURCE1} README.shutdown
+cp %{SOURCE2} README.shutdown
 
 %build
 %{__python2} setup.py build
@@ -54,10 +56,28 @@ cp %{SOURCE1} README.shutdown
 %{__python2} setup.py install --skip-build --root %{buildroot}
 
 install -Dpm0755 run %{buildroot}%{_bindir}/%{name}-run
+install -Dp %{SOURCE1} %{buildroot}%{_unitdir}/%{name}.service
+
 
 # octoprint-shutdown
 mkdir -p %{buildroot}%{_sysconfdir}/sudoers.d/
 touch %{buildroot}%{_sysconfdir}/sudoers.d/%{name}-shutdown
+
+# configuration
+mkdir -p %{buildroot}%{_localstatedir}/%{name}
+ln -s %{_localstatedir}/%{name}/.%{name}/config.yaml %{buildroot}%{_sysconfdir}/%{name}.yaml
+
+# pidifle
+mkdir -p %{buildroot}run/
+touch %{buildroot}run/%{name}.pid
+
+%post
+/usr/sbin/adduser -b %{_localstatedir} %{name} || :
+/usr/sbin/usermod -a -G dialout octoprint || :
+touch %{_localstatedir}/%{name}/.%{name}/config.yaml || :
+
+%postun
+/usr/sbin/userdel %{name} || :
 
 %files
 %doc README.md LICENSE README.shutdown
@@ -65,9 +85,11 @@ touch %{buildroot}%{_sysconfdir}/sudoers.d/%{name}-shutdown
 %{python2_sitelib}/%{name}
 %{python2_sitelib}/*.egg-info
 %ghost %config(noreplace) %{_sysconfdir}/sudoers.d/%{name}-shutdown
+%ghost %config(noreplace) %{_localstatedir}/%{name}
+%{_sysconfdir}/%{name}.yaml
+%ghost /run/%{name}.pid
+%{_unitdir}/%{name}.service
 
 %changelog
 * Sat Jan 04 2014 Miro Hrončok <mhroncok@redhat.com> - 1.0.0-0.1.rc1
 - Initial spec.
-
-
