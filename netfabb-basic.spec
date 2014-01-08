@@ -1,6 +1,6 @@
 Name:           netfabb-basic
 Version:        5.0.1
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Freeware suite for STL editing
 License:        Redistributable
 URL:            http://www.netfabb.com/
@@ -50,8 +50,8 @@ mkdir -p %{buildroot}%{_mandir}/man1
 mkdir -p %{buildroot}%{_datadir}/pixmaps
 
 # binary and libraries
-cp -p netfabb %{buildroot}%{_bindir}/%{name}
-cp -p *.so.* %{buildroot}%{_libdir}
+install -pm 0755 netfabb %{buildroot}%{_bindir}/%{name}
+install -pm 0755 *.so.* %{buildroot}%{_libdir}/
 
 # desktopfile
 export DESKTOPFILE=%{buildroot}%{_datadir}/applications/%{name}.desktop
@@ -84,18 +84,22 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 
 %post
 /sbin/ldconfig
-gtk-update-icon-cache -qf %{_datadir}/icons/hicolor &>/dev/null || :
-update-desktop-database &>/dev/null || :
+/bin/touch --no-create %{_datadir}/icons/hicolor &>/dev/null || :
 
 %postun
 /sbin/ldconfig
-gtk-update-icon-cache -qf %{_datadir}/icons/hicolor &>/dev/null || :
-update-desktop-database &>/dev/null || :
+if [ $1 -eq 0 ] ; then
+    /bin/touch --no-create %{_datadir}/icons/hicolor &>/dev/null
+    /usr/bin/gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
+fi
+
+%posttrans
+/usr/bin/gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 
 %files
 %doc README LICENSE changelog.gz Examples
-%attr(0755, root, root) %{_bindir}/%{name}
-%attr(0755, root, root) %{_libdir}/*
+%{_bindir}/%{name}
+%{_libdir}/*
 %{_datadir}/applications/*
 %{_datadir}/pixmaps/*
 %{_datadir}/icons/hicolor/*/apps/*
@@ -103,6 +107,10 @@ update-desktop-database &>/dev/null || :
 
 
 %changelog
+* Wed Jan 08 2014 Miro Hrončok <mhroncok@redhat.com> - 5.0.1-2
+- Use install to copy files that needs different rights
+- Rework icon cache scriptlets
+
 * Tue Dec 31 2013 Miro Hrončok <mhroncok@redhat.com> - 5.0.1-1
 - New version
 
