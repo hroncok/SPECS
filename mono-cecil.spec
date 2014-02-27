@@ -37,7 +37,7 @@ xbuild Mono.Cecil.sln /p:Configuration=%{configuration}
 
 %install
 mkdir -p %{buildroot}%{monodir}/gac/
-cd bin/net_3_5_Release/
+cd bin/%{configuration}/
 gacutil -i Mono.Cecil.dll -f -package Mono.Cecil -root %{buildroot}/usr/lib
 gacutil -i Mono.Cecil.Mdb.dll -f -package Mono.Cecil -root %{buildroot}/usr/lib
 gacutil -i Mono.Cecil.Pdb.dll -f -package Mono.Cecil -root %{buildroot}/usr/lib
@@ -53,6 +53,7 @@ cd -
 * Thu Feb 27 2014 Miro Hrončok <mhroncok@redhat.com> - 0.9.5-2.20131105git8425de4
 - Define %%monodir
 - Require mono-core for monodir/gac dependency
+- Define %%configuration
 - Run tests
 
 * Mon Jan 27 2014 Miro Hrončok <mhroncok@redhat.com> - 0.9.5-1
