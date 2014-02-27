@@ -1,10 +1,13 @@
 Name:           mono-cecil
 Version:        0.9.5
-Release:        1%{?dist}
+%global commit 8425de4db6a6e120154ced991f1ebc8d4d79dfb5
+%global shortcommit %(c=%{commit}; echo ${c:0:7})
+%global snapshot 20131105git%{shortcommit}
+Release:        1.%{snapshot}%{?dist}
 Summary:        Library to generate and inspect programs and libraries in the ECMA CIL form
 License:        MIT
 URL:            http://www.mono-project.com/Cecil
-Source0:        https://github.com/jbevain/cecil/archive/%{version}.tar.gz
+Source0:        https://github.com/jbevain/cecil/archive/%{commit}/%{name}-%{version}-%{shortcommit}.tar.gz
 BuildArch:      noarch
 BuildRequires:  mono(xbuild)
 
@@ -21,14 +24,14 @@ Today it is used by the Mono Debugger, the bug-finding and compliance checking
 tool Gendarme, MoMA, DB4O, as well as many other tools.
 
 %prep
-%setup -q -n cecil-%{version}
+%setup -qn cecil-%{commit}
 
 %build
-xbuild Mono.Cecil.sln /p:Configuration=net_4_0_Release
+xbuild Mono.Cecil.sln /p:Configuration=net_3_5_Release
 
 %install
 mkdir -p %{buildroot}/usr/lib/mono/gac/
-cd bin/net_4_0_Release/
+cd bin/net_3_5_Release/
 gacutil -i Mono.Cecil.dll -f -package Mono.Cecil -root %{buildroot}/usr/lib
 gacutil -i Mono.Cecil.Mdb.dll -f -package Mono.Cecil -root %{buildroot}/usr/lib
 gacutil -i Mono.Cecil.Pdb.dll -f -package Mono.Cecil -root %{buildroot}/usr/lib
