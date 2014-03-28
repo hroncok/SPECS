@@ -1,7 +1,7 @@
 Name:           octoprint
 Version:        1.0.0
 %global         rcver rc1
-Release:        0.1.%{rcver}%{?dist}
+Release:        0.2.%{rcver}%{?dist}
 Summary:        The responsive web interface for your 3D printer
 License:        AGPLv3
 
@@ -69,6 +69,11 @@ touch %{buildroot}%{_sysconfdir}/sudoers.d/%{name}-shutdown
 mkdir -p %{buildroot}%{_localstatedir}/%{name}
 ln -s %{_localstatedir}/%{name}/.%{name}/config.yaml %{buildroot}%{_sysconfdir}/%{name}.yaml
 
+# the pid file
+mkdir -p %{buildroot}%{_tmpfilesdir}
+mkdir -p %{buildroot}/run/%{name}
+echo 'd /run/%{name} 0700 %{name} %{name} -' > %{buildroot}%{_tmpfilesdir}/%{name}.conf
+
 %post
 /usr/sbin/adduser -b %{_localstatedir} -K MAIL_DIR=/dev/null %{name} &> /dev/null || :
 /usr/sbin/usermod -a -G dialout octoprint &> /dev/null || :
@@ -80,6 +85,7 @@ ln -s %{_localstatedir}/%{name}/.%{name}/config.yaml %{buildroot}%{_sysconfdir}/
 /usr/bin/systemctl stop %{name}.service &> /dev/null || :
 /usr/bin/pkill -u %{name} &> /dev/null || :
 /usr/bin/rm %{_localstatedir}/%{name}/%{name}.pid &> /dev/null || :
+/usr/bin/systemctl daemon-reload || :
 
 %files
 %doc README.md LICENSE README.shutdown
@@ -90,7 +96,12 @@ ln -s %{_localstatedir}/%{name}/.%{name}/config.yaml %{buildroot}%{_sysconfdir}/
 %ghost %config(noreplace) %{_localstatedir}/%{name}
 %{_sysconfdir}/%{name}.yaml
 %{_unitdir}/%{name}.service
+%{_tmpfilesdir}/%{name}.conf
+%dir /run/%{name}
 
 %changelog
+* Fri Mar 28 2014 Miro Hrončok <mhroncok@redhat.com> - 1.0.0-0.2.rc1
+- Use %%{_tmpfilesdir} for pidfile
+
 * Sat Jan 04 2014 Miro Hrončok <mhroncok@redhat.com> - 1.0.0-0.1.rc1
 - Initial spec.
