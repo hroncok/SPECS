@@ -1,29 +1,29 @@
 Name:           openscad
-%global shortversion 2013.12
-%global commit bf193472481d3e708da841d59df5f323e2785db7
-%global shortcommit %(c=%{commit}; echo ${c:0:7})
-%global gittag 20131229git%{shortcommit}
+%global shortversion %(date +%Y).%(date +%m)
 Version:        %{shortversion}
-Release:        0.6.%{gittag}%{?dist}
+Release:        0.2.20140530gitca3ff7cf%{?dist}
 Summary:        The Programmers Solid 3D CAD Modeller
 # COPYING contains a linking exception for CGAL
 # Appdata file is CC0
 License:        GPLv2 with exceptions and CC0
 Group:          Applications/Engineering
 URL:            http://www.openscad.org/
-Source0:        https://github.com/%{name}/%{name}/archive/%{commit}/%{name}-%{version}-%{shortcommit}.tar.gz
+Source0:        openscad-devel-ca3ff7cf.tar
 Source1:        MCAD-master.zip
 BuildRequires:  CGAL-devel >= 3.6
 BuildRequires:  ImageMagick
 BuildRequires:  Xvfb
 BuildRequires:  bison >= 2.4
-BuildRequires:  boost-devel >= 1.3.5
+BuildRequires:  boost-devel >= 1.35
 BuildRequires:  desktop-file-utils
 BuildRequires:  eigen3-devel
 BuildRequires:  flex >= 2.5.35
+BuildRequires:  freetype-devel >= 2.4
+BuildRequires:  fontconfig-devel >= 2.10
 BuildRequires:  glew-devel >= 1.6
 BuildRequires:  glib2-devel
 BuildRequires:  gmp-devel >= 5.0.0
+BuildRequires:  harfbuzz-devel >= 0.9.19
 BuildRequires:  mesa-dri-drivers
 BuildRequires:  mpfr-devel >= 3.0.0
 BuildRequires:  opencsg-devel >= 1.3.2
@@ -41,9 +41,9 @@ parts but pretty sure is not what you are looking for when you are more
 interested in creating computer-animated movies.
 
 %prep
-%setup -qa1 -Tcn %{name}-%{commit}/libraries
+%setup -qa1 -Tcn %{name}-devel/libraries
 mv MCAD{-master,}
-%setup -Dqn %{name}-%{commit}
+%setup -Dqn %{name}-devel
 
 %build
 qmake-qt4 VERSION=%{shortversion} PREFIX=%{_prefix}
@@ -51,7 +51,7 @@ make %{?_smp_mflags}
 
 # tests
 cd tests
-cmake .
+OPENSCAD_UPLOAD_TESTS=yes cmake .
 make %{?_smp_mflags}
 cd -
 
@@ -65,8 +65,6 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 # tests
 cd tests
 ctest %{?_smp_mflags} -C All || : # let the tests fail, as they probably won't work in Koji
-cat sysinfo.txt
-cat Testing/Temporary/LastTest.log
 cd -
 
 # remove MCAD (separate package) after the tests
@@ -82,12 +80,46 @@ rm -rf %{buildroot}%{_datadir}/%{name}/libraries/MCAD
 %endif
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/pixmaps/%{name}.png
+%{_datadir}/mime/packages/%{name}.xml
 %dir %{_datadir}/%{name}
 %{_datadir}/%{name}/examples
 %dir %{_datadir}/%{name}/libraries
 %{_mandir}/man1/*
 
 %changelog
+* Fri May 30 2014 Miro Hrončok <mhroncok@redhat.com> - %{shortversion}-0.2.20140530gitca3ff7cf
+- Update to git: ca3ff7cf
+
+* Thu May 29 2014 Miro Hrončok <mhroncok@redhat.com> - %{shortversion}-0.1.20140529git380af79b
+- Update to git: 380af79b
+
+* Mon Mar 03 2014 Miro Hrončok <mhroncok@redhat.com> - 2014.03-0.1.201400303git8635e94
+- Latest RC
+
+* Fri Feb 28 2014 Miro Hrončok <mhroncok@redhat.com> - 2014.02-0.4.20140228gitb2fbad4
+- 2014.03 RC new commits
+
+* Thu Feb 27 2014 Miro Hrončok <mhroncok@redhat.com> - 2014.02-0.3.20140227gitbc86c49
+- 2014.03 RC new commits
+
+* Wed Feb 26 2014 Miro Hrončok <mhroncok@redhat.com> - 2014.02-0.2.20140225git341571c
+- 2014.03 RC
+
+* Sat Feb 22 2014 Miro Hrončok <mhroncok@redhat.com> - 2014.02-0.1.20140222git6867c50
+- New commit
+
+* Wed Jan 29 2014 Miro Hrončok <mhroncok@redhat.com> - 2014.01-0.3.20140127git41f4575
+- New commit
+- Upload test results
+- Don't cat the results to the log
+
+* Mon Jan 27 2014 Miro Hrončok <mhroncok@redhat.com> - 2014.01-0.2.20140124gitd9432d7
+- New commit
+
+* Sun Jan 12 2014 Miro Hrončok <mhroncok@redhat.com> - 2014.01-0.1.20140108gite6bfee0
+- New commit
+- New month
+
 * Mon Dec 30 2013 Miro Hrončok <mhroncok@redhat.com> - 2013.12-0.6.20131229gitbf19347
 - New commit
 
@@ -150,6 +182,6 @@ rm -rf %{buildroot}%{_datadir}/%{name}/libraries/MCAD
 
 * Mon Oct 08 2012 Miro Hrončok <miro@hroncok.cz> 2012.10-1
 - New version.
-
 * Sun Oct 07 2012 Miro Hrončok <miro@hroncok.cz> 2012.08-1
+
 - New package.
