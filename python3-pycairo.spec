@@ -6,7 +6,7 @@ Summary:       Python 3 bindings for the cairo library
 URL:           http://cairographics.org/pycairo
 Source:        http://cairographics.org/releases/pycairo-%{version}.tar.bz2
 
-Provides:      py3cairo
+Provides:      py3cairo = %{version}-%{release}
 BuildRequires: python3-devel
 BuildRequires: python3-pytest
 BuildRequires: cairo-devel
@@ -20,7 +20,7 @@ Requires:      %{name} = %{version}-%{release}
 Requires:      cairo-devel
 Requires:      pkgconfig
 Requires:      python3-devel
-Provides:      py3cairo-devel
+Provides:      py3cairo-devel = %{version}-%{release}
 
 %description devel
 This package contains files required to build wrappers for cairo add-on
@@ -31,6 +31,9 @@ libraries so that they interoperate with Python 3 pycairo.
 
 # for tests
 sed -i 's/python /python3 /' test/examples_test.py
+
+# rights
+find examples -name \*.py -exec chmod -x {} \;
 
 %build
 export PYTHON="%{__python3}"
@@ -65,6 +68,7 @@ cd -
 %{python3_sitearch}/cairo/
 
 %files devel
+%doc COPYING*
 %{_includedir}/pycairo/
 %{_libdir}/pkgconfig/py3cairo.pc
 
