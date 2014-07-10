@@ -1,6 +1,6 @@
 Name:           netfabb-basic
-Version:        5.1.0
-Release:        1%{?dist}
+Version:        5.1.1
+Release:        2%{?dist}
 Summary:        Freeware suite for STL editing
 License:        Redistributable
 URL:            http://www.netfabb.com/
@@ -10,6 +10,7 @@ URL:            http://www.netfabb.com/
 Source0:        %{name}_%{version}_linux32.tar.gz
 Source1:        %{name}_%{version}_linux64.tar.gz
 BuildRequires:  desktop-file-utils
+Requires:       lib3ds%{?_isa} = 1.3.0
 
 ExclusiveArch:  %{ix86} x86_64
 %global debug_package %{nil}
@@ -53,6 +54,10 @@ mkdir -p %{buildroot}%{_datadir}/pixmaps
 install -pm 0755 netfabb %{buildroot}%{_bindir}/%{name}
 install -pm 0755 *.so.* %{buildroot}%{_libdir}/
 
+# we have this in Fedora
+rm %{buildroot}%{_libdir}/lib3ds-netfabb-1.so.3
+ln -s lib3ds-1.so.3 %{buildroot}%{_libdir}/lib3ds-netfabb-1.so.3
+
 # desktopfile
 export DESKTOPFILE=%{buildroot}%{_datadir}/applications/%{name}.desktop
 echo "[Desktop Entry]">${DESKTOPFILE}
@@ -85,6 +90,7 @@ desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 %post
 /sbin/ldconfig
 /bin/touch --no-create %{_datadir}/icons/hicolor &>/dev/null || :
+/usr/bin/update-desktop-database &>/dev/null || :
 
 %postun
 /sbin/ldconfig
@@ -92,9 +98,11 @@ if [ $1 -eq 0 ] ; then
     /bin/touch --no-create %{_datadir}/icons/hicolor &>/dev/null
     /usr/bin/gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 fi
+/usr/bin/update-desktop-database &>/dev/null || :
 
 %posttrans
 /usr/bin/gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
+update-desktop-database &>/dev/null || :
 
 %files
 %doc README LICENSE changelog.gz Examples
@@ -107,6 +115,13 @@ fi
 
 
 %changelog
+* Thu Jul 10 2014 Miro Hrončok <mhroncok@redhat.com> - 5.1.1-2
+- Use Fedora's lib3ds
+- Update desktop database
+
+* Tue Apr 08 2014 Miro Hrončok <mhroncok@redhat.com> - 5.1.1-1
+- Updated to 5.1.1
+
 * Wed Mar 19 2014 Miro Hrončok <mhroncok@redhat.com> - 5.1.0-1
 - Updated to 5.1.0
 
