@@ -1,13 +1,13 @@
 %{?mingw_package_header}
 Name:           mingw-admesh
 Version:        0.98.0
-Release:        0.1.beta%{?dist}
+Release:        1%{?dist}
 Summary:        MinGW compiled ADMesh
 
 License:        GPLv2+
 
-URL:            http://github.com/hroncok/admesh/
-Source0:        http://github.com/hroncok/admesh/releases/download/v%{version}beta/admesh-%{version}beta.tar.gz
+URL:            http://github.com/admesh/admesh/
+Source0:        http://github.com/admesh/admesh/releases/download/v%{version}/admesh-%{version}.tar.gz
 BuildArch:      noarch
 
 BuildRequires:  mingw32-gcc
@@ -62,7 +62,7 @@ problems with STL (STereo Lithography) data files.
 
 
 %prep
-%setup -q -n admesh-%{version}beta
+%setup -q -n admesh-%{version}
 
 
 %build
@@ -109,5 +109,5 @@ find %{buildroot} -name "*.la" -delete
 %{mingw64_libdir}/libadmesh.a
 
 %changelog
-* Fri Jul 18 2014 Miro Hrončok <mhroncok@redhat.com> - 0.98.0-0.1.beta
+* Tue Jul 29 2014 Miro Hrončok <mhroncok@redhat.com> - 0.98.0-1
 - Initial package
