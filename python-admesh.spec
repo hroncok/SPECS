@@ -11,7 +11,7 @@ URL:            https://github.com/admesh/python-admesh
 Source0:        https://pypi.python.org/packages/source/a/%{pypi_name}/%{pypi_name}-%{version}.tar.gz
  
 BuildRequires:  python2-devel
-BuildRequires:  admesh-devel
+BuildRequires:  admesh-devel >= %{version}
 BuildRequires:  Cython
  
 %if %{?with_python3}
