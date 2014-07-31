@@ -3,7 +3,7 @@
 
 Name:           python-%{pypi_name}
 Version:        0.98
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Python bindings for ADMesh, STL maipulation library
 
 License:        GPLv2+
@@ -11,11 +11,13 @@ URL:            https://github.com/admesh/python-admesh
 Source0:        https://pypi.python.org/packages/source/a/%{pypi_name}/%{pypi_name}-%{version}.tar.gz
  
 BuildRequires:  python2-devel
-BuildRequires:  admesh-devel >= %{version}
+BuildRequires:  python-setuptools
 BuildRequires:  Cython
+BuildRequires:  admesh-devel >= %{version}
  
 %if %{?with_python3}
 BuildRequires:  python3-devel
+BuildRequires:  python3-setuptools
 BuildRequires:  python3-Cython
 %endif # if with_python3
 
@@ -86,5 +88,8 @@ popd
 
 
 %changelog
+* Thu Jul 31 2014 Miro Hrončok <mhroncok@redhat.com> - 0.98-2
+- Require setuptools.
+
 * Tue Jul 29 2014 Miro Hrončok <mhroncok@redhat.com> - 0.98-1
 - Initial package.
