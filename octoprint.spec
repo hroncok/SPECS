@@ -1,7 +1,7 @@
 Name:           octoprint
-Version:        1.0.0
-%global         rcver rc1
-Release:        0.3.%{rcver}%{?dist}
+Version:        1.1.0
+%global         rcver rc2
+Release:        0.1.%{rcver}%{?dist}
 Summary:        The responsive web interface for your 3D printer
 License:        AGPLv3
 
@@ -98,8 +98,8 @@ echo 'd /run/%{name} 0700 %{name} %{name} -' > %{buildroot}%{_tmpfilesdir}/%{nam
 %{_tmpfilesdir}/%{name}.conf
 
 %changelog
-* Sun Apr 06 2014 Miro Hrončok <mhroncok@redhat.com> - 1.0.0-0.3.rc1
-- rebuilt
+* Wed Oct 08 2014 Miro Hrončok <mhroncok@redhat.com> - 1.1.0-0.1.rc2
+- New version
 
 * Fri Mar 28 2014 Miro Hrončok <mhroncok@redhat.com> - 1.0.0-0.2.rc1
 - Use %%{_tmpfilesdir} for pidfile
