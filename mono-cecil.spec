@@ -8,6 +8,7 @@ Summary:        Library to generate and inspect programs and libraries in the EC
 License:        MIT
 URL:            http://www.mono-project.com/Cecil
 Source0:        https://github.com/jbevain/cecil/archive/%{commit}/%{name}-%{version}-%{shortcommit}.tar.gz
+Patch0:         %{name}-nobuild-tests.patch
 BuildArch:      noarch
 BuildRequires:  mono(xbuild)
 Requires:       mono-core
@@ -15,7 +16,7 @@ Requires:       mono-core
 # TODO Remove once defined as standard macro
 %global monodir /usr/lib/mono
 
-%global configuration net_4_0_Release
+%global configuration net_3_5_Release
 
 %description
 Cecil is a library written by Jb Evain to generate and inspect programs and
@@ -31,6 +32,10 @@ tool Gendarme, MoMA, DB4O, as well as many other tools.
 
 %prep
 %setup -qn cecil-%{commit}
+
+# bundles nunit and we don't use them anyway
+rm Test -rf
+%patch0 -p1
 
 %build
 xbuild Mono.Cecil.sln /p:Configuration=%{configuration}
@@ -52,6 +57,7 @@ cd -
 %changelog
 * Sat Oct 25 2014 Miro Hrončok <mhroncok@redhat.com> - 0.9.5-3.20140924git6d1b7d0
 - Updated
+- Remove bundled nunit
 
 * Thu Feb 27 2014 Miro Hrončok <mhroncok@redhat.com> - 0.9.5-2.20131105git8425de4
 - Define %%monodir
