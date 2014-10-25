@@ -58,6 +58,7 @@ cd -
 * Sat Oct 25 2014 Miro Hrončok <mhroncok@redhat.com> - 0.9.5-3.20140924git6d1b7d0
 - Updated
 - Remove bundled nunit
+- Patch Mono.Cecil.sln not to build tests
 
 * Thu Feb 27 2014 Miro Hrončok <mhroncok@redhat.com> - 0.9.5-2.20131105git8425de4
 - Define %%monodir
