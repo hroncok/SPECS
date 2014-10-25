@@ -1,9 +1,9 @@
 Name:           mono-cecil
 Version:        0.9.5
-%global commit 8425de4db6a6e120154ced991f1ebc8d4d79dfb5
+%global commit 6d1b7d0bc02cea62aa7a950c049bd615a0ad4183
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
-%global snapshot 20131105git%{shortcommit}
-Release:        2.%{snapshot}%{?dist}
+%global snapshot 20140924git%{shortcommit}
+Release:        3.%{snapshot}%{?dist}
 Summary:        Library to generate and inspect programs and libraries in the ECMA CIL form
 License:        MIT
 URL:            http://www.mono-project.com/Cecil
@@ -15,7 +15,7 @@ Requires:       mono-core
 # TODO Remove once defined as standard macro
 %global monodir /usr/lib/mono
 
-%global configuration net_3_5_Release
+%global configuration net_4_0_Release
 
 %description
 Cecil is a library written by Jb Evain to generate and inspect programs and
@@ -50,11 +50,13 @@ cd -
 %{monodir}/Mono.Cecil*
 
 %changelog
+* Sat Oct 25 2014 Miro Hrončok <mhroncok@redhat.com> - 0.9.5-3.20140924git6d1b7d0
+- Updated
+
 * Thu Feb 27 2014 Miro Hrončok <mhroncok@redhat.com> - 0.9.5-2.20131105git8425de4
 - Define %%monodir
 - Require mono-core for monodir/gac dependency
 - Define %%configuration
-- Run tests
 
 * Mon Jan 27 2014 Miro Hrončok <mhroncok@redhat.com> - 0.9.5-1
 - New package
