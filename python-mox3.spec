@@ -9,16 +9,20 @@ Summary:        Mock object framework for Python
 License:        ASL 2.0
 URL:            http://www.openstack.org/
 Source0:        https://pypi.python.org/packages/source/m/%{pypi_name}/%{pypi_name}-%{version}.tar.gz
+# https://bugs.launchpad.net/heat-cfntools/+bug/1403214/
+Patch0:         %{name}-ismethod.patch
 BuildArch:      noarch
  
 BuildRequires:  python-devel
 BuildRequires:  python-pbr >= 0.5.21
 BuildRequires:  python-pbr < 1.0
+BuildRequires:  python-nose
 BuildRequires:  python-testrepository
  
 BuildRequires:  python3-devel
 BuildRequires:  python3-pbr >= 0.5.21
 BuildRequires:  python3-pbr < 1.0
+BuildRequires:  python3-nose
 BuildRequires:  python3-testrepository
 
 
@@ -50,6 +54,10 @@ rm -rf %{pypi_name}.egg-info
 rm -rf %{py3dir}
 cp -a . %{py3dir}
 
+# Only apply the patch on Python 3
+pushd %{py3dir}
+%patch0 -p1
+popd
 
 %build
 %{__python2} setup.py build
@@ -67,10 +75,10 @@ popd
 %{__python2} setup.py install --skip-build --root %{buildroot}
 
 %check
-%{__python2} setup.py testr --slowest
+nosetests
 
 pushd %{py3dir}
-PYTHON=%{__python3} %{__python3} setup.py testr --slowest
+nosetests-%{python3_version}
 popd
 
 %files
