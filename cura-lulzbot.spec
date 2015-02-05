@@ -105,7 +105,8 @@ desktop-file-install --dir=%{buildroot}%{_datadir}/applications %{SOURCE2}
 %{find_lang} CuraLulzbot
 
 %files -f CuraLulzbot.lang
-%doc Cura/LICENSE changelog resources/example/Attribution.txt
+%license Cura/LICENSE resources/example/Attribution.txt
+%doc changelog
 %{python_sitelib}/CuraLulzbot
 %{_datadir}/%{name}
 %{_datadir}/pixmaps/%{name}.ico
