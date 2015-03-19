@@ -86,14 +86,14 @@ popd
 export LANG=en_US.UTF-8
 
 export PYTHONPATH=`echo build/lib.linux-*/`
-mv fiona{,no} # Move the directory away so it does not import form here
+mv fiona{,no} # Move the directory away so it does not import from here
 nosetests --exclude test_filter_vsi --exclude test_geopackag
 mv fiona{no,} # Move it back
 
 
 pushd %{py3dir}
 export PYTHONPATH=`echo build/lib.linux-*/`
-mv fiona{,no} # Move the directory away so it does not import form here
+mv fiona{,no} # Move the directory away so it does not import from here
 nosetests-%{python3_version} --exclude test_filter_vsi --exclude test_geopackag
 mv fiona{no,} # Move it back
 popd
