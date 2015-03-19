@@ -31,6 +31,7 @@ Requires:       python-cligj
 %description
 Fiona is OGR's neat, nimble, no-nonsense API for Python
 programmers.
+Python 2 version.
 
 %package -n     python3-%{pypi_name}
 Summary:        Fiona reads and writes spatial data files
@@ -44,7 +45,7 @@ Requires:       python3-cligj
 %description -n python3-%{pypi_name}
 Fiona is OGR's neat, nimble, no-nonsense API for Python
 programmers.
-
+Python 3 version.
 
 %prep
 %setup -qa1 -Tcn %{pypi_name}-%{version}/github
