@@ -6,11 +6,14 @@ Summary:        Click params for GeoJSON CLI (Python 2)
 License:        MIT
 URL:            https://github.com/mapbox/cligj
 Source0:        https://pypi.python.org/packages/source/c/%{pypi_name}/%{pypi_name}-%{version}.tar.gz
+Source1:        https://raw.githubusercontent.com/mapbox/%{pypi_name}/%{version}/LICENSE
 BuildArch:      noarch
  
 BuildRequires:  python2-devel
+BuildRequires:  python-setuptools
  
 BuildRequires:  python3-devel
+BuildRequires:  python3-setuptools
  
 Requires:       python-click >= 3.0
 
@@ -30,6 +33,7 @@ Python 3 version.
 
 %prep
 %setup -q -n %{pypi_name}-%{version}
+cp %{SOURCE1} .
 # Remove bundled egg-info
 rm -rf %{pypi_name}.egg-info
 
@@ -58,11 +62,13 @@ popd
 
 
 %files
+%license LICENSE
 %doc README.rst
 %{python2_sitelib}/%{pypi_name}
 %{python2_sitelib}/%{pypi_name}-%{version}-py?.?.egg-info
 
 %files -n python3-%{pypi_name}
+%license LICENSE
 %doc README.rst
 %{python3_sitelib}/%{pypi_name}
 %{python3_sitelib}/%{pypi_name}-%{version}-py?.?.egg-info
