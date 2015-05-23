@@ -3,7 +3,8 @@ Name:           admeshgui
 Version:        1.0
 Release:        1%{?dist}
 Summary:        STL viewer and manipulation tool
-License:        AGPLv3
+# Code is AGPLv3 logo/license is LGPLv3 or CC-BY-SA
+License:        AGPLv3 and (LGPLv3 or CC-BY-SA)
 URL:            https://github.com/vyvledav/%{camelname}
 Source0:        https://github.com/vyvledav/%{camelname}/archive/v%{version}.tar.gz
 
