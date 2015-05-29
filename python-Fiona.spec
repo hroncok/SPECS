@@ -21,12 +21,14 @@ BuildRequires:  python-cligj
 BuildRequires:  python-nose
 BuildRequires:  python-six
 BuildRequires:  Cython
+BuildRequires:  pytest
  
 BuildRequires:  python3-devel
 BuildRequires:  python3-cligj
 BuildRequires:  python3-nose
 BuildRequires:  python3-six
 BuildRequires:  python3-Cython
+BuildRequires:  python3-pytest
 
 Requires:       python-cligj
 Requires:       python-six
