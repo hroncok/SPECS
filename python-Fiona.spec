@@ -19,14 +19,17 @@ BuildRequires:  gdal-devel
 BuildRequires:  python2-devel
 BuildRequires:  python-cligj
 BuildRequires:  python-nose
+BuildRequires:  python-six
 BuildRequires:  Cython
  
 BuildRequires:  python3-devel
 BuildRequires:  python3-cligj
 BuildRequires:  python3-nose
+BuildRequires:  python3-six
 BuildRequires:  python3-Cython
 
 Requires:       python-cligj
+Requires:       python-six
 
 %description
 Fiona is OGR's neat, nimble, no-nonsense API for Python
@@ -41,6 +44,7 @@ Provides:       python3-fiona%{?_isa} = %{version}-%{release}
 
 
 Requires:       python3-cligj
+Requires:       python3-six
 
 %description -n python3-%{pypi_name}
 Fiona is OGR's neat, nimble, no-nonsense API for Python
