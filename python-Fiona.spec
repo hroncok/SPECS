@@ -15,6 +15,7 @@ Source1:        https://github.com/Toblerity/Fiona/archive/%{version}.tar.gz
 Provides:       python-fiona%{?_isa} = %{version}-%{release}
 
 BuildRequires:  gdal-devel
+BuildRequires:  /usr/bin/ogrinfo
 
 BuildRequires:  python2-devel
 BuildRequires:  python-cligj
