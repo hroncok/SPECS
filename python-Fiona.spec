@@ -1,15 +1,13 @@
 %global pypi_name Fiona
 
 Name:           python-%{pypi_name}
-Version:        1.5.0
+Version:        1.5.1
 Release:        1%{?dist}
 Summary:        Fiona reads and writes spatial data files
 
 License:        BSD
 URL:            http://github.com/Toblerity/Fiona
 Source0:        https://pypi.python.org/packages/source/F/%{pypi_name}/%{pypi_name}-%{version}.tar.gz
-# PyPI package misses some test data
-Source1:        https://github.com/Toblerity/Fiona/archive/%{version}.tar.gz
 
 # So user will find this with lowercase as well
 Provides:       python-fiona%{?_isa} = %{version}-%{release}
@@ -55,13 +53,7 @@ programmers.
 Python 3 version.
 
 %prep
-%setup -qa1 -Tcn %{pypi_name}-%{version}/github
-%setup -Dqn %{pypi_name}-%{version}
-
-# Get test data from git archive
-rm -rf tests/data
-mv github/%{pypi_name}-%{version}/tests/data tests/data
-rm -rf github
+%setup -qn %{pypi_name}-%{version}
 
 # Remove bundled egg-info
 rm -rf %{pypi_name}.egg-info
@@ -84,9 +76,11 @@ popd
 
 %install
 %{__python2} setup.py install --skip-build --root %{buildroot}
+chmod 0755 %{buildroot}%{python2_sitearch}/fiona/*.so
 
 pushd %{py3dir}
 %{__python3} setup.py install --skip-build --root %{buildroot}
+chmod 0755 %{buildroot}%{python3_sitearch}/fiona/*.so
 popd
 
 %check
@@ -106,17 +100,19 @@ mv fiona{no,} # Move it back
 popd
 
 %files
-%doc README.rst LICENSE.txt CREDITS.txt CHANGES.txt docs
+%license LICENSE.txt CREDITS.txt
+%doc README.rst CHANGES.txt docs
 %{python2_sitearch}/fiona
 %{python2_sitearch}/%{pypi_name}-%{version}-py?.?.egg-info
 
 %files -n python3-%{pypi_name}
-%doc README.rst LICENSE.txt CREDITS.txt CHANGES.txt docs
+%license LICENSE.txt CREDITS.txt
+%doc README.rst CHANGES.txt docs
 %{_bindir}/fio
 %{python3_sitearch}/fiona
 %{python3_sitearch}/%{pypi_name}-%{version}-py?.?.egg-info
 
 
 %changelog
-* Thu Mar 19 2015 Miro Hrončok <mhroncok@redhat.com> - 1.5.0-1
+* Thu Mar 19 2015 Miro Hrončok <mhroncok@redhat.com> - 1.5.1-1
 - Initial package.
