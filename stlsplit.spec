@@ -30,7 +30,8 @@ applications that utilize the %{name} library.
 
 %build
 premake4 gmake
-make %{?_smp_mflags} CFLAGS="%{optflags} -fPIC"
+sed -i -e 's! -shared ! -Wl,--as-needed\0!g' lib.make
+CFLAGS="%{optflags} -fPIC" LDFLAGS="%{?__global_ldflags}" make %{?_smp_mflags}
 
 %install
 install -Dpm 755 build/%{name} %{buildroot}%{_bindir}/%{name}
